@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Ninject;
 using Ninject.Modules;
 
-namespace WindowsGame.Common.IoC
+namespace WindowsGame.Master.IoC
 {
 	/// <summary>
 	/// IoCContainer will resolve/release all applicable object references.

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace WindowsGame.Common.Interfaces
+namespace WindowsGame.Master.Interfaces
 {
 	public interface IFileManager
 	{

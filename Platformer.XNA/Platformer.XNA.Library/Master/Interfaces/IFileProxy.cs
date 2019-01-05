@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace WindowsGame.Common.Interfaces
+namespace WindowsGame.Master.Interfaces
 {
 	public interface IFileProxy
 	{

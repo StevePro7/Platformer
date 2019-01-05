@@ -1,8 +1,8 @@
 ﻿using WindowsGame.Common.Managers;
 using WindowsGame.Common.TheGame;
-using WindowsGame.Common.Implementation;
-using WindowsGame.Common.Interfaces;
-using WindowsGame.Common.IoC;
+using WindowsGame.Master.Implementation;
+using WindowsGame.Master.Interfaces;
+using WindowsGame.Master.IoC;
 
 namespace WindowsGame.Common.Static
 {
@@ -14,6 +14,8 @@ namespace WindowsGame.Common.Static
 
 			IoCContainer.Initialize<IFileProxy, ProdFileProxy>();
 			IoCContainer.Initialize<IFileManager, FileManager>();
+
+			IoCContainer.Initialize<ILogger, ProdLogger>();
 		}
 	}
 }

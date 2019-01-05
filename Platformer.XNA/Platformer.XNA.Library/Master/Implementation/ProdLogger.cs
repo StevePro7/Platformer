@@ -1,9 +1,9 @@
 ﻿#if WINDOWS
 using log4net;
 using log4net.Config;
-using WindowsGame.Common.Interfaces;
+using WindowsGame.Master.Interfaces;
 
-namespace WindowsGame.Common.Implementation
+namespace WindowsGame.Master.Implementation
 {
 	public class ProdLogger : ILogger
 	{

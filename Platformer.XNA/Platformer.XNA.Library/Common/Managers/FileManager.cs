@@ -4,7 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using WindowsGame.Common.Interfaces;
+using WindowsGame.Master.Interfaces;
 
 namespace WindowsGame.Common.Managers
 {

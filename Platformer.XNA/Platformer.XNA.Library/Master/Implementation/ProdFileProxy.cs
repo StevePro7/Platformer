@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using Microsoft.Xna.Framework;
-using WindowsGame.Common.Interfaces;
+using WindowsGame.Master.Interfaces;
 
-namespace WindowsGame.Common.Implementation
+namespace WindowsGame.Master.Implementation
 {
 	public class ProdFileProxy : IFileProxy
 	{
