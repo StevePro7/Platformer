@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <GlobalConfigData>
 	<FramesPerSecond>100</FramesPerSecond>
-	<LoadAudio>true</LoadAudio>
-	<PlayAudio>true</PlayAudio>
+	<LoadAudio>false</LoadAudio>
+	<PlayAudio>false</PlayAudio>
 	<QuitsToExit>false</QuitsToExit>
 </GlobalConfigData>

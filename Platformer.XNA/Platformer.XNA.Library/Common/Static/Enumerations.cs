@@ -16,61 +16,36 @@
 		Test,
 	}
 
-	public enum DifficultyType
+	public enum AnimationType
 	{
-		Easy,
-		Norm,
-		Hard,
-		Argh,
+		PlayerIdle,
+		PlayerRun,
+		PlayerJump,
+		PlayerCelebrate,
+		PlayerDie,
+		MonsterAIdle,
+		MonsterARun,
+		MonsterADie,
+		MonsterBIdle,
+		MonsterBRun,
+		MonsterBDie,
+		MonsterCIdle,
+		MonsterCRun,
+		MonsterCDie,
+		MonsterDIdle,
+		MonsterDRun,
+		MonsterDDie,
 	}
 
 	public enum SoundEffectType
 	{
-		Right,
-		Wrong,
-		Cheat,
-		Early
-	}
-
-	public enum SpriteType
-	{
-		Select,
-		Right,
-		Wrong,
-		LeftArrow,
-		RightArrow,
-		VolumeOn,
-		VolumeOff,
-		White
-	}
-
-	public enum OptionType
-	{
-		A,
-		B,
-		C,
-		D,
-		None
-	}
-
-	public enum ActorType
-	{
-		Bart1,
-		Bart2,
-		Comic,
-		Drhibbert,
-		Drnick,
-		Flanders,
-		Grampa1,
-		Homer1,
-		Homer2,
-		Homer3,
-		Lisa1,
-		Lisa2,
-		Maggie,
-		Marge0,
-		Skinner,
-		Troy
+		ExitReached,
+		GemCollected,
+		MonsterKilled,
+		PlayerFall,
+		PlayerJump,
+		PlayerKilled,
+		Powerup,
 	}
 
 }
