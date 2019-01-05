@@ -18,7 +18,6 @@ namespace WindowsGame.Common.Managers
 	{
 		private String configRoot;
 
-		private const String CONFIG_DIRECTORY = "Config";
 		private const String GLOBAL_CONFIG_FILENAME = "GlobalConfig.xml";
 
 		public void Initialize()
@@ -27,7 +26,7 @@ namespace WindowsGame.Common.Managers
 		}
 		public void Initialize(String root)
 		{
-			configRoot = String.Format("{0}{1}/{2}/{3}", root, Constants.CONTENT_DIRECTORY, Constants.DATA_DIRECTORY, CONFIG_DIRECTORY);
+			configRoot = String.Format("{0}{1}/{2}", root, Constants.CONTENT_DIRECTORY, Constants.DATA_DIRECTORY);
 		}
 
 		public void LoadContent()

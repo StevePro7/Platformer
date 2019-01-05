@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using WindowsGame.Common.Static;
+using Microsoft.Xna.Framework;
 using WindowsGame.Common.TheGame;
 using WindowsGame.Master;
 
@@ -21,11 +23,11 @@ namespace WindowsGame.Common
 
 		public static void LoadContent()
 		{
-			//Byte framesPerSecond = Manager.ConfigManager.GlobalConfigData.FramesPerSecond;
-			//Engine.Game.IsFixedTimeStep = Constants.IsFixedTimeStep;
-			//Engine.Game.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / framesPerSecond);
-			//Engine.Game.IsMouseVisible = Constants.IsMouseVisible;
-			//Manager.ResolutionManager.LoadContent(Constants.IsFullScreen, Constants.ScreenWide, Constants.ScreenHigh, Constants.UseExposed, Constants.ExposeWide, Constants.ExposeHigh);
+			Byte framesPerSecond = Manager.ConfigManager.GlobalConfigData.FramesPerSecond;
+			Engine.Game.IsFixedTimeStep = Constants.IsFixedTimeStep;
+			Engine.Game.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / framesPerSecond);
+			Engine.Game.IsMouseVisible = Constants.IsMouseVisible;
+			Manager.ResolutionManager.LoadContent(Constants.IsFullScreen, Constants.ScreenWide, Constants.ScreenHigh, Constants.UseExposed, Constants.ExposeWide, Constants.ExposeHigh);
 			//Manager.InputManager.LoadContent();
 		}
 

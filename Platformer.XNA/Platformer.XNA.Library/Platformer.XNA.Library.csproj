@@ -68,8 +68,12 @@
   <ItemGroup>
     <Compile Include="Common\AnGame.cs" />
     <Compile Include="Common\Data\GlobalConfigData.cs" />
+    <Compile Include="Common\Interfaces\IDeviceManager.cs" />
+    <Compile Include="Common\Interfaces\IInputManager.cs" />
     <Compile Include="Common\Managers\ConfigManager.cs" />
     <Compile Include="Common\Managers\ContentManager.cs" />
+    <Compile Include="Common\Managers\InputManager.cs" />
+    <Compile Include="Common\Managers\LevelManager.cs" />
     <Compile Include="Common\MyGame.cs" />
     <Compile Include="Common\Static\Assets.cs" />
     <Compile Include="Common\Static\Constants.cs" />
