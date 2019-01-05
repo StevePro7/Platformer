@@ -67,11 +67,32 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\AnGame.cs" />
+    <Compile Include="Common\Managers\FileManager.cs" />
+    <Compile Include="Common\Managers\RandomManager.cs" />
+    <Compile Include="Common\Managers\ResolutionManager.cs" />
+    <Compile Include="Common\MyGame.cs" />
+    <Compile Include="Common\Static\Assets.cs" />
+    <Compile Include="Common\Static\Constants.cs" />
+    <Compile Include="Common\Static\Enumerations.cs" />
+    <Compile Include="Common\Static\Globalize.cs" />
+    <Compile Include="Common\Static\Registration.cs" />
+    <Compile Include="Common\TheGame\GameFactory.cs" />
+    <Compile Include="Common\TheGame\GameManager.cs" />
+    <Compile Include="Master\Engine.cs" />
+    <Compile Include="Master\Implementation\ProdFileProxy.cs" />
+    <Compile Include="Master\Implementation\ProdLogger.cs" />
+    <Compile Include="Master\Implementation\TestLogger.cs" />
+    <Compile Include="Master\Interfaces\IFileManager.cs" />
+    <Compile Include="Master\Interfaces\IFileProxy.cs" />
+    <Compile Include="Master\Interfaces\ILogger.cs" />
+    <Compile Include="Master\IoC\EngineModule.cs" />
+    <Compile Include="Master\IoC\IoCContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--
