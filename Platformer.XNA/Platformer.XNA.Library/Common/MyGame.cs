@@ -19,6 +19,9 @@ namespace WindowsGame.Common
 
 			Manager.ConfigManager.Initialize();
 			Manager.ConfigManager.LoadContent();
+
+			Manager.ResolutionManager.Initialize();
+			Manager.SoundManager.Initialize();
 		}
 
 		public static void LoadContent()
@@ -28,7 +31,7 @@ namespace WindowsGame.Common
 			Engine.Game.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / framesPerSecond);
 			Engine.Game.IsMouseVisible = Constants.IsMouseVisible;
 			Manager.ResolutionManager.LoadContent(Constants.IsFullScreen, Constants.ScreenWide, Constants.ScreenHigh, Constants.UseExposed, Constants.ExposeWide, Constants.ExposeHigh);
-			//Manager.InputManager.LoadContent();
+			Manager.InputManager.LoadContent();
 		}
 
 		public static void UnloadContent()

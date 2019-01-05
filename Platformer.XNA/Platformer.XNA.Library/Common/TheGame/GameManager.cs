@@ -13,6 +13,7 @@ namespace WindowsGame.Common.TheGame
 		ILevelManager LevelManager { get; }
 		IRandomManager RandomManager { get; }
 		IResolutionManager ResolutionManager { get; }
+		ISoundManager SoundManager { get; }
 		IFileManager FileManager { get; }
 		ILogger Logger { get; }
 	}
@@ -27,6 +28,7 @@ namespace WindowsGame.Common.TheGame
 			ILevelManager levelManager,
 			IRandomManager randomManager,
 			IResolutionManager resolutionManager,
+			ISoundManager soundManager,
 			IFileManager fileManager,
 			ILogger logger
 		)
@@ -37,6 +39,7 @@ namespace WindowsGame.Common.TheGame
 			LevelManager = levelManager;
 			RandomManager = randomManager;
 			ResolutionManager = resolutionManager;
+			SoundManager = soundManager;
 			FileManager = fileManager;
 			Logger = logger;
 		}
@@ -47,6 +50,7 @@ namespace WindowsGame.Common.TheGame
 		public ILevelManager LevelManager { get; private set; }
 		public IRandomManager RandomManager { get; private set; }
 		public IResolutionManager ResolutionManager { get; private set; }
+		public ISoundManager SoundManager { get; private set; }
 		public IFileManager FileManager { get; private set; }
 		public ILogger Logger { get; private set; }
 	}

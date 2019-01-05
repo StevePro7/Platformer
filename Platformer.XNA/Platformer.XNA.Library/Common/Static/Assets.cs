@@ -16,7 +16,6 @@ namespace WindowsGame.Common.Static
 
 		// Sound.
 		public static IDictionary<SoundEffectType, SoundEffectInstance> SoundEffectDictionary;
-		public static Song TitleMusicSong;
-		public static Song GameOverSong;
+		public static Song GameSong;
 	}
 }

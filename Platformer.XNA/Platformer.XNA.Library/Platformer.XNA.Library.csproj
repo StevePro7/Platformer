@@ -74,6 +74,7 @@
     <Compile Include="Common\Managers\ContentManager.cs" />
     <Compile Include="Common\Managers\InputManager.cs" />
     <Compile Include="Common\Managers\LevelManager.cs" />
+    <Compile Include="Common\Managers\SoundManager.cs" />
     <Compile Include="Common\MyGame.cs" />
     <Compile Include="Common\Static\Assets.cs" />
     <Compile Include="Common\Static\Constants.cs" />

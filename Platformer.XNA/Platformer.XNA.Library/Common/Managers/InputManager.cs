@@ -7,13 +7,13 @@ using WindowsGame.Master.Inputs;
 
 namespace WindowsGame.Managers.Inputs
 {
-	public class DesktopInputManager : IInputManager
+	public class InputManager : IInputManager
 	{
 		private readonly IJoystickInput joystickInput;
 		private readonly IMouseScreenInput mouseScreenInput;
 		private readonly IKeyboardInput keyboardInput;
 
-		public DesktopInputManager(IJoystickInput joystickInput, IKeyboardInput keyboardInput, IMouseScreenInput mouseScreenInput)
+		public InputManager(IJoystickInput joystickInput, IKeyboardInput keyboardInput, IMouseScreenInput mouseScreenInput)
 		{
 			this.joystickInput = joystickInput;
 			this.keyboardInput = keyboardInput;
