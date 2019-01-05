@@ -3,6 +3,7 @@ using WindowsGame.Common.TheGame;
 using WindowsGame.Master.Implementation;
 using WindowsGame.Master.Interfaces;
 using WindowsGame.Master.IoC;
+using TheRegistration = WindowsGame.Master.Static.Registration;
 
 namespace WindowsGame.Common.Static
 {
@@ -10,12 +11,12 @@ namespace WindowsGame.Common.Static
 	{
 		public static void Initialize()
 		{
+			// Initialize engine first.
+			TheRegistration.Initialize();
+
 			IoCContainer.Initialize<IGameManager, GameManager>();
 
-			IoCContainer.Initialize<IFileProxy, ProdFileProxy>();
-			IoCContainer.Initialize<IFileManager, FileManager>();
 
-			IoCContainer.Initialize<ILogger, ProdLogger>();
 		}
 	}
 }

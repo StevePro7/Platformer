@@ -1,6 +1,6 @@
-﻿using WindowsGame.Master;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using WindowsGame.Common.TheGame;
+using WindowsGame.Master;
 
 namespace WindowsGame.Common
 {
@@ -14,6 +14,9 @@ namespace WindowsGame.Common
 		public static void Initialize()
 		{
 			Manager.Logger.Initialize();
+
+			Manager.ConfigManager.Initialize();
+			Manager.ConfigManager.LoadContent();
 		}
 
 		public static void LoadContent()

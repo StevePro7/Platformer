@@ -67,9 +67,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\AnGame.cs" />
-    <Compile Include="Common\Managers\FileManager.cs" />
-    <Compile Include="Common\Managers\RandomManager.cs" />
-    <Compile Include="Common\Managers\ResolutionManager.cs" />
+    <Compile Include="Common\Data\GlobalConfigData.cs" />
+    <Compile Include="Common\Managers\ConfigManager.cs" />
+    <Compile Include="Common\Managers\ContentManager.cs" />
     <Compile Include="Common\MyGame.cs" />
     <Compile Include="Common\Static\Assets.cs" />
     <Compile Include="Common\Static\Constants.cs" />
@@ -79,14 +79,25 @@
     <Compile Include="Common\TheGame\GameFactory.cs" />
     <Compile Include="Common\TheGame\GameManager.cs" />
     <Compile Include="Master\Engine.cs" />
+    <Compile Include="Master\Factorys\ContentFactory.cs" />
+    <Compile Include="Master\Factorys\SoundFactory.cs" />
+    <Compile Include="Master\Factorys\StorageFactory.cs" />
     <Compile Include="Master\Implementation\ProdFileProxy.cs" />
     <Compile Include="Master\Implementation\ProdLogger.cs" />
     <Compile Include="Master\Implementation\TestLogger.cs" />
+    <Compile Include="Master\Inputs\JoystickInput.cs" />
+    <Compile Include="Master\Inputs\KeyboardInput.cs" />
+    <Compile Include="Master\Inputs\MouseScreenInput.cs" />
     <Compile Include="Master\Interfaces\IFileManager.cs" />
     <Compile Include="Master\Interfaces\IFileProxy.cs" />
     <Compile Include="Master\Interfaces\ILogger.cs" />
     <Compile Include="Master\IoC\EngineModule.cs" />
     <Compile Include="Master\IoC\IoCContainer.cs" />
+    <Compile Include="Master\Managers\FileManager.cs" />
+    <Compile Include="Master\Managers\RandomManager.cs" />
+    <Compile Include="Master\Managers\ResolutionManager.cs" />
+    <Compile Include="Master\Managers\StopwatchManager.cs" />
+    <Compile Include="Master\Static\Registration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
