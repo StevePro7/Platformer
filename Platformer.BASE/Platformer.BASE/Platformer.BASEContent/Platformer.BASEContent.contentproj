@@ -105,17 +105,17 @@
     <Compile Include="Sounds\ExitReached.wma">
       <Name>ExitReached</Name>
       <Importer>WmaImporter</Importer>
-      <Processor>SongProcessor</Processor>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
     <Compile Include="Sounds\GemCollected.wma">
       <Name>GemCollected</Name>
       <Importer>WmaImporter</Importer>
-      <Processor>SongProcessor</Processor>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
     <Compile Include="Sounds\MonsterKilled.wma">
       <Name>MonsterKilled</Name>
       <Importer>WmaImporter</Importer>
-      <Processor>SongProcessor</Processor>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
     <Compile Include="Sounds\Music.wma">
       <Name>Music</Name>
@@ -125,22 +125,22 @@
     <Compile Include="Sounds\PlayerFall.wma">
       <Name>PlayerFall</Name>
       <Importer>WmaImporter</Importer>
-      <Processor>SongProcessor</Processor>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
     <Compile Include="Sounds\PlayerJump.wma">
       <Name>PlayerJump</Name>
       <Importer>WmaImporter</Importer>
-      <Processor>SongProcessor</Processor>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
     <Compile Include="Sounds\PlayerKilled.wma">
       <Name>PlayerKilled</Name>
       <Importer>WmaImporter</Importer>
-      <Processor>SongProcessor</Processor>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
     <Compile Include="Sounds\Powerup.wma">
       <Name>Powerup</Name>
       <Importer>WmaImporter</Importer>
-      <Processor>SongProcessor</Processor>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
     <Compile Include="Sprites\Gem.png">
       <Name>Gem</Name>
