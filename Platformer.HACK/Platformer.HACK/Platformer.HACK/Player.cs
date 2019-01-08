@@ -19,7 +19,7 @@ namespace Platformer
 	/// <summary>
 	/// Our fearless adventurer!
 	/// </summary>
-	internal class Player
+	class Player
 	{
 		// Animations
 		private Animation idleAnimation;
@@ -39,15 +39,13 @@ namespace Platformer
 		{
 			get { return level; }
 		}
-
-		private Level level;
+		Level level;
 
 		public bool IsAlive
 		{
 			get { return isAlive; }
 		}
-
-		private bool isAlive;
+		bool isAlive;
 
 		// Physics state
 		public Vector2 Position
@@ -55,8 +53,7 @@ namespace Platformer
 			get { return position; }
 			set { position = value; }
 		}
-
-		private Vector2 position;
+		Vector2 position;
 
 		private float previousBottom;
 
@@ -65,8 +62,7 @@ namespace Platformer
 			get { return velocity; }
 			set { velocity = value; }
 		}
-
-		private Vector2 velocity;
+		Vector2 velocity;
 
 		// Constants for controling horizontal movement
 		private const float MoveAcceleration = 13000.0f;
@@ -82,6 +78,8 @@ namespace Platformer
 		private const float JumpControlPower = 0.14f;
 
 		// Input configuration
+		private const float MoveStickScale = 1.0f;
+		private const float AccelerometerScale = 1.5f;
 		private const Buttons JumpButton = Buttons.A;
 
 		/// <summary>
@@ -91,8 +89,7 @@ namespace Platformer
 		{
 			get { return isOnGround; }
 		}
-
-		private bool isOnGround;
+		bool isOnGround;
 
 		/// <summary>
 		/// Current user movement input.
@@ -105,7 +102,6 @@ namespace Platformer
 		private float jumpTime;
 
 		private Rectangle localBounds;
-
 		/// <summary>
 		/// Gets a rectangle which bounds this player in world space.
 		/// </summary>
@@ -113,8 +109,8 @@ namespace Platformer
 		{
 			get
 			{
-				int left = (int) Math.Round(Position.X - sprite.Origin.X) + localBounds.X;
-				int top = (int) Math.Round(Position.Y - sprite.Origin.Y) + localBounds.Y;
+				int left = (int)Math.Round(Position.X - sprite.Origin.X) + localBounds.X;
+				int top = (int)Math.Round(Position.Y - sprite.Origin.Y) + localBounds.Y;
 
 				return new Rectangle(left, top, localBounds.Width, localBounds.Height);
 			}
@@ -145,9 +141,9 @@ namespace Platformer
 			dieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Die"), 0.1f, false);
 
 			// Calculate bounds within texture size.            
-			int width = (int) (idleAnimation.FrameWidth*0.4);
-			int left = (idleAnimation.FrameWidth - width)/2;
-			int height = (int) (idleAnimation.FrameWidth*0.8);
+			int width = (int)(idleAnimation.FrameWidth * 0.4);
+			int left = (idleAnimation.FrameWidth - width) / 2;
+			int height = (int)(idleAnimation.FrameWidth * 0.8);
 			int top = idleAnimation.FrameHeight - height;
 			localBounds = new Rectangle(left, top, width, height);
 
@@ -177,7 +173,10 @@ namespace Platformer
 		/// once per frame. We also pass the game's orientation because when using the accelerometer,
 		/// we need to reverse our motion when the orientation is in the LandscapeRight orientation.
 		/// </remarks>
-		public void Update(GameTime gameTime, KeyboardState keyboardState, DisplayOrientation orientation)
+		public void Update(
+			GameTime gameTime,
+			KeyboardState keyboardState,
+			DisplayOrientation orientation)
 		{
 			GetInput(keyboardState, orientation);
 
@@ -203,26 +202,45 @@ namespace Platformer
 		/// <summary>
 		/// Gets player horizontal movement and jump commands from input.
 		/// </summary>
-		private void GetInput(KeyboardState keyboardState, DisplayOrientation orientation)
+		private void GetInput(
+			KeyboardState keyboardState,
+			DisplayOrientation orientation)
 		{
+			// Get analog horizontal movement.
+			//movement = gamePadState.ThumbSticks.Left.X * MoveStickScale;
 
 			// Ignore small movements to prevent running in place.
 			if (Math.Abs(movement) < 0.5f)
 				movement = 0.0f;
 
+			// Move the player with accelerometer
+			//if (Math.Abs(accelState.Acceleration.Y) > 0.10f)
+			//{
+			//    // set our movement speed
+			//    movement = MathHelper.Clamp(-accelState.Acceleration.Y * AccelerometerScale, -1f, 1f);
+
+			//    // if we're in the LandscapeLeft orientation, we must reverse our movement
+			//    if (orientation == DisplayOrientation.LandscapeRight)
+			//        movement = -movement;
+			//}
+
 			// If any digital horizontal movement input is found, override the analog movement.
-			if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
+			if (keyboardState.IsKeyDown(Keys.Left) ||
+				keyboardState.IsKeyDown(Keys.A))
 			{
 				movement = -1.0f;
 			}
-			else if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
+			else if (keyboardState.IsKeyDown(Keys.Right) ||
+					 keyboardState.IsKeyDown(Keys.D))
 			{
 				movement = 1.0f;
 			}
 
 			// Check if the player wants to jump.
-			isJumping = keyboardState.IsKeyDown(Keys.Space) || keyboardState.IsKeyDown(Keys.Up) ||
-			            keyboardState.IsKeyDown(Keys.W);
+			isJumping =
+				keyboardState.IsKeyDown(Keys.Space) ||
+				keyboardState.IsKeyDown(Keys.Up) ||
+				keyboardState.IsKeyDown(Keys.W);
 		}
 
 		/// <summary>
@@ -230,16 +248,14 @@ namespace Platformer
 		/// </summary>
 		public void ApplyPhysics(GameTime gameTime)
 		{
-			float elapsed = (float) gameTime.ElapsedGameTime.TotalSeconds;
+			float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
 			Vector2 previousPosition = Position;
 
 			// Base velocity is a combination of horizontal movement control and
 			// acceleration downward due to gravity.
-
-			// stevepro
-			velocity.X += movement*MoveAcceleration*elapsed;
-			velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration*elapsed, -MaxFallSpeed, MaxFallSpeed);
+			velocity.X += movement * MoveAcceleration * elapsed;
+			velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
 
 			velocity.Y = DoJump(velocity.Y, gameTime);
 
@@ -253,8 +269,8 @@ namespace Platformer
 			velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
 
 			// Apply velocity.
-			Position += velocity*elapsed;
-			Position = new Vector2((float) Math.Round(Position.X), (float) Math.Round(Position.Y));
+			Position += velocity * elapsed;
+			Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
 
 			// If the player is now colliding with the level, separate them.
 			HandleCollisions();
@@ -292,10 +308,10 @@ namespace Platformer
 				// Begin or continue a jump
 				if ((!wasJumping && IsOnGround) || jumpTime > 0.0f)
 				{
-					if (jumpTime == 0.0f)
-						//jumpSound.Play();
+					//if (jumpTime == 0.0f)
+					//    jumpSound.Play();
 
-						jumpTime += (float) gameTime.ElapsedGameTime.TotalSeconds;
+					jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 					sprite.PlayAnimation(jumpAnimation);
 				}
 
@@ -303,7 +319,7 @@ namespace Platformer
 				if (0.0f < jumpTime && jumpTime <= MaxJumpTime)
 				{
 					// Fully override the vertical velocity with a power curve that gives players more control over the top of the jump
-					velocityY = JumpLaunchVelocity*(1.0f - (float) Math.Pow(jumpTime/MaxJumpTime, JumpControlPower));
+					velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower));
 				}
 				else
 				{
@@ -331,10 +347,10 @@ namespace Platformer
 		{
 			// Get the player's bounding rectangle and find neighboring tiles.
 			Rectangle bounds = BoundingRectangle;
-			int leftTile = (int) Math.Floor((float) bounds.Left/Tile.Width);
-			int rightTile = (int) Math.Ceiling(((float) bounds.Right/Tile.Width)) - 1;
-			int topTile = (int) Math.Floor((float) bounds.Top/Tile.Height);
-			int bottomTile = (int) Math.Ceiling(((float) bounds.Bottom/Tile.Height)) - 1;
+			int leftTile = (int)Math.Floor((float)bounds.Left / Tile.Width);
+			int rightTile = (int)Math.Ceiling(((float)bounds.Right / Tile.Width)) - 1;
+			int topTile = (int)Math.Floor((float)bounds.Top / Tile.Height);
+			int bottomTile = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
 
 			// Reset flag to search for ground collision.
 			isOnGround = false;
