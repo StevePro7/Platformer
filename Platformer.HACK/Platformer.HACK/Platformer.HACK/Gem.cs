@@ -92,7 +92,7 @@ namespace Platformer
             // Bounce along a sine curve over time.
             // Include the X coordinate so that neighboring gems bounce in a nice wave pattern.            
             double t = gameTime.TotalGameTime.TotalSeconds * BounceRate + Position.X * BounceSync;
-            bounce = (float)Math.Sin(t) * BounceHeight * texture.Height;
+	        bounce = 1*BounceHeight*texture.Height - 4; // * (float)Math.Sin(t)
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Platformer
         /// </param>
         public void OnCollected(Player collectedBy)
         {
-            collectedSound.Play();
+            //collectedSound.Play();
         }
 
         /// <summary>
