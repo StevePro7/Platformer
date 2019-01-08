@@ -378,10 +378,7 @@ namespace Platformer
 		/// Updates all objects in the world, performs collision between them,
 		/// and handles the time limit with scoring.
 		/// </summary>
-		public void Update(
-			GameTime gameTime,
-			KeyboardState keyboardState,
-			DisplayOrientation orientation)
+		public void Update(GameTime gameTime, KeyboardState keyboardState, DisplayOrientation orientation)
 		{
 			// Pause while the player is dead or time is expired.
 			if (!Player.IsAlive || TimeRemaining == TimeSpan.Zero)

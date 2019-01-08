@@ -46,6 +46,8 @@ namespace Platformer
 		{
 			graphics = new GraphicsDeviceManager(this);
 			Content.RootDirectory = "Content";
+			Logger.Initialize();
+			Logger.Info("hello");
 		}
 
 		/// <summary>
@@ -152,7 +154,7 @@ namespace Platformer
 
 			level.Draw(gameTime, spriteBatch);
 
-			DrawHud();
+			//DrawHud();
 
 			spriteBatch.End();
 
