@@ -1,4 +1,4 @@
-namespace Platformer.BASE
+namespace Platformer
 {
 	internal static class Program
 	{

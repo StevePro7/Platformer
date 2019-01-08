@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Input.Touch;
 
-namespace Platformer.BASE
+namespace Platformer
 {
 	/// <summary>
 	/// This is the main type for your game
