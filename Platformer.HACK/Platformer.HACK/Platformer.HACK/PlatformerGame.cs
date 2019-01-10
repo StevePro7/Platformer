@@ -47,7 +47,6 @@ namespace Platformer
 			graphics = new GraphicsDeviceManager(this);
 			Content.RootDirectory = "Content";
 			Logger.Initialize();
-			Logger.Info("hello");
 		}
 
 		/// <summary>
@@ -57,6 +56,11 @@ namespace Platformer
 		protected override void LoadContent()
 		{
 			IsMouseVisible = true;
+
+			const Byte framesPerSecond = 50;
+			IsFixedTimeStep = true;
+			TargetElapsedTime = TimeSpan.FromSeconds(1.0f / framesPerSecond);
+
 
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
