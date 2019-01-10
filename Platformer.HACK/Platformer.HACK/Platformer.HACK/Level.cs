@@ -343,7 +343,9 @@ namespace Platformer
 			if (y < 0 || y >= Height)
 				return TileCollision.Passable;
 
-			return tiles[x, y].Collision;
+			TileCollision collision = tiles[x, y].Collision;
+			return collision;
+			//return tiles[x, y].Collision;
 		}
 
 		/// <summary>
@@ -378,7 +380,7 @@ namespace Platformer
 		/// Updates all objects in the world, performs collision between them,
 		/// and handles the time limit with scoring.
 		/// </summary>
-		public void Update(GameTime gameTime, KeyboardState keyboardState, DisplayOrientation orientation)
+		public void Update(GameTime gameTime, KeyboardState keyboardState)
 		{
 			// Pause while the player is dead or time is expired.
 			if (!Player.IsAlive || TimeRemaining == TimeSpan.Zero)
@@ -397,7 +399,7 @@ namespace Platformer
 			else
 			{
 				//timeRemaining -= gameTime.ElapsedGameTime;
-				Player.Update(gameTime, keyboardState, orientation);
+				Player.Update(gameTime, keyboardState);
 				UpdateGems(gameTime);
 
 				// Falling off the bottom of the level kills the player.

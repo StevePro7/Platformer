@@ -92,7 +92,7 @@ namespace Platformer
 			HandleInput();
 
 			// update our level, passing down the GameTime along with all of our input states
-			level.Update(gameTime, keyboardState, Window.CurrentOrientation);
+			level.Update(gameTime, keyboardState);
 
 			base.Update(gameTime);
 		}

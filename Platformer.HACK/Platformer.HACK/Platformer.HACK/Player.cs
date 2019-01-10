@@ -173,12 +173,9 @@ namespace Platformer
 		/// once per frame. We also pass the game's orientation because when using the accelerometer,
 		/// we need to reverse our motion when the orientation is in the LandscapeRight orientation.
 		/// </remarks>
-		public void Update(
-			GameTime gameTime,
-			KeyboardState keyboardState,
-			DisplayOrientation orientation)
+		public void Update(GameTime gameTime, KeyboardState keyboardState)
 		{
-			GetInput(keyboardState, orientation);
+			GetInput(keyboardState);
 
 			ApplyPhysics(gameTime);
 
@@ -202,9 +199,7 @@ namespace Platformer
 		/// <summary>
 		/// Gets player horizontal movement and jump commands from input.
 		/// </summary>
-		private void GetInput(
-			KeyboardState keyboardState,
-			DisplayOrientation orientation)
+		private void GetInput(KeyboardState keyboardState)
 		{
 			// Get analog horizontal movement.
 			//movement = gamePadState.ThumbSticks.Left.X * MoveStickScale;
@@ -305,6 +300,7 @@ namespace Platformer
 			// If the player wants to jump
 			if (isJumping)
 			{
+				Logger.Info("jumping true");
 				// Begin or continue a jump
 				if ((!wasJumping && IsOnGround) || jumpTime > 0.0f)
 				{

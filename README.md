@@ -51,3 +51,27 @@ Width	22px
 Top		20px		head
 
 localBounds			rectangle around enemy	[less head]
+
+move + idle
+if there is block to immed. left then cannot walk i.e. idle and reverse
+if there is no block underneath to immed. left or right then idle + rev
+
+PLAYER
+bool
+IsAlive
+IsOnGround
+isJumping
+wasJumping
+
+
+Jump
+velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower));
+velocityY = -3500.0f * (1.0f - (float)Math.Pow(0.02 / 0.35, 0.14));
+velocityY = -3500.0f * (1.0f - 0.6698455)
+velocityY = -3500.0f * 0.330154479
+velocityY = -1155.5406765
+
+
+Documentation
+https://www.gamasutra.com/blogs/YoannPignole/20140103/207987/Platformer_controls_how_to_avoid_limpness_and_rigidity_feelings.php
+https://medium.com/@btco_code/writing-a-platformer-for-the-tic-80-virtual-console-6fa737abe476
