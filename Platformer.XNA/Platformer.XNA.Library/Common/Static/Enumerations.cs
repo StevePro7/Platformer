@@ -18,33 +18,35 @@
 	public enum AnimationType
 	{
 		PlayerIdle,
-		PlayerRun,
+		PlayerMove,
 		PlayerJump,
-		PlayerCelebrate,
-		PlayerDie,
-		MonsterAIdle,
-		MonsterARun,
-		MonsterADie,
-		MonsterBIdle,
-		MonsterBRun,
-		MonsterBDie,
-		MonsterCIdle,
-		MonsterCRun,
-		MonsterCDie,
-		MonsterDIdle,
-		MonsterDRun,
-		MonsterDDie,
+		PlayerExit,
+		PlayerDead,
+		EnemyAIdle,
+		EnemyAMove,
+		EnemyBIdle,
+		EnemyBMove,
+		EnemyCIdle,
+		EnemyCMove,
+		EnemyDIdle,
+		EnemyDMove,
+	}
+
+	public enum BlockType
+	{
+		BlockA0,
+		BlockA1,
+		BlockA2,
+		BlockA3,
+		BlockA4,
+		BlockA5,
+		BlockA6,
+		BlockB0,
+		BlockB1,
 	}
 
 	public enum SoundEffectType
 	{
-		ExitReached,
-		GemCollected,
-		MonsterKilled,
-		PlayerFall,
-		PlayerJump,
-		PlayerKilled,
-		Powerup,
 	}
 
 }

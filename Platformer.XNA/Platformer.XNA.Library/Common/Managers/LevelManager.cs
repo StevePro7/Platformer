@@ -30,6 +30,5 @@ namespace WindowsGame.Common.Managers
 		{
 		}
 
-		
 	}
 }
