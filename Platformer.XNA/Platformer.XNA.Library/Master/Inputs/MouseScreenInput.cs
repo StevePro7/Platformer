@@ -9,7 +9,6 @@ namespace WindowsGame.Master.Inputs
 	{
 		// Methods.
 		void Initialize();
-		void LoadContent();
 		void Update(GameTime gameTime);
 
 		Single Horizontal();
@@ -38,10 +37,6 @@ namespace WindowsGame.Master.Inputs
 			CurrMouseX = 0;
 			CurrMouseY = 0;
 			MousePosition = Vector2.Zero;
-		}
-
-		public void LoadContent()
-		{
 		}
 
 		public void Update(GameTime gameTime)

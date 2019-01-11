@@ -75,8 +75,14 @@
     <Compile Include="Common\Managers\ContentManager.cs" />
     <Compile Include="Common\Managers\InputManager.cs" />
     <Compile Include="Common\Managers\LevelManager.cs" />
+    <Compile Include="Common\Managers\ScreenManager.cs" />
     <Compile Include="Common\Managers\SoundManager.cs" />
     <Compile Include="Common\MyGame.cs" />
+    <Compile Include="Common\Screens\BaseScreen.cs" />
+    <Compile Include="Common\Screens\InitScreen.cs" />
+    <Compile Include="Common\Screens\LoadScreen.cs" />
+    <Compile Include="Common\Screens\PlayScreen.cs" />
+    <Compile Include="Common\Screens\SplashScreen.cs" />
     <Compile Include="Common\Static\Assets.cs" />
     <Compile Include="Common\Static\Constants.cs" />
     <Compile Include="Common\Static\Enumerations.cs" />
@@ -97,6 +103,7 @@
     <Compile Include="Master\Interfaces\IFileManager.cs" />
     <Compile Include="Master\Interfaces\IFileProxy.cs" />
     <Compile Include="Master\Interfaces\ILogger.cs" />
+    <Compile Include="Master\Interfaces\IScreen.cs" />
     <Compile Include="Master\IoC\EngineModule.cs" />
     <Compile Include="Master\IoC\IoCContainer.cs" />
     <Compile Include="Master\Managers\FileManager.cs" />

@@ -26,11 +26,6 @@ namespace WindowsGame.Managers.Inputs
 			mouseScreenInput.Initialize();
 		}
 
-		public void LoadContent()
-		{
-			mouseScreenInput.LoadContent();
-		}
-
 		public void Update(GameTime gameTime)
 		{
 			joystickInput.Update(gameTime);

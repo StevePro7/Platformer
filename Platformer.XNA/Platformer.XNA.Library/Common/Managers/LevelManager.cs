@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using WindowsGame.Common.Data;
 using WindowsGame.Common.Static;
-using WindowsGame.Master;
 
 namespace WindowsGame.Common.Managers
 {
@@ -11,7 +7,7 @@ namespace WindowsGame.Common.Managers
 	{
 		void Initialize();
 		void Initialize(String root);
-		void LoadContent();
+		void LoadLevel(Byte levelNo);
 	}
 
 	public class LevelManager : ILevelManager 
@@ -27,13 +23,11 @@ namespace WindowsGame.Common.Managers
 
 		public void Initialize(String root)
 		{
-			levelRoot = String.Format("{0}{1}/{2}/{3}", root, Constants.CONTENT_DIRECTORY, Constants.DATA_DIRECTORY, LEVELS_DIRECTORY);
-
+			levelRoot = String.Format("{0}{1}/{2}", root, Constants.CONTENT_DIRECTORY,LEVELS_DIRECTORY);
 		}
 
-		public void LoadContent()
+		public void LoadLevel(Byte levelNo)
 		{
-			
 		}
 
 		

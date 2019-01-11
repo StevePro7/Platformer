@@ -11,16 +11,8 @@
 	{
 		Splash,
 		Init,
-		Title,
-		Diff,
-		Long,
-		Ready,
+		Load,
 		Play,
-		Quiz,
-		Score,
-		Over,
-		Exit,
-		Test,
 	}
 
 	public enum AnimationType

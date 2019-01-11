@@ -6,7 +6,6 @@ namespace WindowsGame.Common.Interfaces
 	public interface IInputManager
 	{
 		void Initialize();
-		void LoadContent();
 		void Update(GameTime gameTime);
 
 		Boolean Escape();
