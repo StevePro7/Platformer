@@ -32,19 +32,16 @@ namespace WindowsGame.Master.Inputs
 		private ButtonState prevLeftButtonState;
 		private ButtonState currRightButtonState;
 		private ButtonState prevRightButtonState;
-		private Byte maxInputs;
 
 		public void Initialize()
 		{
 			CurrMouseX = 0;
 			CurrMouseY = 0;
 			MousePosition = Vector2.Zero;
-			maxInputs = 0;
 		}
 
 		public void LoadContent()
 		{
-			maxInputs = 1;
 		}
 
 		public void Update(GameTime gameTime)

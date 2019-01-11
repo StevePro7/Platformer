@@ -38,6 +38,11 @@ namespace WindowsGame.Managers.Inputs
 			mouseScreenInput.Update(gameTime);
 		}
 
+		public Boolean Escape()
+		{
+			return keyboardInput.KeyHold(Keys.Escape);
+		}
+
 
 		public void SetMotors(Single leftMotor, Single rightMotor)
 		{

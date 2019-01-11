@@ -32,7 +32,11 @@ namespace WindowsGame.Common
 
 		protected override void LoadContent()
 		{
-			MyGame.LoadContent();
+			var gameTypeName = System.Configuration.ConfigurationManager.AppSettings["GameType"];
+			GameType gameType = (GameType)Enum.Parse(typeof(GameType), gameTypeName, true);
+			UInt16 screenWide = (UInt16)(Constants.ScreenWide * (UInt16)gameType);
+			UInt16 screenHigh = (UInt16)(Constants.ScreenHigh * (UInt16)gameType);
+			MyGame.LoadContent(screenWide, screenHigh);
 			base.LoadContent();
 		}
 

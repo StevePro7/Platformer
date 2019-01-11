@@ -9,7 +9,7 @@ namespace WindowsGame.Master.Managers
 	public interface IResolutionManager
 	{
 		void Initialize();
-		void LoadContent(Boolean isFullScreen, UInt16 screenWide, UInt16 screenHigh, Boolean useExposed, UInt16 exposeWide, UInt16 exposeHigh);
+		void LoadContent(Boolean isFullScreen, UInt16 screenWide, UInt16 screenHigh);
 		void BeginDraw(Color color);
 		void ApplyFullScreen(Boolean fullScreen);
 
@@ -39,22 +39,22 @@ namespace WindowsGame.Master.Managers
 			SwapDisplayMode(ref displayModeWidth, ref displayModeHeight);
 		}
 
-		public void LoadContent(Boolean isFullScreen, UInt16 screenWide, UInt16 screenHigh, Boolean useExposed, UInt16 exposeWide, UInt16 exposeHigh)
+		public void LoadContent(Boolean isFullScreen, UInt16 screenWide, UInt16 screenHigh)
 		{
 			_FullScreen = isFullScreen;
 			_VWidth = screenWide;
 			_VHeight = screenHigh;
 
-			if (useExposed)
-			{
-				_Width = exposeWide;
-				_Height = exposeHigh;
-			}
-			else
-			{
-				_Width = displayModeWidth;
-				_Height = displayModeHeight;
-			}
+			//if (useExposed)
+			//{
+			_Width = screenWide;
+			_Height = screenHigh;
+			//}
+			//else
+			//{
+			//    _Width = displayModeWidth;
+			//    _Height = displayModeHeight;
+			//}
 
 			ApplyResolutionSettings();
 			fullViewport = GetFullViewport();

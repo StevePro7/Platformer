@@ -1,5 +1,12 @@
 ﻿namespace WindowsGame.Common.Static
 {
+	public enum GameType
+	{
+		Incog = 0,
+		Small = 1, 
+		Large = 2,
+	}
+
 	public enum ScreenType
 	{
 		Splash,

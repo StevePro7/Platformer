@@ -18,11 +18,7 @@ namespace WindowsGame.Common.Managers
 	{
 		private String levelRoot;
 
-		private Vector2 levelNumPosition;
-		private Vector2 levelOrbPosition;
-
 		private const String LEVELS_DIRECTORY = "Levels";
-		private const String LEVELS_NAMESFILE = "LevelNames";
 
 		public void Initialize()
 		{

@@ -9,6 +9,8 @@ namespace WindowsGame.Common.Interfaces
 		void LoadContent();
 		void Update(GameTime gameTime);
 
+		Boolean Escape();
+
 		void SetMotors(Single leftMotor, Single rightMotor);
 		void ResetMotors();
 	}
