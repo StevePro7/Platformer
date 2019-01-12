@@ -18,11 +18,17 @@ namespace WindowsGame.Common.Static
 
 			IoCContainer.Initialize<IGameManager, GameManager>();
 
+			IoCContainer.Initialize<IAnimationManager, AnimationManager>();
+			IoCContainer.Initialize<ICollisionManager, CollisionManager>();
 			IoCContainer.Initialize<IConfigManager, ConfigManager>();
 			IoCContainer.Initialize<IContentManager, ContentManager>();
+			IoCContainer.Initialize<IEnemyManager, EnemyManager>();
 			IoCContainer.Initialize<ILevelManager, LevelManager>();
+			IoCContainer.Initialize<IPhysicsManager, PhysicsManager>();
 			IoCContainer.Initialize<ISoundManager, SoundManager>();
 			IoCContainer.Initialize<IScreenManager, ScreenManager>();
+			IoCContainer.Initialize<IScrollManager, ScrollManager>();
+			IoCContainer.Initialize<ITileManager, TileManager>();
 
 			IoCContainer.Initialize<IInputManager, InputManager>();
 			IoCContainer.Initialize<ILogger, ProdLogger>();
