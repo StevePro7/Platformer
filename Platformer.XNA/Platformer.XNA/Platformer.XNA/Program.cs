@@ -1,5 +1,5 @@
 using WindowsGame.Common;
-// test comment
+
 namespace WindowsGame
 {
 #if WINDOWS || XBOX
