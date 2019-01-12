@@ -20,7 +20,8 @@ namespace WindowsGame.SystemTests.Common.Managers
 		{
 			LevelManager.LoadLevel(0);
 
-			Assert.AreEqual(12, LevelManager.LevelDataLines.Count);
+			Assert.AreEqual(16, LevelManager.Width);
+			Assert.AreEqual(12, LevelManager.Height);
 		}
 
 	}

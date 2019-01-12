@@ -32,17 +32,41 @@
 		EnemyDMove,
 	}
 
+	public enum TileType
+	{
+		Unknown,
+		Blank,
+		Block,
+		Platform,
+		Player,
+		EnemyA,
+		EnemyB,
+		EnemyC,
+		EnemyD,
+		Exit,
+		Gem,
+	}
+
 	public enum BlockType
 	{
-		BlockA0,
-		BlockA1,
-		BlockA2,
-		BlockA3,
-		BlockA4,
-		BlockA5,
-		BlockA6,
-		BlockB0,
-		BlockB1,
+		None = 0,
+		BlockA0 = 1,
+		BlockA1 = 2,
+		BlockA2 = 3,
+		BlockA3 = 4,
+		BlockA4 = 5,
+		BlockA5 = 6,
+		BlockA6 = 7,
+		BlockB0 = 8,
+		BlockB1 = 9,
+		Platform = 10
+	}
+
+	public enum CollisionType
+	{
+		Passable = 0,
+		Impassable = 1,
+		Platform = 2,
 	}
 
 	public enum SoundEffectType
