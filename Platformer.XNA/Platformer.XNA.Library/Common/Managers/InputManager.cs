@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using WindowsGame.Common.Interfaces;
-using WindowsGame.Common.Static;
 using WindowsGame.Master.Inputs;
 
 namespace WindowsGame.Managers.Inputs

@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Media;
 using WindowsGame.Common.Static;
 using WindowsGame.Master.Factorys;
 
