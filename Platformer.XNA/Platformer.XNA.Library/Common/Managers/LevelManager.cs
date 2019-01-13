@@ -12,6 +12,8 @@ namespace WindowsGame.Common.Managers
 
 		IList<String> LevelDataLines { get; }
 
+		Byte[] TileType1D { get; }
+		Byte[][] TileType2D { get; }
 		Byte[] Collision1D { get; }
 		Byte[][] Collision2D { get; }
 		Byte Width { get; }
@@ -44,23 +46,35 @@ namespace WindowsGame.Common.Managers
 			Width = (Byte) LevelDataLines[0].Length;
 			Height = (Byte)LevelDataLines.Count;
 
+			TileType1D = new Byte[Height * Width];
 			Collision1D = new Byte[Height * Width];
+
+			TileType2D = new Byte[Height][];
 			Collision2D = new Byte[Height][];
 
 			for (Byte high = 0; high < Height; high++)
 			{
 				for (Byte wide = 0; wide < Width; wide++)
 				{
+					UInt16 index = (UInt16)(high * Height + wide);
+
+					TileType2D[high] = new Byte[Width];
 					Collision2D[high] = new Byte[Width];
+
 					String line = LevelDataLines[high];
 					Char tile = line[wide];
 					TileType tileType = MyGame.Manager.TileManager.GetTileType(tile);
+
+					TileType1D[index] = (Byte) tileType;
+					TileType2D[high][wide] = (Byte)tileType;
 				}
 			}
 
 		}
 
 		public IList<String> LevelDataLines { get; private set; }
+		public Byte[] TileType1D { get; private set; }
+		public Byte[][] TileType2D { get; private set; }
 		public Byte[] Collision1D { get; private set; }
 		public Byte[][] Collision2D { get; private set; }
 		public Byte Width { get; private set; }

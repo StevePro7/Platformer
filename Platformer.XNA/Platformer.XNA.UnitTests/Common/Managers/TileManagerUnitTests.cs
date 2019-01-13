@@ -1,13 +1,11 @@
-﻿using System;
-using WindowsGame.Common.Static;
-using NUnit.Framework;
-using WindowsGame.Common;
+﻿using NUnit.Framework;
 using WindowsGame.Common.Managers;
+using WindowsGame.Common.Static;
 
 namespace WindowsGame.UnitTests.Common.Managers
 {
 	[TestFixture]
-	public class CollisionManagerUnitTests : BaseUnitTests
+	public class TileManagerUnitTests : BaseUnitTests
 	{
 		[SetUp]
 		public new void SetUp()

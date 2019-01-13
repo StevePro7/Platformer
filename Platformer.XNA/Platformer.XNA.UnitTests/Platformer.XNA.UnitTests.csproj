@@ -49,11 +49,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseUnitTests.cs" />
+    <Compile Include="Common\Managers\CollisionManagerUnitTests.cs" />
     <Compile Include="Common\Managers\TileManagerUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="UnitTests.nunit" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Platformer.XNA.Library\Platformer.XNA.Library.csproj">

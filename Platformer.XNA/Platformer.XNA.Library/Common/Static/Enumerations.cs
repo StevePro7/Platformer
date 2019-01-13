@@ -34,11 +34,11 @@
 
 	public enum TileType
 	{
-		Unknown,
-		Blank,
-		Block,
-		Platform,
-		Player,
+		Unknown = -1,
+		Blank = 0,
+		Block = 1,
+		Platform = 2,
+		Player = 3,
 		EnemyA,
 		EnemyB,
 		EnemyC,
