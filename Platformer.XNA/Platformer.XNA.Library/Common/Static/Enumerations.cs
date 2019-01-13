@@ -49,7 +49,8 @@
 
 	public enum BlockType
 	{
-		None = 0,
+		None = -1,
+		Blank = 0,
 		BlockA0 = 1,
 		BlockA1 = 2,
 		BlockA2 = 3,
@@ -59,7 +60,9 @@
 		BlockA6 = 7,
 		BlockB0 = 8,
 		BlockB1 = 9,
-		Platform = 10
+		Platform = 10,
+		Exit = 11,
+		Gem = 12
 	}
 
 	public enum CollisionType
