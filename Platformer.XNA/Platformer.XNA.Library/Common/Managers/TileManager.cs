@@ -7,6 +7,8 @@ namespace WindowsGame.Common.Managers
 	{
 		BlockType GetBlockType(TileType tileType);
 		TileType GetTileType(Char tile);
+
+		void DrawBlockType(BlockType blockType, Byte x, Byte y);
 	}
 
 	public class TileManager : ITileManager
@@ -23,6 +25,10 @@ namespace WindowsGame.Common.Managers
 				next += 1;
 				BlockType blockType = (BlockType) next;
 				return blockType;
+			}
+			if (TileType.Platform == tileType)
+			{
+				return BlockType.Platform;
 			}
 			if (TileType.Exit == tileType)
 			{
@@ -81,5 +87,9 @@ namespace WindowsGame.Common.Managers
 
 			return TileType.Unknown;
 		}
-}
+
+		public void DrawBlockType(BlockType blockType, Byte x, Byte y)
+		{
+		}
+	}
 }
