@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <GlobalConfigData>
 	<ScreenType>Load</ScreenType>
-	<LevelNo>0</LevelNo>
+	<LevelNo>2</LevelNo>
 	<FramesPerSecond>50</FramesPerSecond>
 	<LoadAudio>false</LoadAudio>
 	<PlayAudio>false</PlayAudio>
