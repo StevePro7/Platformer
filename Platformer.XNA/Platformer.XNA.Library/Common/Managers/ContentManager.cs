@@ -7,8 +7,8 @@ namespace WindowsGame.Common.Managers
 {
 	public interface IContentManager 
 	{
-		void Initialize();
-		void Initialize(String root);
+		void Initialize(GameType gameType);
+		void Initialize(GameType gameType, String root);
 		void LoadContent();
 	}
 
@@ -28,19 +28,19 @@ namespace WindowsGame.Common.Managers
 			this.contentFactory = contentFactory;
 		}
 
-		public void Initialize()
+		public void Initialize(GameType gameType)
 		{
-			Initialize(String.Empty);
+			Initialize(gameType, String.Empty);
 		}
-		public void Initialize(String root)
+		public void Initialize(GameType gameType, String root)
 		{
 			contentRoot = String.Format("{0}{1}", root, Constants.CONTENT_DIRECTORY);
-			texturesRoot = String.Format("{0}/{1}/", contentRoot, TILES_DIRECTORY);
+			texturesRoot = String.Format("{0}/{1}/{2}/", contentRoot, TILES_DIRECTORY, gameType);
 		}
 
 		public void LoadContent()
 		{
-			String gameTypeText = MyGame.Manager.StateManager.GameType.ToString();
+			//String gameTypeText = MyGame.Manager.StateManager.GameType.ToString();
 
 			//// Fonts.
 			//String fontsRoot = String.Format("{0}/{1}/", contentRoot, FONTS_DIRECTORY);
@@ -69,12 +69,12 @@ namespace WindowsGame.Common.Managers
 			//}
 
 			// Textures.
-			texturesRoot += String.Format("{0}/", gameTypeText);
+			//texturesRoot += String.Format("{0}/", gameTypeText);
 			Assets.BlocksTexture = new Texture2D[Constants.NUM_BLOCKS];
-			for (BlockType key = BlockType.BlockA0; key <= BlockType.Gem; key++)
+			for (BlockType key = BlockType.Blank; key <= BlockType.Gem; key++)
 			{
 				String assetName = String.Format("{0}{1}", texturesRoot, key);
-				Assets.BlocksTexture[(Byte) key - 1] = contentFactory.LoadTexture(assetName);
+				Assets.BlocksTexture[(Byte) key] = contentFactory.LoadTexture(assetName);
 			}
 		}
 

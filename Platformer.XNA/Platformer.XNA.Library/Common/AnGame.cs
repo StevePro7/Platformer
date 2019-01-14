@@ -25,18 +25,19 @@ namespace WindowsGame.Common
 		protected override void Initialize()
 		{
 			Engine.Initialize(this, graphics);
-			MyGame.Initialize();
+
+			var gameTypeName = System.Configuration.ConfigurationManager.AppSettings["GameType"];
+			GameType gameType = (GameType)Enum.Parse(typeof(GameType), gameTypeName, true);
+			UInt16 screenWide = (UInt16)(Constants.ScreenWide * (UInt16)gameType);
+			UInt16 screenHigh = (UInt16)(Constants.ScreenHigh * (UInt16)gameType);
+			MyGame.Initialize(gameType, screenWide, screenHigh);
 
 			base.Initialize();
 		}
 
 		protected override void LoadContent()
 		{
-			var gameTypeName = System.Configuration.ConfigurationManager.AppSettings["GameType"];
-			GameType gameType = (GameType)Enum.Parse(typeof(GameType), gameTypeName, true);
-			UInt16 screenWide = (UInt16)(Constants.ScreenWide * (UInt16)gameType);
-			UInt16 screenHigh = (UInt16)(Constants.ScreenHigh * (UInt16)gameType);
-			MyGame.LoadContent(gameType, screenWide, screenHigh);
+			MyGame.LoadContent();
 			base.LoadContent();
 		}
 

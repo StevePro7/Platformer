@@ -16,6 +16,8 @@ namespace WindowsGame.Common.Static
 		public const UInt16 ScreenWide = 256;
 		public const UInt16 ScreenHigh = 192;
 
-		public const Byte NUM_BLOCKS = 12;
+		public const Byte NUM_BLOCKS = 13;
+		public const Byte TILE_WIDTH = 16;
+
 	}
 }

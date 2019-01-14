@@ -13,14 +13,14 @@ namespace WindowsGame.Common
 			Manager = manager;
 		}
 
-		public static void Initialize()
+		public static void Initialize(GameType gameType, UInt16 screenWide, UInt16 screenHigh)
 		{
 			Manager.Logger.Initialize();
 
 			Manager.ConfigManager.Initialize();
 			Manager.ConfigManager.LoadContent();
 
-			Manager.ContentManager.Initialize();
+			Manager.ContentManager.Initialize(gameType);
 
 			Manager.LevelManager.Initialize();
 			Manager.RandomManager.Initialize();
@@ -28,17 +28,20 @@ namespace WindowsGame.Common
 			Manager.ResolutionManager.Initialize();
 			Manager.SoundManager.Initialize();
 			Manager.ScreenManager.Initialize();
+			Manager.StateManager.Initialize(gameType, screenWide, screenHigh);
+			Manager.TileManager.Initialize(gameType);
 		}
 
-		public static void LoadContent(GameType gameType , UInt16 screenWide, UInt16 screenHigh)
+		public static void LoadContent()
 		{
 			Byte framesPerSecond = Manager.ConfigManager.GlobalConfigData.FramesPerSecond;
 			Engine.Game.IsFixedTimeStep = Constants.IsFixedTimeStep;
 			Engine.Game.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / framesPerSecond);
 			Engine.Game.IsMouseVisible = Constants.IsMouseVisible;
 
+			UInt16 screenWide = Manager.StateManager.ScreenWide;
+			UInt16 screenHigh = Manager.StateManager.ScreenHigh;
 			Manager.ResolutionManager.LoadContent(Constants.IsFullScreen, screenWide, screenHigh);
-			Manager.StateManager.LoadContent(gameType);
 		}
 
 		public static void LoadContentAsync()

@@ -14,6 +14,15 @@ namespace WindowsGame.Common.Screens
 
 		public void Draw()
 		{
+			MyGame.Manager.TileManager.DrawBlockTypeLeft(BlockType.Blank, 0, 0);
+
+			MyGame.Manager.TileManager.DrawBlockTypeLeft(BlockType.Platform, 0, 1);
+			MyGame.Manager.TileManager.DrawBlockTypeRght(BlockType.Platform, 0, 1);
+
+			MyGame.Manager.TileManager.DrawBlockType(BlockType.Platform, 0, 2);
+			//MyGame.Manager.TileManager.DrawBlockType(BlockType.Platform, 0, 0);
+			//MyGame.Manager.TileManager.DrawBlockType(BlockType.BlockA1, 1, 0);
+			//MyGame.Manager.TileManager.DrawBlockType(BlockType.Blank, 0, 0);
 		}
 
 	}
