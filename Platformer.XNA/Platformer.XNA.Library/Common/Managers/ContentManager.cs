@@ -69,9 +69,8 @@ namespace WindowsGame.Common.Managers
 			//}
 
 			// Textures.
-			//texturesRoot += String.Format("{0}/", gameTypeText);
-			Assets.BlocksTexture = new Texture2D[Constants.NUM_BLOCKS];
-			for (BlockType key = BlockType.Blank; key <= BlockType.Gem; key++)
+			Assets.BlocksTexture = new Texture2D[Constants.NUM_TILES];
+			for (BlockType key = BlockType.Blank; key <= BlockType.Strip; key++)
 			{
 				String assetName = String.Format("{0}{1}", texturesRoot, key);
 				Assets.BlocksTexture[(Byte) key] = contentFactory.LoadTexture(assetName);

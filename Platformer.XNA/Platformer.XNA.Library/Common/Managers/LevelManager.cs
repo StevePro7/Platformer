@@ -1,6 +1,7 @@
 using System;
 using WindowsGame.Common.Static;
 using System.Collections.Generic;
+using WindowsGame.Master;
 using Microsoft.Xna.Framework;
 
 namespace WindowsGame.Common.Managers
@@ -49,7 +50,7 @@ namespace WindowsGame.Common.Managers
 			Width = 0;
 			Height = 0;
 
-			size = (Byte)((Byte)gameType * Constants.TILE_WIDTH);
+			size = (Byte)((Byte)gameType * Constants.TILE_WIDE);
 		}
 
 		public void LoadLevel(Byte levelNo)
@@ -108,10 +109,6 @@ namespace WindowsGame.Common.Managers
 				for (Byte wide = 0; wide < Width; wide++)
 				{
 					DrawCol(high, wide);
-					//Byte block = LevelMap2D[high][wide];
-					//BlockType blockType = (BlockType) block;
-
-					//MyGame.Manager.TileManager.DrawBlockType(blockType, wide, high);
 				}
 			}
 		}
@@ -121,10 +118,6 @@ namespace WindowsGame.Common.Managers
 			for (Byte high = 0; high < Height; high++)
 			{
 				DrawCol(high, index);
-				//Byte block = LevelMap2D[high][index];
-				//BlockType blockType = (BlockType)block;
-
-				//MyGame.Manager.TileManager.DrawBlockType(blockType, index, high);
 			}
 		}
 		public void DrawColumnLeft(Byte index)
@@ -142,6 +135,7 @@ namespace WindowsGame.Common.Managers
 			}
 		}
 
+		
 		private void DrawCol(Byte high, Byte wide)
 		{
 			Byte block = LevelMap2D[high][wide];

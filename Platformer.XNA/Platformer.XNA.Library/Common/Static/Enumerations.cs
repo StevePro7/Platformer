@@ -61,7 +61,8 @@
 		BlockB1 = 9,
 		Platform = 10,
 		Exit = 11,
-		Gem = 12
+		Gem = 12,
+		Strip = 13,
 	}
 
 	public enum CollisionType

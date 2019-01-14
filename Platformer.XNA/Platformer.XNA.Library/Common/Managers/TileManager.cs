@@ -16,6 +16,9 @@ namespace WindowsGame.Common.Managers
 		void DrawBlockType(BlockType blockType, Byte x, Byte y);
 		void DrawBlockTypeLeft(BlockType blockType, Byte x, Byte y);
 		void DrawBlockTypeRght(BlockType blockType, Byte x, Byte y);
+		void DrawStrips();
+		void DrawStripLeft();
+		void DrawStripRght();
 	}
 
 	public class TileManager : ITileManager
@@ -24,15 +27,17 @@ namespace WindowsGame.Common.Managers
 
 		private Rectangle leftRect;
 		private Rectangle rghtRect;
+		private Vector2 rghtPosn;
 
 		public void Initialize(GameType gameType)
 		{
-			size = (Byte) ((Byte) gameType * Constants.TILE_WIDTH);
+			size = (Byte) ((Byte) gameType * Constants.TILE_WIDE);
 			high = size;
 			wide = (Byte) (high / 2);
 
 			leftRect = new Rectangle(0, 0, wide, high);
 			rghtRect = new Rectangle(wide, 0, wide, high);
+			rghtPosn = new Vector2(MyGame.Manager.StateManager.ScreenWide - wide, 0);
 		}
 
 		public BlockType GetBlockType(TileType tileType)
@@ -114,29 +119,35 @@ namespace WindowsGame.Common.Managers
 		public void DrawBlockType(BlockType blockType, Byte x, Byte y)
 		{
 			DrawBlock(null, blockType, 0, x, y);
-			//Texture2D image = Assets.BlocksTexture[(Byte) blockType];
-			//Vector2 position = new Vector2(x * size, y * size);
-			////Engine.SpriteBatch.Draw(image, position, Color.White);
-			//Engine.SpriteBatch.Draw(image, position, null, Color.White);
 		}
 
 		public void DrawBlockTypeLeft(BlockType blockType, Byte x, Byte y)
 		{
 			DrawBlock(leftRect, blockType, 0, x, y);
-			//Texture2D image = Assets.BlocksTexture[(Byte)blockType];
-			//Vector2 position = new Vector2(x * size, y * size);
-			//Engine.SpriteBatch.Draw(image, new Vector2(x, y), leftRect, Color.White);
-			//Engine.SpriteBatch.Draw(image, position, leftRect, Color.White);
 		}
 
 		public void DrawBlockTypeRght(BlockType blockType, Byte x, Byte y)
 		{
 			DrawBlock(rghtRect, blockType, wide, x, y);
-			//Texture2D image = Assets.BlocksTexture[(Byte)blockType];
-			//Vector2 position = new Vector2(x * size, y * size);
+		}
 
-			////Engine.SpriteBatch.Draw(image, new Vector2(x, y), rghtRect, Color.White);
-			//Engine.SpriteBatch.Draw(image, position, rghtRect, Color.White);
+		public void DrawStrips()
+		{
+			DrawStripLeft();
+			DrawStripRght();
+		}
+		public void DrawStripLeft()
+		{
+			DrawStrip(Vector2.Zero);
+		}
+		public void DrawStripRght()
+		{
+			DrawStrip(rghtPosn);
+		}
+		private void DrawStrip(Vector2 position)
+		{
+			Texture2D image = Assets.BlocksTexture[(Byte)BlockType.Strip];
+			Engine.SpriteBatch.Draw(image, position, Color.White);
 		}
 
 		private void DrawBlock(Rectangle? rectangle, BlockType blockType, Byte s, Byte x, Byte y)
