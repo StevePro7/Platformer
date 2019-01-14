@@ -49,7 +49,6 @@
 
 	public enum BlockType
 	{
-		None = -1,
 		Blank = 0,
 		BlockA0 = 1,
 		BlockA1 = 2,

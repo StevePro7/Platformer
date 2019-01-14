@@ -61,7 +61,8 @@ namespace WindowsGame.Common.Managers
 				return BlockType.Gem;
 			}
 
-			return BlockType.None;
+			// Default block type blank.
+			return BlockType.Blank;
 		}
 
 		public TileType GetTileType(Char tile)

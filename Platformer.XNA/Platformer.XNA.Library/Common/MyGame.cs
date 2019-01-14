@@ -22,7 +22,7 @@ namespace WindowsGame.Common
 
 			Manager.ContentManager.Initialize(gameType);
 
-			Manager.LevelManager.Initialize();
+			Manager.LevelManager.Initialize(gameType);
 			Manager.RandomManager.Initialize();
 			
 			Manager.ResolutionManager.Initialize();
