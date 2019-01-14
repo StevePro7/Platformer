@@ -11,8 +11,7 @@ namespace WindowsGame.Common.Static
 		public static SpriteFont EmulogicFont;
 
 		// Textures.
-		public static Texture2D SplashTexture;
-		public static Texture2D SpritesheetTexture;
+		public static Texture2D[] BlocksTexture;
 
 		// Sound.
 		public static IDictionary<SoundEffectType, SoundEffectInstance> SoundEffectDictionary;

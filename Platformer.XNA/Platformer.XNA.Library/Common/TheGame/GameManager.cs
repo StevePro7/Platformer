@@ -20,6 +20,7 @@ namespace WindowsGame.Common.TheGame
 		ISoundManager SoundManager { get; }
 		IScreenManager ScreenManager { get; }
 		IScrollManager ScrollManager { get; }
+		IStateManager StateManager { get; }
 		ITileManager TileManager { get; }
 		IFileManager FileManager { get; }
 		ILogger Logger { get; }
@@ -42,6 +43,7 @@ namespace WindowsGame.Common.TheGame
 			IScreenManager screenManager,
 			ISoundManager soundManager,
 			IScrollManager scrollManager,
+			IStateManager stateManager,
 			ITileManager tileManager,
 			IFileManager fileManager,
 			ILogger logger
@@ -60,6 +62,7 @@ namespace WindowsGame.Common.TheGame
 			SoundManager = soundManager;
 			ScreenManager = screenManager;
 			ScrollManager = scrollManager;
+			StateManager = stateManager;
 			TileManager = tileManager;
 			FileManager = fileManager;
 			Logger = logger;
@@ -79,6 +82,7 @@ namespace WindowsGame.Common.TheGame
 		public ISoundManager SoundManager { get; private set; }
 		public IScreenManager ScreenManager { get; private set; }
 		public IScrollManager ScrollManager { get; private set; }
+		public IStateManager StateManager { get; private set; }
 		public ITileManager TileManager { get; private set; }
 		public IFileManager FileManager { get; private set; }
 		public ILogger Logger { get; private set; }

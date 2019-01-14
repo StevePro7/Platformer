@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using WindowsGame.Common;
 using WindowsGame.Common.Managers;
+using WindowsGame.Master.Managers;
 
 namespace WindowsGame.SystemTests.Common.Managers
 {
@@ -13,6 +14,7 @@ namespace WindowsGame.SystemTests.Common.Managers
 			// System under test.
 			LevelManager = MyGame.Manager.LevelManager;
 			LevelManager.Initialize(CONTENT_ROOT);
+			MyGame.Manager.RandomManager.Initialize();
 		}
 
 		[Test]

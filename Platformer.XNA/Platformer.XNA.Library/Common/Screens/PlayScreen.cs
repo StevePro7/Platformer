@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using WindowsGame.Master.Interfaces;
+using WindowsGame.Common.Static;
 
 namespace WindowsGame.Common.Screens
 {
@@ -8,7 +9,7 @@ namespace WindowsGame.Common.Screens
 	{
 		public Int32 Update(GameTime gameTime)
 		{
-			return (Int32)CurrScreen;
+			return (Int32)ScreenType.Play;
 		}
 
 		public void Draw()

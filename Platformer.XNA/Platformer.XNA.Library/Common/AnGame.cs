@@ -36,7 +36,7 @@ namespace WindowsGame.Common
 			GameType gameType = (GameType)Enum.Parse(typeof(GameType), gameTypeName, true);
 			UInt16 screenWide = (UInt16)(Constants.ScreenWide * (UInt16)gameType);
 			UInt16 screenHigh = (UInt16)(Constants.ScreenHigh * (UInt16)gameType);
-			MyGame.LoadContent(screenWide, screenHigh);
+			MyGame.LoadContent(gameType, screenWide, screenHigh);
 			base.LoadContent();
 		}
 

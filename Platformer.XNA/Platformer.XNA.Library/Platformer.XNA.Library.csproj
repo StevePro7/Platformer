@@ -83,6 +83,7 @@
     <Compile Include="Common\Managers\LevelManager.cs" />
     <Compile Include="Common\Managers\ScreenManager.cs" />
     <Compile Include="Common\Managers\SoundManager.cs" />
+    <Compile Include="Common\Managers\StateManager.cs" />
     <Compile Include="Common\Managers\TileManager.cs" />
     <Compile Include="Common\MyGame.cs" />
     <Compile Include="Common\Objects\Enemy.cs" />

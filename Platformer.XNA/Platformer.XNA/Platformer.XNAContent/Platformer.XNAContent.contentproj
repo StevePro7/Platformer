@@ -277,18 +277,19 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sprites\Large\Gem.png">
-      <Name>Gem</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Sprites\Large\Player\Idle.png">
       <Name>Idle</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Tiles\Large\Gem.png">
+      <Name>Gem</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Sprites\Large\EnemyA\Idle.png">
       <Name>Idle</Name>
@@ -334,13 +335,15 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Small\Gem.png">
-      <Name>Gem</Name>
+    <Compile Include="Sprites\Small\Player\Idle.png">
+      <Name>Idle</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Sprites\Small\Player\Idle.png">
-      <Name>Idle</Name>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Tiles\Small\Gem.png">
+      <Name>Gem</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -15,5 +15,7 @@ namespace WindowsGame.Common.Static
 		public const Boolean IsMouseVisible = true;
 		public const UInt16 ScreenWide = 256;
 		public const UInt16 ScreenHigh = 192;
+
+		public const Byte NUM_BLOCKS = 12;
 	}
 }

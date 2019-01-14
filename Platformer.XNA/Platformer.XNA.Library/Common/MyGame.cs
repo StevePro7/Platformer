@@ -20,19 +20,25 @@ namespace WindowsGame.Common
 			Manager.ConfigManager.Initialize();
 			Manager.ConfigManager.LoadContent();
 
+			Manager.ContentManager.Initialize();
+
 			Manager.LevelManager.Initialize();
+			Manager.RandomManager.Initialize();
+			
 			Manager.ResolutionManager.Initialize();
 			Manager.SoundManager.Initialize();
 			Manager.ScreenManager.Initialize();
 		}
 
-		public static void LoadContent(UInt16 screenWide, UInt16 screenHigh)
+		public static void LoadContent(GameType gameType , UInt16 screenWide, UInt16 screenHigh)
 		{
 			Byte framesPerSecond = Manager.ConfigManager.GlobalConfigData.FramesPerSecond;
 			Engine.Game.IsFixedTimeStep = Constants.IsFixedTimeStep;
 			Engine.Game.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / framesPerSecond);
 			Engine.Game.IsMouseVisible = Constants.IsMouseVisible;
+
 			Manager.ResolutionManager.LoadContent(Constants.IsFullScreen, screenWide, screenHigh);
+			Manager.StateManager.LoadContent(gameType);
 		}
 
 		public static void LoadContentAsync()
