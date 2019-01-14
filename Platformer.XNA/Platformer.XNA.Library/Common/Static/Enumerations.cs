@@ -65,6 +65,15 @@
 		Strip = 13,
 	}
 
+	public enum EnemysType
+	{
+		Unknown,
+		EnemyA,
+		EnemyB,
+		EnemyC,
+		EnemyD,
+	}
+
 	public enum CollisionType
 	{
 		Passable = 0,

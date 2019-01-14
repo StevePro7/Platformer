@@ -76,7 +76,7 @@
     <Compile Include="Common\Managers\AnimationManager.cs" />
     <Compile Include="Common\Managers\CollisionManager.cs" />
     <Compile Include="Common\Managers\PhysicsManager.cs" />
-    <Compile Include="Common\Managers\EnemyManager.cs" />
+    <Compile Include="Common\Managers\EnemysManager.cs" />
     <Compile Include="Common\Managers\PlayerManager.cs" />
     <Compile Include="Common\Managers\ScrollManager.cs" />
     <Compile Include="Common\Managers\InputManager.cs" />

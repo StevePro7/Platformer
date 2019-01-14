@@ -12,6 +12,7 @@ namespace WindowsGame.Common.Static
 
 		// Textures.
 		public static Texture2D[] BlocksTexture;
+		public static Texture2D PlayerTexture;
 
 		// Sound.
 		public static IDictionary<SoundEffectType, SoundEffectInstance> SoundEffectDictionary;

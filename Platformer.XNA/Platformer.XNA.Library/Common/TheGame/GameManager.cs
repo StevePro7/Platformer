@@ -11,9 +11,10 @@ namespace WindowsGame.Common.TheGame
 		ICollisionManager CollisionManager { get; }
 		IConfigManager ConfigManager { get; }
 		IContentManager ContentManager { get; }
-		IEnemyManager EnemyManager { get; }
+		IEnemysManager EnemysManager { get; }
 		IInputManager InputManager { get; }
 		ILevelManager LevelManager { get; }
+		IPlayerManager PlayerManager { get; }
 		IPhysicsManager PhysicsManager { get; }
 		IRandomManager RandomManager { get; }
 		IResolutionManager ResolutionManager { get; }
@@ -34,9 +35,10 @@ namespace WindowsGame.Common.TheGame
 			ICollisionManager collisionManager,
 			IConfigManager configManager,
 			IContentManager contentManager,
-			IEnemyManager enemyManager,
+			IEnemysManager enemysManager,
 			IInputManager inputManager,
 			ILevelManager levelManager,
+			IPlayerManager playerManager,
 			IPhysicsManager physicsManager,
 			IRandomManager randomManager,
 			IResolutionManager resolutionManager,
@@ -53,9 +55,10 @@ namespace WindowsGame.Common.TheGame
 			CollisionManager = collisionManager;
 			ConfigManager = configManager;
 			ContentManager = contentManager;
-			EnemyManager = enemyManager;
+			EnemysManager = enemysManager;
 			InputManager = inputManager;
 			LevelManager = levelManager;
+			PlayerManager = playerManager;
 			PhysicsManager = physicsManager;
 			RandomManager = randomManager;
 			ResolutionManager = resolutionManager;
@@ -73,9 +76,10 @@ namespace WindowsGame.Common.TheGame
 		public ICollisionManager CollisionManager { get; private set; }
 		public IConfigManager ConfigManager { get; private set; }
 		public IContentManager ContentManager { get; private set; }
-		public IEnemyManager EnemyManager { get; private set; }
+		public IEnemysManager EnemysManager { get; private set; }
 		public IInputManager InputManager { get; private set; }
 		public ILevelManager LevelManager { get; private set; }
+		public IPlayerManager PlayerManager { get; private set; }
 		public IPhysicsManager PhysicsManager { get; private set; }
 		public IRandomManager RandomManager { get; private set; }
 		public IResolutionManager ResolutionManager { get; private set; }

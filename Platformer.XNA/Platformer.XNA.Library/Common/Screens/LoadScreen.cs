@@ -11,6 +11,8 @@ namespace WindowsGame.Common.Screens
 		{
 			Byte levelNo = MyGame.Manager.ConfigManager.GlobalConfigData.LevelNo;
 			MyGame.Manager.LevelManager.LoadLevel(levelNo);
+
+			MyGame.Manager.PlayerManager.LoadContent(MyGame.Manager.LevelManager.PlayerSpot);
 		}
 
 		public Int32 Update(GameTime gameTime)

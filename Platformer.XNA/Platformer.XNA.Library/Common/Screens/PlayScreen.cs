@@ -22,7 +22,11 @@ namespace WindowsGame.Common.Screens
 			//MyGame.Manager.LevelManager.DrawColumn(3);
 			//MyGame.Manager.LevelManager.DrawColumn(4);
 
+			//MyGame.Manager.TileManager.DrawStripLeft();
 			MyGame.Manager.TileManager.DrawStrips();
+
+			MyGame.Manager.PlayerManager.DrawPlayer();
+
 			//MyGame.Manager.TileManager.DrawBlockTypeLeft(BlockType.Blank, 0, 0);
 
 			//MyGame.Manager.TileManager.DrawBlockTypeLeft(BlockType.Platform, 0, 1);

@@ -21,14 +21,15 @@ namespace WindowsGame.Common
 			Manager.ConfigManager.LoadContent();
 
 			Manager.ContentManager.Initialize(gameType);
+			Manager.StateManager.Initialize(gameType, screenWide, screenHigh);
 
 			Manager.LevelManager.Initialize(gameType);
+			Manager.PlayerManager.Initialize();
 			Manager.RandomManager.Initialize();
 			
 			Manager.ResolutionManager.Initialize();
 			Manager.SoundManager.Initialize();
 			Manager.ScreenManager.Initialize();
-			Manager.StateManager.Initialize(gameType, screenWide, screenHigh);
 			Manager.TileManager.Initialize(gameType);
 		}
 

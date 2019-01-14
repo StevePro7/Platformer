@@ -17,6 +17,7 @@ namespace WindowsGame.Common.Static
 		public const UInt16 ScreenHigh = 192;
 
 		public const Byte NUM_TILES = 14;
+		public const Byte GAME_WIDE = 8;
 		public const Byte TILE_WIDE = 16;
 
 	}
