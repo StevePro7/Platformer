@@ -14,7 +14,15 @@ namespace WindowsGame.Common.Screens
 
 		public void Draw()
 		{
-			MyGame.Manager.LevelManager.DrawLevel();
+			//MyGame.Manager.LevelManager.DrawLevel();
+
+			//MyGame.Manager.LevelManager.DrawColumn(0);
+			MyGame.Manager.LevelManager.DrawColumn(1);
+			MyGame.Manager.LevelManager.DrawColumn(2);
+			MyGame.Manager.LevelManager.DrawColumn(3);
+			MyGame.Manager.LevelManager.DrawColumn(4);
+
+
 			//MyGame.Manager.TileManager.DrawBlockTypeLeft(BlockType.Blank, 0, 0);
 
 			//MyGame.Manager.TileManager.DrawBlockTypeLeft(BlockType.Platform, 0, 1);

@@ -11,6 +11,9 @@ namespace WindowsGame.Common.Managers
 		void Initialize(GameType gameType, String root);
 		void LoadLevel(Byte levelNo);
 		void DrawLevel();
+		void DrawColumn(Byte index);
+		void DrawColumnLeft(Byte index);
+		void DrawColumnRght(Byte index);
 
 		IList<String> LevelDataLines { get; }
 
@@ -96,8 +99,6 @@ namespace WindowsGame.Common.Managers
 					//Position2D[high][wide] = position;
 				}
 			}
-
-			int x = 7;
 		}
 
 		public void DrawLevel()
@@ -106,12 +107,58 @@ namespace WindowsGame.Common.Managers
 			{
 				for (Byte wide = 0; wide < Width; wide++)
 				{
-					Byte block = LevelMap2D[high][wide];
-					BlockType blockType = (BlockType) block;
+					DrawCol(high, wide);
+					//Byte block = LevelMap2D[high][wide];
+					//BlockType blockType = (BlockType) block;
 
-					MyGame.Manager.TileManager.DrawBlockType(blockType, wide, high);
+					//MyGame.Manager.TileManager.DrawBlockType(blockType, wide, high);
 				}
 			}
+		}
+
+		public void DrawColumn(Byte index)
+		{
+			for (Byte high = 0; high < Height; high++)
+			{
+				DrawCol(high, index);
+				//Byte block = LevelMap2D[high][index];
+				//BlockType blockType = (BlockType)block;
+
+				//MyGame.Manager.TileManager.DrawBlockType(blockType, index, high);
+			}
+		}
+		public void DrawColumnLeft(Byte index)
+		{
+			for (Byte high = 0; high < Height; high++)
+			{
+				DrawColL(high, index);
+			}
+		}
+		public void DrawColumnRght(Byte index)
+		{
+			for (Byte high = 0; high < Height; high++)
+			{
+				DrawColR(high, index);
+			}
+		}
+
+		private void DrawCol(Byte high, Byte wide)
+		{
+			Byte block = LevelMap2D[high][wide];
+			BlockType blockType = (BlockType)block;
+			MyGame.Manager.TileManager.DrawBlockType(blockType, wide, high);
+		}
+		private void DrawColL(Byte high, Byte wide)
+		{
+			Byte block = LevelMap2D[high][wide];
+			BlockType blockType = (BlockType)block;
+			MyGame.Manager.TileManager.DrawBlockTypeLeft(blockType, wide, high);
+		}
+		private void DrawColR(Byte high, Byte wide)
+		{
+			Byte block = LevelMap2D[high][wide];
+			BlockType blockType = (BlockType)block;
+			MyGame.Manager.TileManager.DrawBlockTypeRght(blockType, wide, high);
 		}
 
 		public IList<String> LevelDataLines { get; private set; }

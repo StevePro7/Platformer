@@ -37,6 +37,24 @@ namespace WindowsGame.Managers.Inputs
 			return keyboardInput.KeyHold(Keys.Escape);
 		}
 
+		public Boolean PlayerLeft()
+		{
+			return keyboardInput.KeyPress(Keys.Left);
+		}
+		public Boolean PlayerRght()
+		{
+			return keyboardInput.KeyPress(Keys.Right);
+		}
+
+		public Boolean ScrollLeft()
+		{
+			return keyboardInput.KeyHold(Keys.I);
+		}
+		public Boolean ScrollRght()
+		{
+			return keyboardInput.KeyHold(Keys.J);
+		}
+
 
 		public void SetMotors(Single leftMotor, Single rightMotor)
 		{

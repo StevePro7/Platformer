@@ -9,6 +9,10 @@ namespace WindowsGame.Common.Interfaces
 		void Update(GameTime gameTime);
 
 		Boolean Escape();
+		Boolean PlayerLeft();
+		Boolean PlayerRght();
+		Boolean ScrollLeft();
+		Boolean ScrollRght();
 
 		void SetMotors(Single leftMotor, Single rightMotor);
 		void ResetMotors();
