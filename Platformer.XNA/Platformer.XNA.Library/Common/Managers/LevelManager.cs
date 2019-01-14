@@ -1,8 +1,8 @@
 using System;
-using WindowsGame.Common.Static;
 using System.Collections.Generic;
-using WindowsGame.Master;
+using WindowsGame.Common.Objects;
 using Microsoft.Xna.Framework;
+using WindowsGame.Common.Static;
 
 namespace WindowsGame.Common.Managers
 {
@@ -28,13 +28,15 @@ namespace WindowsGame.Common.Managers
 		Byte[][] Collision2D { get; }
 		Vector2[][] Position2D { get; }
 
-		Byte Width { get; }
-		Byte Height { get; }
+		Byte GameWidth { get; }
+		Byte GameHeight { get; }
+		UInt16 PlayerSpot { get; }
+		IList<UInt16> EnemysSpots { get; }
+		IList<EnemysType> EnemysTypes { get; }
 	}
 
 	public class LevelManager : ILevelManager
 	{
-		private Byte size;
 		private String levelRoot;
 
 		private const String LEVELS_DIRECTORY = "Levels";
@@ -47,10 +49,11 @@ namespace WindowsGame.Common.Managers
 		public void Initialize(GameType gameType, String root)
 		{
 			levelRoot = String.Format("{0}{1}/{2}", root, Constants.CONTENT_DIRECTORY, LEVELS_DIRECTORY);
-			Width = 0;
-			Height = 0;
-
-			size = (Byte)((Byte)gameType * Constants.TILE_WIDE);
+			GameWidth = 0;
+			GameHeight = 0;
+			PlayerSpot = 0;
+			EnemysSpots = new List<UInt16>();
+			EnemysTypes = new List<EnemysType>();
 		}
 
 		public void LoadLevel(Byte levelNo)
@@ -58,35 +61,51 @@ namespace WindowsGame.Common.Managers
 			String file = String.Format("{0}/{1}.txt", levelRoot, levelNo);
 			LevelDataLines = MyGame.Manager.FileManager.LoadTxt(file);
 
-			Width = (Byte) LevelDataLines[0].Length;
-			Height = (Byte)LevelDataLines.Count;
+			GameWidth = (Byte)LevelDataLines[0].Length;
+			GameHeight = (Byte)LevelDataLines.Count;
 
-			LevelMap1D = new Byte[Height * Width];
-			TileType1D = new Byte[Height * Width];
-			Collision1D = new Byte[Height * Width];
-			Position1D = new Vector2[Height * Width];
+			LevelMap1D = new Byte[GameHeight * GameWidth];
+			TileType1D = new Byte[GameHeight * GameWidth];
+			Collision1D = new Byte[GameHeight * GameWidth];
+			Position1D = new Vector2[GameHeight * GameWidth];
 
-			LevelMap2D = new Byte[Height][];
-			TileType2D = new Byte[Height][];
-			Collision2D = new Byte[Height][];
-			Position2D = new Vector2[Height][];
+			LevelMap2D = new Byte[GameHeight][];
+			TileType2D = new Byte[GameHeight][];
+			Collision2D = new Byte[GameHeight][];
+			Position2D = new Vector2[GameHeight][];
 
-			for (Byte high = 0; high < Height; high++)
+			PlayerSpot = 0;
+			EnemysSpots.Clear();
+			EnemysTypes.Clear();
+
+			for (Byte high = 0; high < GameHeight; high++)
 			{
 				String line = LevelDataLines[high];
-				LevelMap2D[high] = new Byte[Width];
-				TileType2D[high] = new Byte[Width];
-				Collision2D[high] = new Byte[Width];
-				Position2D[high] = new Vector2[Width];
+				LevelMap2D[high] = new Byte[GameWidth];
+				TileType2D[high] = new Byte[GameWidth];
+				Collision2D[high] = new Byte[GameWidth];
+				Position2D[high] = new Vector2[GameWidth];
 
-				for (Byte wide = 0; wide < Width; wide++)
+				for (Byte wide = 0; wide < GameWidth; wide++)
 				{
-					UInt16 index = (UInt16)(high * Height + wide);
+					UInt16 index = (UInt16)(high * GameHeight + wide);
 
 					Char tile = line[wide];
 					TileType tileType = MyGame.Manager.TileManager.GetTileType(tile);
 					TileType1D[index] = (Byte) tileType;
 					TileType2D[high][wide] = (Byte)tileType;
+
+					if (tileType == TileType.Player)
+					{
+						PlayerSpot = (UInt16) (high * GameHeight + wide);
+					}
+					if (tileType == TileType.EnemyA || tileType == TileType.EnemyB || tileType == TileType.EnemyC || tileType == TileType.EnemyD)
+					{
+						EnemysType enemysType = MyGame.Manager.TileManager.GetEnemysType(tileType);
+						UInt16 enemysSpot = (UInt16)(high * GameHeight + wide);
+						EnemysTypes.Add(enemysType);
+						EnemysSpots.Add(enemysSpot);
+					}
 
 					CollisionType collisionType = MyGame.Manager.CollisionManager.GetCollisionType(tile);
 					Collision1D[index] = (Byte) collisionType;
@@ -95,18 +114,15 @@ namespace WindowsGame.Common.Managers
 					BlockType blockType = MyGame.Manager.TileManager.GetBlockType(tileType);
 					LevelMap1D[index] = (Byte) blockType;
 					LevelMap2D[high][wide] = (Byte)blockType;
-
-					//Vector2 position = new Vector2(wide * size, high * size);
-					//Position2D[high][wide] = position;
 				}
 			}
 		}
 
 		public void DrawLevel()
 		{
-			for (Byte high = 0; high < Height; high++)
+			for (Byte high = 0; high < GameHeight; high++)
 			{
-				for (Byte wide = 0; wide < Width; wide++)
+				for (Byte wide = 0; wide < GameWidth; wide++)
 				{
 					DrawCol(high, wide);
 				}
@@ -115,21 +131,21 @@ namespace WindowsGame.Common.Managers
 
 		public void DrawColumn(Byte index)
 		{
-			for (Byte high = 0; high < Height; high++)
+			for (Byte high = 0; high < GameHeight; high++)
 			{
 				DrawCol(high, index);
 			}
 		}
 		public void DrawColumnLeft(Byte index)
 		{
-			for (Byte high = 0; high < Height; high++)
+			for (Byte high = 0; high < GameHeight; high++)
 			{
 				DrawColL(high, index);
 			}
 		}
 		public void DrawColumnRght(Byte index)
 		{
-			for (Byte high = 0; high < Height; high++)
+			for (Byte high = 0; high < GameHeight; high++)
 			{
 				DrawColR(high, index);
 			}
@@ -167,7 +183,10 @@ namespace WindowsGame.Common.Managers
 		public Byte[][] Collision2D { get; private set; }
 		public Vector2[][] Position2D { get; private set; }
 
-		public Byte Width { get; private set; }
-		public Byte Height { get; private set; }
+		public Byte GameWidth { get; private set; }
+		public Byte GameHeight { get; private set; }
+		public UInt16 PlayerSpot { get; private set; }
+		public IList<UInt16> EnemysSpots { get; private set; }
+		public IList<EnemysType> EnemysTypes { get; private set; }
 	}
 }

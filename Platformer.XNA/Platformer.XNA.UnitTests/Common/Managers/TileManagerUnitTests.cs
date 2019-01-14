@@ -18,6 +18,13 @@ namespace WindowsGame.UnitTests.Common.Managers
 		}
 
 		[Test]
+		public void GetTileTypeTest()
+		{
+			TileType tileType = TileManager.GetTileType('#');
+			Assert.That(TileType.Block, Is.EqualTo(tileType));
+		}
+
+		[Test]
 		public void GetBlockTypeTest()
 		{
 			RandomManager.Stub(rm => rm.Next(9)).Return(4);
@@ -26,10 +33,10 @@ namespace WindowsGame.UnitTests.Common.Managers
 		}
 
 		[Test]
-		public void GetTileTypeTest()
+		public void GetEnemysTypeTest()
 		{
-			TileType tileType = TileManager.GetTileType('#');
-			Assert.That(TileType.Block, Is.EqualTo(tileType));
+			EnemysType enemysType = TileManager.GetEnemysType(TileType.EnemyA);
+			Assert.That(EnemysType.EnemyA, Is.EqualTo(enemysType));
 		}
 
 	}

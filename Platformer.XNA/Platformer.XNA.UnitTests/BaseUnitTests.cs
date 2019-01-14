@@ -15,9 +15,10 @@ namespace WindowsGame.UnitTests
 		protected ICollisionManager CollisionManager;
 		protected IConfigManager ConfigManager;
 		protected IContentManager ContentManager;
-		protected IEnemyManager EnemyManager;
+		protected IEnemysManager EnemysManager;
 		protected IInputManager InputManager;
 		protected ILevelManager LevelManager;
+		protected IPlayerManager PlayerManager;
 		protected IPhysicsManager PhysicsManager;
 		protected IRandomManager RandomManager;
 		protected IResolutionManager ResolutionManager;
@@ -38,9 +39,10 @@ namespace WindowsGame.UnitTests
 			CollisionManager = MockRepository.GenerateStub<ICollisionManager>();
 			ConfigManager = MockRepository.GenerateStub<IConfigManager>();
 			ContentManager = MockRepository.GenerateStub<IContentManager>();
-			EnemyManager = MockRepository.GenerateStub<IEnemyManager>();
+			EnemysManager = MockRepository.GenerateStub<IEnemysManager>();
 			InputManager = MockRepository.GenerateStub<IInputManager>();
 			LevelManager = MockRepository.GenerateStub<ILevelManager>();
+			PlayerManager = MockRepository.GenerateStub<IPlayerManager>();
 			PhysicsManager = MockRepository.GenerateStub<IPhysicsManager>();
 			RandomManager = MockRepository.GenerateStub<IRandomManager>();
 			ResolutionManager = MockRepository.GenerateStub<IResolutionManager>();
@@ -61,9 +63,10 @@ namespace WindowsGame.UnitTests
 				CollisionManager,
 				ConfigManager,
 				ContentManager,
-				EnemyManager,
+				EnemysManager,
 				InputManager,
 				LevelManager,
+				PlayerManager,
 				PhysicsManager,
 				RandomManager,
 				ResolutionManager,
@@ -88,9 +91,10 @@ namespace WindowsGame.UnitTests
 			CollisionManager = null;
 			ConfigManager = null;
 			ContentManager = null;
-			EnemyManager = null;
+			EnemysManager = null;
 			InputManager = null;
 			LevelManager = null;
+			PlayerManager = null;
 			PhysicsManager = null;
 			RandomManager = null;
 			ResolutionManager = null;

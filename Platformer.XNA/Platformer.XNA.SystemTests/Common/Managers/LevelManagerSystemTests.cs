@@ -1,8 +1,6 @@
 ﻿using NUnit.Framework;
 using WindowsGame.Common;
-using WindowsGame.Common.Managers;
 using WindowsGame.Common.Static;
-using WindowsGame.Master.Managers;
 
 namespace WindowsGame.SystemTests.Common.Managers
 {
@@ -23,8 +21,8 @@ namespace WindowsGame.SystemTests.Common.Managers
 		{
 			LevelManager.LoadLevel(0);
 
-			Assert.AreEqual(16, LevelManager.Width);
-			Assert.AreEqual(12, LevelManager.Height);
+			Assert.AreEqual(16, LevelManager.GameWidth);
+			Assert.AreEqual(12, LevelManager.GameHeight);
 		}
 
 	}

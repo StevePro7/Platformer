@@ -10,8 +10,9 @@ namespace WindowsGame.Common.Managers
 	{
 		void Initialize(GameType gameType);
 
-		BlockType GetBlockType(TileType tileType);
 		TileType GetTileType(Char tile);
+		BlockType GetBlockType(TileType tileType);
+		EnemysType GetEnemysType(TileType tileType);
 
 		void DrawBlockType(BlockType blockType, Byte x, Byte y);
 		void DrawBlockTypeLeft(BlockType blockType, Byte x, Byte y);
@@ -23,7 +24,7 @@ namespace WindowsGame.Common.Managers
 
 	public class TileManager : ITileManager
 	{
-		private Byte size, wide, high;
+		private Byte size, wide, high, gameOffset;
 
 		private Rectangle leftRect;
 		private Rectangle rghtRect;
@@ -34,40 +35,11 @@ namespace WindowsGame.Common.Managers
 			size = (Byte) ((Byte) gameType * Constants.TILE_WIDE);
 			high = size;
 			wide = (Byte) (high / 2);
+			gameOffset = MyGame.Manager.StateManager.GameOffset;
 
 			leftRect = new Rectangle(0, 0, wide, high);
 			rghtRect = new Rectangle(wide, 0, wide, high);
 			rghtPosn = new Vector2(MyGame.Manager.StateManager.ScreenWide - wide, 0);
-		}
-
-		public BlockType GetBlockType(TileType tileType)
-		{
-			if (TileType.Blank == tileType)
-			{
-				return BlockType.Blank;
-			}
-			if (TileType.Block == tileType)
-			{
-				Int32 next = MyGame.Manager.RandomManager.Next(9);
-				next += 1;
-				BlockType blockType = (BlockType) next;
-				return blockType;
-			}
-			if (TileType.Platform == tileType)
-			{
-				return BlockType.Platform;
-			}
-			if (TileType.Exit == tileType)
-			{
-				return BlockType.Exit;
-			}
-			if (TileType.Gem == tileType)
-			{
-				return BlockType.Gem;
-			}
-
-			// Default block type blank.
-			return BlockType.Blank;
 		}
 
 		public TileType GetTileType(Char tile)
@@ -115,6 +87,57 @@ namespace WindowsGame.Common.Managers
 
 			return TileType.Unknown;
 		}
+		public BlockType GetBlockType(TileType tileType)
+		{
+			if (TileType.Blank == tileType)
+			{
+				return BlockType.Blank;
+			}
+			if (TileType.Block == tileType)
+			{
+				Int32 next = MyGame.Manager.RandomManager.Next(9);
+				next += 1;
+				BlockType blockType = (BlockType) next;
+				return blockType;
+			}
+			if (TileType.Platform == tileType)
+			{
+				return BlockType.Platform;
+			}
+			if (TileType.Exit == tileType)
+			{
+				return BlockType.Exit;
+			}
+			if (TileType.Gem == tileType)
+			{
+				return BlockType.Gem;
+			}
+
+			// Default block type blank.
+			return BlockType.Blank;
+		}
+
+		public EnemysType GetEnemysType(TileType tileType)
+		{
+			if (TileType.EnemyA == tileType)
+			{
+				return EnemysType.EnemyA;
+			}
+			if (TileType.EnemyB == tileType)
+			{
+				return EnemysType.EnemyB;
+			}
+			if (TileType.EnemyC == tileType)
+			{
+				return EnemysType.EnemyC;
+			}
+			if (TileType.EnemyD == tileType)
+			{
+				return EnemysType.EnemyD;
+			}
+
+			return EnemysType.Unknown;
+		}
 
 		public void DrawBlockType(BlockType blockType, Byte x, Byte y)
 		{
@@ -144,7 +167,7 @@ namespace WindowsGame.Common.Managers
 		{
 			DrawStrip(rghtPosn);
 		}
-		private void DrawStrip(Vector2 position)
+		private static void DrawStrip(Vector2 position)
 		{
 			Texture2D image = Assets.BlocksTexture[(Byte)BlockType.Strip];
 			Engine.SpriteBatch.Draw(image, position, Color.White);
@@ -153,7 +176,7 @@ namespace WindowsGame.Common.Managers
 		private void DrawBlock(Rectangle? rectangle, BlockType blockType, Byte s, Byte x, Byte y)
 		{
 			Texture2D image = Assets.BlocksTexture[(Byte)blockType];
-			Vector2 position = new Vector2(x * size + s, y * size);
+			Vector2 position = new Vector2(x * size + s + gameOffset, y * size);
 			Engine.SpriteBatch.Draw(image, position, rectangle, Color.White);
 		}
 
