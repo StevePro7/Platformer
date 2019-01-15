@@ -9,7 +9,8 @@ namespace WindowsGame.Common.Managers
 	{
 		void Initialize();
 		void LoadContent(UInt16 playerSpot);
-		void LoadContent(UInt16 playerSpot, Byte gameWidth, Byte gameHeight, Byte theGameOffset, Byte theTileSize);
+		void LoadContent(UInt16 playerSpot, Byte gameHeight, Byte theGameOffset, Byte theTileSize);
+		void Reset();
 
 		void Update(GameTime gameTime);
 		void UpdateControls(Boolean left, Boolean rght, Boolean jump);
@@ -39,6 +40,13 @@ namespace WindowsGame.Common.Managers
 		private const float GroundDragFactor = 0.48f;
 		private const float AirDragFactor = 0.58f;
 
+		// Constants for controlling vertical movement
+		private const float MaxJumpTime = 0.35f;
+		private const float JumpLaunchVelocity = -3500.0f;
+		private const float GravityAcceleration = 3400.0f;
+		private const float MaxFallSpeed = 550.0f;
+		private const float JumpControlPower = 0.14f;
+
 		public void Initialize()
 		{
 			Player = new Player();
@@ -54,15 +62,13 @@ namespace WindowsGame.Common.Managers
 
 		public void LoadContent(UInt16 playerSpot)
 		{
-			Byte gameWidth = MyGame.Manager.LevelManager.GameWidth;
 			Byte gameHeight = MyGame.Manager.LevelManager.GameHeight;
-			
-			LoadContent(playerSpot, gameWidth, gameHeight, gameOffset, tileSize);
+			LoadContent(playerSpot, gameHeight, gameOffset, tileSize);
 		}
-		public void LoadContent(UInt16 playerSpot, Byte gameWidth, Byte gameHeight, Byte theGameOffset, Byte theTileSize)
+		public void LoadContent(UInt16 playerSpot, Byte gameHeight, Byte theGameOffset, Byte theTileSize)
 		{
 			Byte y = (Byte) (playerSpot / gameHeight);
-			Byte x = (Byte) (playerSpot % gameWidth);
+			Byte x = (Byte) (playerSpot % gameHeight);
 			Vector2 position = new Vector2(x * theTileSize + theGameOffset, (y - 1) * tileSize);
 			Player.LoadContent(x, y, position);
 		}
@@ -87,6 +93,13 @@ namespace WindowsGame.Common.Managers
 			}
 		}
 
+		public void UpdatePhysicsX(GameTime gameTime)
+		{
+			Vector2 position = Player.Position;
+			position.X += movement;
+			Player.Update(position);
+		}
+
 		public void UpdatePhysics(GameTime gameTime)
 		{
 			float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -97,7 +110,7 @@ namespace WindowsGame.Common.Managers
 			// acceleration downward due to gravity.
 			Vector2 velocity = Velocity;
 			velocity.X += movement * MoveAcceleration * elapsed;
-
+			velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
 
 			// Apply pseudo-drag horizontally.
 			if (IsOnGround)
@@ -118,6 +131,13 @@ namespace WindowsGame.Common.Managers
 
 			Velocity = velocity;
 			Player.Update(position);
+		}
+
+		public void Reset()
+		{
+			// Clear input.
+			movement = 0.0f;
+			isJumping = false;
 		}
 
 		public void Draw()

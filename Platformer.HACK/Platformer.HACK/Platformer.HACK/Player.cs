@@ -181,14 +181,14 @@ namespace Platformer
 
 			if (IsAlive && IsOnGround)
 			{
-				if (Math.Abs(Velocity.X) - 0.02f > 0)
-				{
-					sprite.PlayAnimation(runAnimation);
-				}
-				else
-				{
-					sprite.PlayAnimation(idleAnimation);
-				}
+				//if (Math.Abs(Velocity.X) - 0.02f > 0)
+				//{
+				//    sprite.PlayAnimation(runAnimation);
+				//}
+				//else
+				//{
+				//    sprite.PlayAnimation(idleAnimation);
+				//}
 			}
 
 			// Clear input.
