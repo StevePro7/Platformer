@@ -16,6 +16,11 @@ namespace WindowsGame.Common.Objects
 			PositionY = position.Y;
 		}
 
+		public void Update(Vector2 position)
+		{
+			Position = position;
+		}
+
 		public void Draw()
 		{
 			Engine.SpriteBatch.Draw(Assets.PlayerTexture, Position, Color.White);

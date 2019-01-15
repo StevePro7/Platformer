@@ -45,6 +45,10 @@ namespace WindowsGame.Managers.Inputs
 		{
 			return keyboardInput.KeyPress(Keys.Right);
 		}
+		public Boolean PlayerJump()
+		{
+			return keyboardInput.KeyPress(Keys.Space);
+		}
 
 		public Boolean ScrollLeft()
 		{

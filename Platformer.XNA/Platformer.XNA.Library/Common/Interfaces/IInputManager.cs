@@ -11,6 +11,7 @@ namespace WindowsGame.Common.Interfaces
 		Boolean Escape();
 		Boolean PlayerLeft();
 		Boolean PlayerRght();
+		Boolean PlayerJump();
 		Boolean ScrollLeft();
 		Boolean ScrollRght();
 

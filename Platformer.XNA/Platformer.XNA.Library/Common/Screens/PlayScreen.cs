@@ -9,6 +9,15 @@ namespace WindowsGame.Common.Screens
 	{
 		public Int32 Update(GameTime gameTime)
 		{
+			Boolean left = MyGame.Manager.InputManager.PlayerLeft();
+			Boolean rght = MyGame.Manager.InputManager.PlayerRght();
+			Boolean jump = MyGame.Manager.InputManager.PlayerJump();
+			if (left || rght)
+			{
+				MyGame.Manager.PlayerManager.UpdateControls(left, rght, jump);
+				MyGame.Manager.PlayerManager.UpdatePhysics(gameTime);
+			}
+
 			return (Int32)ScreenType.Play;
 		}
 
@@ -25,7 +34,7 @@ namespace WindowsGame.Common.Screens
 			//MyGame.Manager.TileManager.DrawStripLeft();
 			MyGame.Manager.TileManager.DrawStrips();
 
-			MyGame.Manager.PlayerManager.DrawPlayer();
+			MyGame.Manager.PlayerManager.Draw();
 
 			//MyGame.Manager.TileManager.DrawBlockTypeLeft(BlockType.Blank, 0, 0);
 
