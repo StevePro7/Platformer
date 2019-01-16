@@ -34,7 +34,7 @@ namespace WindowsGame.Common.Screens
 			//MyGame.Manager.LevelManager.DrawColumn(4);
 
 			//MyGame.Manager.TileManager.DrawStripLeft();
-			MyGame.Manager.TileManager.DrawStrips();
+			//MyGame.Manager.TileManager.DrawStrips();	//TODO
 
 			MyGame.Manager.PlayerManager.Draw();
 

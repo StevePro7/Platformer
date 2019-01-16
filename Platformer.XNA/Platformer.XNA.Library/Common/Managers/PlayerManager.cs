@@ -110,7 +110,7 @@ namespace WindowsGame.Common.Managers
 			// acceleration downward due to gravity.
 			Vector2 velocity = Velocity;
 			velocity.X += movement * MoveAcceleration * elapsed;
-			velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
+			//velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);	//TODO
 
 			// Apply pseudo-drag horizontally.
 			if (IsOnGround)
