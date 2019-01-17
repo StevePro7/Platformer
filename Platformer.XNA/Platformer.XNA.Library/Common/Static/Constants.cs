@@ -19,6 +19,5 @@ namespace WindowsGame.Common.Static
 		public const Byte NUM_TILES = 14;
 		public const Byte GAME_WIDE = 0;	//TODO revert back to 8
 		public const Byte TILE_WIDE = 16;
-
 	}
 }

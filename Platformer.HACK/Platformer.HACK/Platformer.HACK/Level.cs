@@ -353,7 +353,8 @@ namespace Platformer
 		/// </summary>        
 		public Rectangle GetBounds(int x, int y)
 		{
-			return new Rectangle(x*Tile.Width, y*Tile.Height, Tile.Width, Tile.Height);
+			Rectangle rectangle = new Rectangle(x * Tile.Width, y * Tile.Height, Tile.Width, Tile.Height);
+			return rectangle;
 		}
 
 		/// <summary>

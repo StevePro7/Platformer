@@ -60,7 +60,8 @@ namespace Platformer
         /// </summary>
         public static Vector2 GetBottomCenter(this Rectangle rect)
         {
-            return new Vector2(rect.X + rect.Width / 2.0f, rect.Bottom);
+			Vector2 bottom = new Vector2(rect.X + rect.Width / 2.0f, rect.Bottom);
+	        return bottom;
         }
     }
 }
