@@ -72,10 +72,10 @@ namespace WindowsGame.Common.Managers
 
 			Rectangle bounds = MyGame.Manager.LevelManager.GetBounds(x, y);
 			Vector2 bottom = MyGame.Manager.LevelManager.GetBottomCenter(bounds);
-				new Vector2(bounds.X + bounds.Width / 2.0f, bounds.Bottom);
 
-			Vector2 position = new Vector2(x * theTileSize + theGameOffset, (y - 1) * tileWide);
-			Player.LoadContent(x, y, position);
+			Vector2 drawPosition = new Vector2(x * theTileSize + theGameOffset, (y - 1) * tileWide);
+			Vector2 tilePosition = bottom;
+			Player.LoadContent(x, y, tilePosition, drawPosition);
 		}
 
 		public void Update(GameTime gameTime)
