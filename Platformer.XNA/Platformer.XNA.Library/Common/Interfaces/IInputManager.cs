@@ -9,6 +9,8 @@ namespace WindowsGame.Common.Interfaces
 		void Update(GameTime gameTime);
 
 		Boolean Escape();
+		Boolean PlayerUp();
+		Boolean PlayerDown();
 		Boolean PlayerLeft();
 		Boolean PlayerRght();
 		Boolean PlayerJump();

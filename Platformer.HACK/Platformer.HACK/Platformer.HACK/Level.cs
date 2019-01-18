@@ -275,6 +275,8 @@ namespace Platformer
 			if (Player != null)
 				throw new NotSupportedException("A level may only have one starting point.");
 
+			Rectangle bounds = GetBounds(x, y);
+			Vector2 bottom = new Vector2(bounds.X + bounds.Width / 2.0f, bounds.Bottom);
 			start = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
 			player = new Player(this, start);
 

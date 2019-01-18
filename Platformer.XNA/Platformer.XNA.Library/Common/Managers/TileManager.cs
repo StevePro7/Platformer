@@ -20,6 +20,9 @@ namespace WindowsGame.Common.Managers
 		void DrawStrips();
 		void DrawStripLeft();
 		void DrawStripRght();
+
+		Byte TileWide { get; }
+		Byte TileHigh { get; }
 	}
 
 	public class TileManager : ITileManager
@@ -33,6 +36,8 @@ namespace WindowsGame.Common.Managers
 		public void Initialize(GameType gameType)
 		{
 			size = (Byte) ((Byte) gameType * Constants.TILE_WIDE);
+			TileWide = TileHigh = size;
+
 			high = size;
 			wide = (Byte) (high / 2);
 			gameOffset = MyGame.Manager.StateManager.GameOffset;
@@ -180,5 +185,7 @@ namespace WindowsGame.Common.Managers
 			Engine.SpriteBatch.Draw(image, position, rectangle, Color.White);
 		}
 
+		public Byte TileWide { get; private set; }
+		public Byte TileHigh { get; private set; }
 	}
 }

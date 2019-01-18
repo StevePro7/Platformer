@@ -27,7 +27,7 @@ namespace WindowsGame.Common.Managers
 	public class PlayerManager : IPlayerManager
 	{
 		private Byte gameOffset;
-		private Byte tileSize;
+		private Byte tileWide;
 
 		private float movement;
 		private bool isJumping;
@@ -56,20 +56,25 @@ namespace WindowsGame.Common.Managers
 			IsAlive = false;
 
 			gameOffset = MyGame.Manager.StateManager.GameOffset;
-			tileSize = MyGame.Manager.StateManager.TileSize;
+			tileWide = MyGame.Manager.TileManager.TileWide;
 			movement = 0.0f;
 		}
 
 		public void LoadContent(UInt16 playerSpot)
 		{
-			Byte gameHeight = MyGame.Manager.LevelManager.GameHeight;
-			LoadContent(playerSpot, gameHeight, gameOffset, tileSize);
+			Byte levelHigh = MyGame.Manager.LevelManager.LevelHigh;
+			LoadContent(playerSpot, levelHigh, gameOffset, tileWide);
 		}
 		public void LoadContent(UInt16 playerSpot, Byte gameHeight, Byte theGameOffset, Byte theTileSize)
 		{
 			Byte y = (Byte) (playerSpot / gameHeight);
 			Byte x = (Byte) (playerSpot % gameHeight);
-			Vector2 position = new Vector2(x * theTileSize + theGameOffset, (y - 1) * tileSize);
+
+			Rectangle bounds = MyGame.Manager.LevelManager.GetBounds(x, y);
+			Vector2 bottom = MyGame.Manager.LevelManager.GetBottomCenter(bounds);
+				new Vector2(bounds.X + bounds.Width / 2.0f, bounds.Bottom);
+
+			Vector2 position = new Vector2(x * theTileSize + theGameOffset, (y - 1) * tileWide);
 			Player.LoadContent(x, y, position);
 		}
 

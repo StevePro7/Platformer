@@ -11,7 +11,7 @@ namespace WindowsGame.Common.Managers
 		UInt16 ScreenWide { get; }
 		UInt16 ScreenHigh { get; }
 		Byte GameOffset { get; }
-		Byte TileSize { get; }
+		//Byte TileSize { get; }
 	}
 
 	public class StateManager : IStateManager
@@ -22,13 +22,13 @@ namespace WindowsGame.Common.Managers
 			ScreenWide = screenWide;
 			ScreenHigh = screenHigh;
 			GameOffset = (Byte)((Byte)gameType * Constants.GAME_WIDE);
-			TileSize = (Byte)((Byte)gameType * Constants.TILE_WIDE);
+			//TileSize = (Byte)((Byte)gameType * Constants.TILE_WIDE);
 		}
 
 		public GameType GameType { get; private set; }
 		public UInt16 ScreenWide { get; private set; }
 		public UInt16 ScreenHigh { get; private set; }
 		public Byte GameOffset { get; private set; }
-		public Byte TileSize { get; private set; }
+		//public Byte TileSize { get; private set; }
 	}
 }

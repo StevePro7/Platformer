@@ -37,6 +37,15 @@ namespace WindowsGame.Managers.Inputs
 			return keyboardInput.KeyHold(Keys.Escape);
 		}
 
+		public Boolean PlayerUp()
+		{
+			return keyboardInput.KeyHold(Keys.Up);
+		}
+		public Boolean PlayerDown()
+		{
+			return keyboardInput.KeyHold(Keys.Down);
+		}
+
 		public Boolean PlayerLeft()
 		{
 			return keyboardInput.KeyPress(Keys.Left);

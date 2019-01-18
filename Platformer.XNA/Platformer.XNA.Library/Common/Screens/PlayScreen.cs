@@ -12,13 +12,14 @@ namespace WindowsGame.Common.Screens
 			Boolean left = MyGame.Manager.InputManager.PlayerLeft();
 			Boolean rght = MyGame.Manager.InputManager.PlayerRght();
 			Boolean jump = MyGame.Manager.InputManager.PlayerJump();
-			if (left || rght ||jump)
+			if (left || rght || jump)
 			{
 				MyGame.Manager.PlayerManager.UpdateControls(left, rght, jump);
-				MyGame.Manager.PlayerManager.UpdatePhysics(gameTime);
-
-				MyGame.Manager.PlayerManager.Reset();
+				//MyGame.Manager.PlayerManager.Reset();
 			}
+
+			Boolean up = MyGame.Manager.InputManager.PlayerUp();
+			Boolean down = MyGame.Manager.InputManager.PlayerDown();
 
 			return (Int32)ScreenType.Play;
 		}
