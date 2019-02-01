@@ -55,6 +55,11 @@ namespace Platformer
 		}
 		Vector2 position;
 
+		private int px;
+		private int py;
+		private int vx;
+		private int vy;
+
 		private float previousBottom;
 
 		public Vector2 Velocity
@@ -69,6 +74,11 @@ namespace Platformer
 		private const float MaxMoveSpeed = 1750.0f;
 		private const float GroundDragFactor = 0.48f;
 		private const float AirDragFactor = 0.58f;
+
+		private const int MoveAcceleration2 = 13000;
+		private const int MaxMoveSpeed2 = 1750;
+		private const int GroundDragFactor2 = 48;
+		private const int AirDragFactor2 = 58;
 
 		// Constants for controlling vertical movement
 		private const float MaxJumpTime = 0.35f;
@@ -95,6 +105,7 @@ namespace Platformer
 		/// Current user movement input.
 		/// </summary>
 		private float movement;
+		private int movement2;
 
 		// Jumping state
 		private bool isJumping;
@@ -111,6 +122,9 @@ namespace Platformer
 			{
 				int left = (int)Math.Round(Position.X - sprite.Origin.X) + localBounds.X;
 				int top = (int)Math.Round(Position.Y - sprite.Origin.Y) + localBounds.Y;
+
+				int left2 = (int)Math.Round(px - sprite.Origin.X) + localBounds.X;
+				int top2 = (int)Math.Round(py - sprite.Origin.Y) + localBounds.Y;
 
 				return new Rectangle(left, top, localBounds.Width, localBounds.Height);
 			}
@@ -163,6 +177,11 @@ namespace Platformer
 			Velocity = Vector2.Zero;
 			isAlive = true;
 			sprite.PlayAnimation(idleAnimation);
+
+			px = (int) position.X;
+			py = (int) position.Y;
+			vx = 0;
+			vy = 0;
 		}
 
 		/// <summary>
@@ -193,6 +212,7 @@ namespace Platformer
 
 			// Clear input.
 			movement = 0.0f;
+			movement2 = 0;
 			isJumping = false;
 		}
 
@@ -205,9 +225,10 @@ namespace Platformer
 			//movement = gamePadState.ThumbSticks.Left.X * MoveStickScale;
 
 			// Ignore small movements to prevent running in place.
-			if (Math.Abs(movement) < 0.5f)
-				movement = 0.0f;
-
+			//if (Math.Abs(movement) < 0.5f)
+			//{
+			//    movement = 0.0f;
+			//}
 			// Move the player with accelerometer
 			//if (Math.Abs(accelState.Acceleration.Y) > 0.10f)
 			//{
@@ -224,11 +245,13 @@ namespace Platformer
 				keyboardState.IsKeyDown(Keys.A))
 			{
 				movement = -1.0f;
+				movement2 = -1;
 			}
 			else if (keyboardState.IsKeyDown(Keys.Right) ||
 					 keyboardState.IsKeyDown(Keys.D))
 			{
 				movement = 1.0f;
+				movement2 = 1;
 			}
 
 			// Check if the player wants to jump.
@@ -243,28 +266,64 @@ namespace Platformer
 		/// </summary>
 		public void ApplyPhysics(GameTime gameTime)
 		{
-			float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+			float elapsed = (float) gameTime.ElapsedGameTime.TotalSeconds;
+			int elapsed2 = gameTime.ElapsedGameTime.Milliseconds;
 
 			Vector2 previousPosition = Position;
+			int ppx = px;
+			int ppy = py;
 
+			int dx = 0;
+			int dy = 0;
 			// Base velocity is a combination of horizontal movement control and
 			// acceleration downward due to gravity.
-			velocity.X += movement * MoveAcceleration * elapsed;
+
+			if (0 != movement2)
+			{
+				//Logger.Info("jump button pressed");
+			}
+
+			float val1 = movement * MoveAcceleration * elapsed;
+			int val2 = movement2 * MoveAcceleration2 * elapsed2 / 1000;
+
+			//velocity.X += movement * MoveAcceleration * elapsed;
+			velocity.X += val1;
+			//velocity.X += val2;
+			vx += val2;
+
 			velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
+			vy += Convert.ToInt32(MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed,
+				MaxFallSpeed));
 
 			velocity.Y = DoJump(velocity.Y, gameTime);
+			//vy = Convert.ToInt32(DoJump(vy, gameTime));		// double up JUMP
 
 			// Apply pseudo-drag horizontally.
 			if (IsOnGround)
+			{
 				velocity.X *= GroundDragFactor;
+				dx = (GroundDragFactor2 / 100);
+				vx *= dx;
+			}
 			else
+			{
 				velocity.X *= AirDragFactor;
+				dx = (AirDragFactor2 / 100);
+				vx *= dx;
+			}
 
-			// Prevent the player from running faster than his top speed.            
+			// Prevent the player from running faster than his top speed.
 			velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
+			vx = Convert.ToInt32(MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed));
 
 			// Apply velocity.
 			Position += velocity * elapsed;
+
+			dx = vx * elapsed2 / 1000;
+			dy = vy * elapsed2 / 1000;
+			px += dx;
+			px += dy;
+
 			Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
 
 			// If the player is now colliding with the level, separate them.
@@ -272,10 +331,14 @@ namespace Platformer
 
 			// If the collision stopped us from moving, reset the velocity to zero.
 			if (Position.X == previousPosition.X)
+			{
 				velocity.X = 0;
+			}
 
 			if (Position.Y == previousPosition.Y)
+			{
 				velocity.Y = 0;
+			}
 		}
 
 		/// <summary>
@@ -308,7 +371,7 @@ namespace Platformer
 					//    jumpSound.Play();
 
 					jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-					sprite.PlayAnimation(jumpAnimation);
+					//sprite.PlayAnimation(jumpAnimation);
 				}
 
 				// If we are in the ascent of the jump
