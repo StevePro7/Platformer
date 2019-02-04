@@ -293,9 +293,23 @@ namespace Platformer
 			//velocity.X += val2;
 			vx += val2;
 
-			velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
-			vy += Convert.ToInt32(MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed,
-				MaxFallSpeed));
+			float velY = velocity.Y + GravityAcceleration*elapsed;
+			float velZ = MathHelper.Clamp(velY, -MaxFallSpeed, MaxFallSpeed);
+
+			if (velY > MaxFallSpeed)
+			{
+				int x = 7;
+			}
+			if (velY != 68)
+			{
+				String msg = String.Format("velY: {0} velZ:{1}", velY, velZ);
+				Logger.Info(msg);
+			}
+			velocity.Y = velZ;
+			
+			
+			//velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
+			vy += Convert.ToInt32(MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed));
 
 			velocity.Y = DoJump(velocity.Y, gameTime);
 			//vy = Convert.ToInt32(DoJump(vy, gameTime));		// double up JUMP
@@ -319,14 +333,14 @@ namespace Platformer
 			vx = Convert.ToInt32(MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed));
 
 			// Apply velocity.
-			Position += velocity * elapsed;
-
 			dx = vx * elapsed2 / 1000;
-			dy = vy * elapsed2 / 1000;
+			dy = (int)(velZ * elapsed2 / 1000);
 			px += dx;
-			px += dy;
+			py += dy;
 
+			Position += velocity * elapsed;
 			Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
+
 
 			// If the player is now colliding with the level, separate them.
 			HandleCollisions();
@@ -335,11 +349,13 @@ namespace Platformer
 			if (Position.X == previousPosition.X)
 			{
 				velocity.X = 0;
+				dx = 0;
 			}
 
 			if (Position.Y == previousPosition.Y)
 			{
 				velocity.Y = 0;
+				dy = 0;
 			}
 		}
 
@@ -445,6 +461,8 @@ namespace Platformer
 								{
 									// Resolve the collision along the Y axis.
 									Position = new Vector2(Position.X, Position.Y + depth.Y);
+									px = (int)Position.X;
+									py = (int)Position.Y;
 
 									// Perform further collisions with the new bounds.
 									bounds = BoundingRectangle;
