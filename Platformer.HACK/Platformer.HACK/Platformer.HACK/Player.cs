@@ -126,7 +126,9 @@ namespace Platformer
 				int left2 = (int)Math.Round(px - sprite.Origin.X) + localBounds.X;
 				int top2 = (int)Math.Round(py - sprite.Origin.Y) + localBounds.Y;
 
-				return new Rectangle(left, top, localBounds.Width, localBounds.Height);
+				Rectangle rect = new Rectangle(left, top, localBounds.Width, localBounds.Height);
+				return rect;
+				//return new Rectangle(left, top, localBounds.Width, localBounds.Height);
 			}
 		}
 
