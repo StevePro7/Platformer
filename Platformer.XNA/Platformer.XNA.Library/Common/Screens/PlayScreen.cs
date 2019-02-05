@@ -15,6 +15,7 @@ namespace WindowsGame.Common.Screens
 			if (left || rght || jump)
 			{
 				MyGame.Manager.PlayerManager.UpdateControls(left, rght, jump);
+				MyGame.Manager.PlayerManager.UpdatePhysics();
 				//MyGame.Manager.PlayerManager.Reset();
 			}
 

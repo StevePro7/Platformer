@@ -25,7 +25,7 @@ namespace WindowsGame.Common
 			Manager.LevelManager.Initialize(gameType);
 			Manager.StateManager.Initialize(gameType, screenWide, screenHigh);
 
-			Manager.PlayerManager.Initialize();
+			Manager.PlayerManager.Initialize(gameType);
 			Manager.RandomManager.Initialize();
 			
 			Manager.ResolutionManager.Initialize();

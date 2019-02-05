@@ -29,9 +29,10 @@ namespace WindowsGame.Common.Objects
 			DrawPosition = drawPosition;
 		}
 
-		public void Update(Vector2 position)
+		public void Update(Vector2 position, Vector2 drawPosition)
 		{
 			Position = position;
+			DrawPosition = drawPosition;
 		}
 
 		public void Draw()

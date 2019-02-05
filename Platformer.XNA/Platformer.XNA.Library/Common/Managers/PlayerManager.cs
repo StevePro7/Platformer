@@ -7,13 +7,14 @@ namespace WindowsGame.Common.Managers
 {
 	public interface IPlayerManager
 	{
-		void Initialize();
+		void Initialize(GameType gameType);
 		void LoadContent(UInt16 playerSpot);
 		void LoadContent(UInt16 playerSpot, Byte gameHeight, Byte theGameOffset, Byte theTileSize);
 		void Reset();
 
 		void Update(GameTime gameTime);
 		void UpdateControls(Boolean left, Boolean rght, Boolean jump);
+		void UpdatePhysics();
 		void UpdatePhysics(GameTime gameTime);
 
 		void Draw();
@@ -26,6 +27,7 @@ namespace WindowsGame.Common.Managers
 
 	public class PlayerManager : IPlayerManager
 	{
+		private GameType gameType;
 		private Byte gameOffset;
 		private Byte tileWide;
 
@@ -47,8 +49,9 @@ namespace WindowsGame.Common.Managers
 		private const float MaxFallSpeed = 550.0f;
 		private const float JumpControlPower = 0.14f;
 
-		public void Initialize()
+		public void Initialize(GameType gameType)
 		{
+			this.gameType = gameType;
 			Player = new Player();
 
 			Velocity = Vector2.Zero;
@@ -75,6 +78,8 @@ namespace WindowsGame.Common.Managers
 
 			Vector2 drawPosition = new Vector2(x * theTileSize + theGameOffset, (y - 1) * tileWide);
 			Vector2 tilePosition = bottom;
+
+			drawPosition.X -= (int)gameType * 2;
 			Player.LoadContent(x, y, tilePosition, drawPosition);
 		}
 
@@ -98,11 +103,26 @@ namespace WindowsGame.Common.Managers
 			}
 		}
 
-		public void UpdatePhysicsX(GameTime gameTime)
+		//public void UpdatePhysicsX(GameTime gameTime)
+		//{
+		//    Vector2 position = Player.Position;
+		//    position.X += movement;
+		//    Player.Update(position);
+		//}
+
+		public void UpdatePhysics()
 		{
+			float delta = movement;
+			//Vector2 previousPosition = Player.Position;
+			
+			// Apply velocity.
 			Vector2 position = Player.Position;
-			position.X += movement;
-			Player.Update(position);
+			Vector2 drawPosition = Player.DrawPosition;
+
+			position.X += delta;
+			drawPosition.X += delta;
+
+			Player.Update(position, drawPosition);
 		}
 
 		public void UpdatePhysics(GameTime gameTime)
@@ -135,7 +155,7 @@ namespace WindowsGame.Common.Managers
 				velocity.Y = 0;
 
 			Velocity = velocity;
-			Player.Update(position);
+			Player.Update(position, position);
 		}
 
 		public void Reset()
