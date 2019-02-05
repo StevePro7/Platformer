@@ -271,6 +271,8 @@ namespace Platformer
 			float elapsed = (float) gameTime.ElapsedGameTime.TotalSeconds;
 			int elapsed2 = gameTime.ElapsedGameTime.Milliseconds;
 
+			String msg = String.Empty;
+
 			Vector2 previousPosition = Position;
 			int ppx = px;
 			int ppy = py;
@@ -293,21 +295,27 @@ namespace Platformer
 			//velocity.X += val2;
 			vx += val2;
 
-			float velY = velocity.Y + GravityAcceleration*elapsed;
+			float velB = velocity.Y;
+			float velY = velB + GravityAcceleration * elapsed;
+			//float velY = velocity.Y + GravityAcceleration*elapsed;
 			float velZ = MathHelper.Clamp(velY, -MaxFallSpeed, MaxFallSpeed);
 
+			// This logging doesn't get the first 68 entry on fall i.e. Position.Y += 1
 			if (velY > MaxFallSpeed)
 			{
 				int x = 7;
 			}
-			if (velY != 68)
+			if (velocity.Y == 68.0 && velY != 68 && velY != 0.0)
 			{
-				String msg = String.Format("velY: {0} velZ:{1}", velY, velZ);
-				Logger.Info(msg);
+				msg = String.Format("velY: {0} velZ:{1}", velY, velZ);
 			}
+			else if (velY != 68 && velY != 0.0)
+			{
+				msg = String.Format("velY: {0} velZ:{1}", velY, velZ);
+			}
+
 			velocity.Y = velZ;
-			
-			
+
 			//velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
 			vy += Convert.ToInt32(MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed));
 
@@ -338,10 +346,16 @@ namespace Platformer
 			px += dx;
 			py += dy;
 
+			float bobY = velocity.Y * elapsed;
 			Position += velocity * elapsed;
 			Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
 
-
+			if (msg.Length != 0)
+			{
+				var delta = Position.Y - previousPosition.Y;
+				msg += String.Format(" posY:{0} deltaY:{1}", Position.Y, delta);
+				Logger.Info(msg);
+			}
 			// If the player is now colliding with the level, separate them.
 			HandleCollisions();
 

@@ -1,4 +1,34 @@
 # Platformer
+05/02/2019
+Position = {X:60 Y:64}
+
+float velY = velocity.Y + GravityAcceleration*elapsed;
+float velY = 0.0f + 3400.0f * 0.02f
+int32 velY = 0 + 3400 * 20 / 1000
+float velY = 68.0f
+
+Position += velocity * elapsed;
+Position += (0, 68) * 0.02
+Position.X += 0
+Position.Y += 68 * 20 / 1000
+Position = {X:60 Y:65}
+		
+VelY		Vel*0.02	PosY		deltaY
+68	68	1	1.36	64	65.36	65	1
+136	136	2	2.72	65	67.72	68	3
+204	204	3	4.08	68	72.08	72	4
+272	272	4	5.44	72	77.44	77	5
+340	340	5	6.8		77	83.8	84	7
+408	408	6	8.16	84	92.16	92	8
+476	476	7	9.52	92	101.52	102	10
+544	544	8	10.88	102	112.88	113	11
+612	550	9	11		113	124		124	11
+618	550	10	11		124	135		135	11
+618	550	10	11		135	146		146	11
+
+Don't forget to halve the deltaY for 256*192 as half screen size
+							
+
 Placeholder repo for Platformer
 
 
