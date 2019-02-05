@@ -5,6 +5,7 @@
 		Incog = 0,
 		Small = 1, 
 		Large = 2,
+		Giant = 4,
 	}
 
 	public enum ScreenType
