@@ -1,4 +1,24 @@
 # Platformer
+06/02/2019
+Platformer jump logic:
+if not pressing jump button then isJumping continues to remain false and jumpTime = 0.0f
+as soon as press jump button then isJumping is true and end of frame wasJumping equals isJumping
+
+if press and hold jump then execute jump logic for the duration of the jumpTime [0.35f]
+at jumpTime=0.35f then reach apex of the jump and begin falling due to influence of gravity
+
+if while still falling and still holding jump button then do not jump because IsOnGround=False
+if after falling and and after hit the ground still holding jump button then do not jump because isJump=wasJump=True
+i.e. MUST release jump button and press jump button again before can jump again
+
+SUMMARY
+Apply gravity force to calc VelY
+Clamp VelY at 550
+DoJump() which overrides existing VelY due to jumping [while isJumping=True]
+When hit apex of jump then jumpTime=0
+
+until release jump button and press again because 
+if still hold jump button after [reach apex 
 05/02/2019
 Position = {X:60 Y:64}
 

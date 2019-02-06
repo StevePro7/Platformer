@@ -81,6 +81,7 @@ namespace Platformer
 		private const int AirDragFactor2 = 58;
 
 		// Constants for controlling vertical movement
+		//private const float MaxJumpTime = 0.35f;
 		private const float MaxJumpTime = 0.35f;
 		private const float JumpLaunchVelocity = -3500.0f;
 		private const float GravityAcceleration = 3400.0f;
@@ -261,6 +262,8 @@ namespace Platformer
 				keyboardState.IsKeyDown(Keys.Space) ||
 				keyboardState.IsKeyDown(Keys.Up) ||
 				keyboardState.IsKeyDown(Keys.W);
+
+			
 		}
 
 		/// <summary>
@@ -272,6 +275,7 @@ namespace Platformer
 			int elapsed2 = gameTime.ElapsedGameTime.Milliseconds;
 
 			String msg = String.Empty;
+			String msg2 = String.Empty;
 
 			Vector2 previousPosition = Position;
 			int ppx = px;
@@ -303,7 +307,7 @@ namespace Platformer
 			// This logging doesn't get the first 68 entry on fall i.e. Position.Y += 1
 			if (velY > MaxFallSpeed)
 			{
-				int x = 7;
+				//int x = 7;
 			}
 			if (velocity.Y == 68.0 && velY != 68 && velY != 0.0)
 			{
@@ -319,7 +323,17 @@ namespace Platformer
 			//velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
 			vy += Convert.ToInt32(MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed));
 
+			float bef = velocity.Y;
+			msg2 = String.Format("BEF:{0} ", (int)bef);
+			
 			velocity.Y = DoJump(velocity.Y, gameTime);
+
+			float aft = velocity.Y;
+			msg2+= String.Format("AFT:{0} ", (int)aft);
+			
+			float diff = bef - aft;
+			msg2 += String.Format("diff:{0} ", (int)diff);
+			//Logger.Info(msg2);
 			//vy = Convert.ToInt32(DoJump(vy, gameTime));		// double up JUMP
 
 			// Apply pseudo-drag horizontally.
@@ -395,8 +409,19 @@ namespace Platformer
 			// If the player wants to jump
 			if (isJumping)
 			{
-				Logger.Info("jumping true");
+				string msg = String.Empty;
+				if (isJumping)
+				{
+					//Logger.Info("isJumping:True !!");
+				}
+
+				//Logger.Info("jumping true");
 				// Begin or continue a jump
+				bool b1 = (!wasJumping && IsOnGround);
+				bool b2 = jumpTime > 0.0f;
+				float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+				msg = String.Format("isJ:{0} was:{1} Grnd:{2} delta:{3} b1:{4} b2:{5}", isJumping, wasJumping, isOnGround, delta, b1, b2);
+				//Logger.Info(msg);
 				if ((!wasJumping && IsOnGround) || jumpTime > 0.0f)
 				{
 					//if (jumpTime == 0.0f)
@@ -407,15 +432,25 @@ namespace Platformer
 				}
 
 				// If we are in the ascent of the jump
+				bool b3 = 0.0f < jumpTime && jumpTime <= MaxJumpTime;
+				int velY = 0;
 				if (0.0f < jumpTime && jumpTime <= MaxJumpTime)
 				{
 					// Fully override the vertical velocity with a power curve that gives players more control over the top of the jump
+					float x = jumpTime / MaxJumpTime;
+					float y = JumpControlPower;
+					float z = (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower);
+					float w = (1.0f -z);
+					float v = JumpLaunchVelocity * w;
 					velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower));
+					velY = (int) velocityY;
+					msg = String.Format("isJ:{0} was:{1} Grnd:{2} delta:{3} b1:{4} b2:{5} b3:{6} jumpTime:{7:0.00} VelY:{8}", isJumping, wasJumping, isOnGround, delta, b1, b2, b3, jumpTime, velY);
+					Logger.Info(msg);
 				}
 				else
 				{
-					// Reached the apex of the jump
-					jumpTime = 0.0f;
+					// Reached the apex of th
+					 jumpTime = 0.0f;
 				}
 			}
 			else
@@ -423,8 +458,8 @@ namespace Platformer
 				// Continues not jumping or cancels a jump in progress
 				jumpTime = 0.0f;
 			}
-			wasJumping = isJumping;
 
+			wasJumping = isJumping;
 			return velocityY;
 		}
 
