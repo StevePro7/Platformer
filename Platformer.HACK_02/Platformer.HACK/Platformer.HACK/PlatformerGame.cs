@@ -1,10 +1,9 @@
 using System;
+using System.Configuration;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Platformer
 {
@@ -57,7 +56,8 @@ namespace Platformer
 		{
 			IsMouseVisible = true;
 
-			const Byte framesPerSecond = 50;
+			//Byte framesPerSecond = 50;
+			Byte framesPerSecond = Convert.ToByte(ConfigurationManager.AppSettings["FramesPerSecond"]);
 			IsFixedTimeStep = true;
 			TargetElapsedTime = TimeSpan.FromSeconds(1.0f / framesPerSecond);
 
