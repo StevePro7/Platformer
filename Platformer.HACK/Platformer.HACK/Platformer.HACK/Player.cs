@@ -185,6 +185,7 @@ namespace Platformer
 			py = (int) position.Y;
 			vx = 0;
 			vy = 0;
+			movement2 = 0;
 		}
 
 		/// <summary>
@@ -215,7 +216,7 @@ namespace Platformer
 
 			// Clear input.
 			movement = 0.0f;
-			movement2 = 0;
+			//movement2 = 0;
 			isJumping = false;
 		}
 
@@ -288,7 +289,8 @@ namespace Platformer
 
 			if (0 != movement2)
 			{
-				//Logger.Info("jump button pressed");
+				movement = 1;
+				Logger.Info("movement");
 			}
 
 			float val1 = movement * MoveAcceleration * elapsed;
@@ -361,6 +363,7 @@ namespace Platformer
 			py += dy;
 
 			float bobY = velocity.Y * elapsed;
+			float bobX = velocity.X * elapsed;
 			Position += velocity * elapsed;
 			Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
 
