@@ -43,7 +43,7 @@ namespace Platformer
 
         public bool IsAlive
         {
-            get { return isAlive; }
+			get { return isAlive; }
         }
         bool isAlive;
 
@@ -250,6 +250,8 @@ namespace Platformer
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             Vector2 previousPosition = Position;
+	        int prevPosY = (int) previousPosition.Y;
+	        int prevPosX = (int) previousPosition.X;
 
             // Base velocity is a combination of horizontal movement control and
             // acceleration downward due to gravity.
@@ -257,12 +259,14 @@ namespace Platformer
             velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
 
             velocity.Y = DoJump(velocity.Y, gameTime);
-
+	        
             // Apply pseudo-drag horizontally.
-            if (IsOnGround)
-                velocity.X *= GroundDragFactor;
-            else
-                velocity.X *= AirDragFactor;
+			if (IsOnGround)
+				velocity.X *= GroundDragFactor;
+			else
+				velocity.X *= AirDragFactor;
+	        //velocity.X *= GroundDragFactor;
+	        //velocity.X *= AirDragFactor;
 
             // Prevent the player from running faster than his top speed.            
             velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
@@ -270,6 +274,17 @@ namespace Platformer
             // Apply velocity.
             Position += velocity * elapsed;
             Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
+
+	        int currPosY = (int) Position.Y;
+	        int currPosX = (int) Position.X;
+
+	        if (0.0 != movement)
+	        {
+		        int velX = (int)(velocity.X);
+		        int delta = currPosX - prevPosX;
+		        string msg = String.Format("{0}\t\t{1}\t\t{2}\t\t{3}", velX, currPosX, prevPosX, delta);
+		        Logger.Info(msg);
+	        }
 
             // If the player is now colliding with the level, separate them.
             HandleCollisions();

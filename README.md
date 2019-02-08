@@ -1,4 +1,8 @@
 # Platformer
+08/02/2019
+Finally calc'd the velX and velY for 50fps and 60fps and averaged the amounts for med + sml
+Next, would need to replace the 
+
 06/02/2019
 Platformer jump logic:
 if not pressing jump button then isJumping continues to remain false and jumpTime = 0.0f
