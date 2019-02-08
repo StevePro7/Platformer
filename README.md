@@ -1,7 +1,7 @@
 # Platformer
 08/02/2019
 Finally calc'd the velX and velY for 50fps and 60fps and averaged the amounts for med + sml
-Next, would need to replace the 
+Next, would need to replace the calculations with the array index to update position
 
 06/02/2019
 Platformer jump logic:
