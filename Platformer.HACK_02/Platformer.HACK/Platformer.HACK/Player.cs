@@ -21,6 +21,11 @@ namespace Platformer
     /// </summary>
     class Player
     {
+		// Position deltas.
+	    private int[] posDeltaAirX = new[] { 0, 1, 2, 3, 4, 5 };
+	    private int[] posDeltaGndX = new[] { 0, 1, 2, 3, 4, 5 };
+	    private int[] posDeltaY = new[] { 0, 1, 2, 3, 4, 5 };
+
         // Animations
         private Animation idleAnimation;
         private Animation runAnimation;
