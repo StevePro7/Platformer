@@ -21,6 +21,9 @@ namespace Platformer
     /// </summary>
     class Player
     {
+	    private KeyboardState prevKeyboardState;
+	    private const int deltaM = 2;
+
 		// Position deltas.
 	    private int[] posDeltaAirX = new[] { 0, 1, 2, 3, 4, 5 };
 	    private int[] posDeltaGndX = new[] { 0, 1, 2, 3, 4, 5 };
@@ -100,6 +103,9 @@ namespace Platformer
         /// Current user movement input.
         /// </summary>
         private float movement;
+
+	    private int moveX;
+	    private int moveY;
 
         // Jumping state
         private bool isJumping;
@@ -201,6 +207,9 @@ namespace Platformer
             // Clear input.
             movement = 0.0f;
             isJumping = false;
+
+	        moveX = 0;
+	        moveY = 0;
         }
 
         /// <summary>
@@ -227,24 +236,42 @@ namespace Platformer
 			//}
 
             // If any digital horizontal movement input is found, override the analog movement.
-            if (keyboardState.IsKeyDown(Keys.Left) ||
-                keyboardState.IsKeyDown(Keys.A))
-            {
-                movement = -1.0f;
-            }
-            else if (keyboardState.IsKeyDown(Keys.Right) ||
-                     keyboardState.IsKeyDown(Keys.D))
-            {
-                movement = 1.0f;
-            }
+	        if (keyboardState.IsKeyDown(Keys.Left))// && prevKeyboardState.IsKeyUp(Keys.Left))
+	        {
+		        moveX = -deltaM;
+	        }
+			if (keyboardState.IsKeyDown(Keys.Right))// && prevKeyboardState.IsKeyUp(Keys.Right))
+			{
+				moveX = deltaM;
+			}
+			if (keyboardState.IsKeyDown(Keys.Up))// && prevKeyboardState.IsKeyUp(Keys.Up))
+	        {
+				moveY = -deltaM;
+	        }
+			if (keyboardState.IsKeyDown(Keys.Down))// && prevKeyboardState.IsKeyUp(Keys.Down))
+	        {
+				moveY = deltaM;
+	        }
+            // //if (keyboardState.IsKeyDown(Keys.Left) ||
+			//    keyboardState.IsKeyDown(Keys.A))
+			//{
+			//    movement = -1.0f;
+			//}
+			//else if (keyboardState.IsKeyDown(Keys.Right) ||
+			//         keyboardState.IsKeyDown(Keys.D))
+			//{
+			//    movement = 1.0f;
+			//}
 
             // Check if the player wants to jump.
-            isJumping =
+	        isJumping = false;
                 //gamePadState.IsButtonDown(JumpButton) ||
-                keyboardState.IsKeyDown(Keys.Space) ||
-                keyboardState.IsKeyDown(Keys.Up) ||
-                keyboardState.IsKeyDown(Keys.W);// ||
+                //keyboardState.IsKeyDown(Keys.Space) ||
+                //keyboardState.IsKeyDown(Keys.Up) ||
+                //keyboardState.IsKeyDown(Keys.W);// ||
                 //touchState.AnyTouch();
+
+	        prevKeyboardState = keyboardState;
         }
 
         /// <summary>
@@ -254,30 +281,34 @@ namespace Platformer
         {
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+			velocity = Vector2.Zero;
             Vector2 previousPosition = Position;
 	        int prevPosY = (int) previousPosition.Y;
 	        int prevPosX = (int) previousPosition.X;
 
             // Base velocity is a combination of horizontal movement control and
             // acceleration downward due to gravity.
-            velocity.X += movement * MoveAcceleration * elapsed;
-            velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
+            //velocity.X += movement * MoveAcceleration * elapsed;
+	        velocity.X += moveX;
+	        velocity.Y += moveY;
+            //velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
 
-            velocity.Y = DoJump(velocity.Y, gameTime);
+            //velocity.Y = DoJump(velocity.Y, gameTime);
 	        
             // Apply pseudo-drag horizontally.
-			if (IsOnGround)
-				velocity.X *= GroundDragFactor;
-			else
-				velocity.X *= AirDragFactor;
+			//if (IsOnGround)
+			//    velocity.X *= GroundDragFactor;
+			//else
+			//    velocity.X *= AirDragFactor;
 	        //velocity.X *= GroundDragFactor;
 	        //velocity.X *= AirDragFactor;
 
             // Prevent the player from running faster than his top speed.            
-            velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
+            //velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
 
             // Apply velocity.
-            Position += velocity * elapsed;
+            //Position += velocity * elapsed;
+	        Position += velocity;
             Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
 
 	        int currPosY = (int) Position.Y;
@@ -458,10 +489,10 @@ namespace Platformer
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             // Flip the sprite to face the way we are moving.
-            if (Velocity.X > 0)
-                flip = SpriteEffects.FlipHorizontally;
-            else if (Velocity.X < 0)
-                flip = SpriteEffects.None;
+			//if (Velocity.X > 0)
+			//    flip = SpriteEffects.FlipHorizontally;
+			//else if (Velocity.X < 0)
+			//    flip = SpriteEffects.None;
 
             // Draw that sprite.
             sprite.Draw(gameTime, spriteBatch, Position, flip);

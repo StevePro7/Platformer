@@ -509,8 +509,8 @@ namespace Platformer
         /// </summary>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            for (int i = 0; i <= EntityLayer; ++i)
-                spriteBatch.Draw(layers[i], Vector2.Zero, Color.White);
+			//for (int i = 0; i <= EntityLayer; ++i)
+			//    spriteBatch.Draw(layers[i], Vector2.Zero, Color.White);
 
             DrawTiles(spriteBatch);
 
@@ -522,8 +522,8 @@ namespace Platformer
             foreach (Enemy enemy in enemies)
                 enemy.Draw(gameTime, spriteBatch);
 
-            for (int i = EntityLayer + 1; i < layers.Length; ++i)
-                spriteBatch.Draw(layers[i], Vector2.Zero, Color.White);
+			//for (int i = EntityLayer + 1; i < layers.Length; ++i)
+			//    spriteBatch.Draw(layers[i], Vector2.Zero, Color.White);
         }
 
         /// <summary>
