@@ -234,24 +234,28 @@ namespace Platformer
 			//    if (orientation == DisplayOrientation.LandscapeRight)
 			//        movement = -movement;
 			//}
-
+	        int offset = 1;
+	        if (keyboardState.IsKeyDown(Keys.Space))
+	        {
+		        offset = 2;
+	        }
             // If any digital horizontal movement input is found, override the analog movement.
 	        if (keyboardState.IsKeyDown(Keys.Left))// && prevKeyboardState.IsKeyUp(Keys.Left))
 	        {
-		        moveX = -deltaM;
+		        moveX = -deltaM * offset;
 	        }
 			if (keyboardState.IsKeyDown(Keys.Right))// && prevKeyboardState.IsKeyUp(Keys.Right))
 			{
-				moveX = deltaM;
+				moveX = deltaM * offset;
 			}
 			if (keyboardState.IsKeyDown(Keys.Up))// && prevKeyboardState.IsKeyUp(Keys.Up))
 	        {
-				moveY = -deltaM;
+				moveY = -deltaM * offset;
 	        }
 			if (keyboardState.IsKeyDown(Keys.Down))// && prevKeyboardState.IsKeyUp(Keys.Down))
-	        {
-				moveY = deltaM;
-	        }
+			{
+				moveY = deltaM * offset;
+			}
             // //if (keyboardState.IsKeyDown(Keys.Left) ||
 			//    keyboardState.IsKeyDown(Keys.A))
 			//{

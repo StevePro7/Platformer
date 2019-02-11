@@ -29,6 +29,8 @@ namespace Platformer
         // Physical structure of the level.
         private Tile[,] tiles;
         private Texture2D[] layers;
+	    private Texture2D stripHorz, stripVert;
+
         // The layer which entities are drawn on top of.
         private const int EntityLayer = 2;
 
@@ -108,6 +110,8 @@ namespace Platformer
                 int segmentIndex = levelIndex;
                 layers[i] = Content.Load<Texture2D>("Backgrounds/Layer" + i + "_" + segmentIndex);
             }
+			stripHorz = Content.Load<Texture2D>("Tiles/StripHorz");
+			stripVert = Content.Load<Texture2D>("Tiles/StripVert");
 
             // Load sounds.
             exitReachedSound = Content.Load<SoundEffect>("Sounds/ExitReached");
@@ -513,7 +517,7 @@ namespace Platformer
 			//    spriteBatch.Draw(layers[i], Vector2.Zero, Color.White);
 
             DrawTiles(spriteBatch);
-
+	        DrawStrip(spriteBatch);
             foreach (Gem gem in gems)
                 gem.Draw(gameTime, spriteBatch);
 
@@ -548,6 +552,20 @@ namespace Platformer
             }
         }
 
-        #endregion
+		private void DrawStrip(SpriteBatch spriteBatch)
+		{
+			Vector2 size = Platformer.Tile.Size;
+		    // For each tile position
+		    for (int y = 0; y < Height; ++y)
+		    {
+			    for (int x = 0; x < Width; ++x)
+			    {
+				    spriteBatch.Draw(stripVert, new Vector2(x * Tile.Size.X, 0), Color.White);
+				    spriteBatch.Draw(stripHorz, new Vector2(0, y * Tile.Size.Y), Color.White);
+			    }
+		    }
+	    }
+
+	    #endregion
     }
 }
