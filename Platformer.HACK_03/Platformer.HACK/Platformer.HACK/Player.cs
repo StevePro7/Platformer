@@ -23,6 +23,7 @@ namespace Platformer
     {
 	    private KeyboardState prevKeyboardState;
 	    private const int deltaM = 2;
+	    private bool shouldLog;
 
 		// Position deltas.
 	    private int[] posDeltaAirX = new[] { 0, 1, 2, 3, 4, 5 };
@@ -234,17 +235,20 @@ namespace Platformer
 			//    if (orientation == DisplayOrientation.LandscapeRight)
 			//        movement = -movement;
 			//}
+	        shouldLog = false;
 	        int offset = 1;
 	        if (keyboardState.IsKeyDown(Keys.Space))
 	        {
 		        offset = 2;
 	        }
             // If any digital horizontal movement input is found, override the analog movement.
-	        if (keyboardState.IsKeyDown(Keys.Left))// && prevKeyboardState.IsKeyUp(Keys.Left))
+	        if (keyboardState.IsKeyDown(Keys.Left))
+			//if (keyboardState.IsKeyDown(Keys.Left) && prevKeyboardState.IsKeyUp(Keys.Left))
 	        {
 		        moveX = -deltaM * offset;
 	        }
-			if (keyboardState.IsKeyDown(Keys.Right))// && prevKeyboardState.IsKeyUp(Keys.Right))
+			if (keyboardState.IsKeyDown(Keys.Right))
+			//if (keyboardState.IsKeyDown(Keys.Right) && prevKeyboardState.IsKeyUp(Keys.Right))
 			{
 				moveX = deltaM * offset;
 			}
@@ -267,6 +271,7 @@ namespace Platformer
 			//    movement = 1.0f;
 			//}
 
+	        shouldLog = keyboardState.IsKeyDown(Keys.Enter) && prevKeyboardState.IsKeyUp(Keys.Enter);
             // Check if the player wants to jump.
 	        isJumping = false;
                 //gamePadState.IsButtonDown(JumpButton) ||
@@ -406,7 +411,14 @@ namespace Platformer
             int topTile = (int)Math.Floor((float)bounds.Top / Tile.Height);
             int bottomTile = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
 
-            // Reset flag to search for ground collision.
+	        if (shouldLog)
+	        {
+		        String msg = String.Format("(X,Y)=({0},{1}), L:{2} R:{3} T:{4} B:{5}", (int) position.X, (int) position.Y, leftTile, rightTile, topTile, bottomTile);
+		        //String msg = String.Format("BoundL:{0} BoundT:{1} BoundW:{2} BoundH:{3}", bounds.Left, bounds.Top, bounds.Width, bounds.Height);
+		        Logger.Info(msg);
+	        }
+
+	        // Reset flag to search for ground collision.
             isOnGround = false;
 
             // For each potentially colliding tile,

@@ -1,4 +1,36 @@
 # Platformer
+11/02/2019
+TODO
+Compare that Math.Floor() and Math.Ceiling() will give same answers on SMS
+Replace GetIntersectionDepth() extension method to determine overlap rects
+
+Player boundingRectangle
+left = 7
+topX = 51 = 64 - 13		should be 64-16 = 48 OR 64-8=56 OR 64-12-52 [32-6=26]
+wide = 25
+bott = 64
+How is 7 + 25 calc'd?
+Ans 7+25 = 32 which should be 8+24
+Remember that tile is 40px wide so
+40 = 4 + 4 + 24 + 4 + 4		sprite coll 24px wide
+but must add 4px either side to add to 32 plus 4px either side to total 40px tile wide
+
+My guy is 16x32 and tile is 16px wide so my calculation is
+16 = 2 + 12 + 2
+no px either side for tile as tile is same width as sprite and coll is 12px wide w/ 2px either side
+thus my Player boundingRectangle would be
+left = 2	(8-4)/2
+topX = 26	52/2
+wide = 12	24/2
+bott = 32	64/2
+
+Also as player does not change size then the boundingRectangle wide + high will NOT change
+Therefore, as player moves and changes int(x) and int(y) then move boundingRect left + top by the same int(delta)
+
+In fact, ensure the left=7 and high=51 [above] becomes 8 and 52 so half wide/high also ints
+GetIntersectionDepth()
+
+
 08/02/2019
 Finally calc'd the velX and velY for 50fps and 60fps and averaged the amounts for med + sml
 Next, would need to replace the calculations with the array index to update position
