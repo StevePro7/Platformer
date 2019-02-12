@@ -123,9 +123,9 @@ namespace Platformer
             get
             {
 	            int localBoundsWidth = 24;
-	            int localBoundsHeight = 50;
+	            int localBoundsHeight = 52;
 	            int localBoundsX = 20;//localBounds.X;
-	            int localBoundsY = 14;//localBounds.Y;
+	            int localBoundsY = 12;//localBounds.Y;
 
 	            int left = (int)Math.Round(Position.X - sprite.Origin.X) + localBounds.X;
                 int top = (int)Math.Round(Position.Y - sprite.Origin.Y) + localBounds.Y;
@@ -163,8 +163,8 @@ namespace Platformer
             // Calculate bounds within texture size.            
 	        int width = 24;//ORG=25;// (int)(idleAnimation.FrameWidth * 0.4);
 	        int left = 20;//ORG=19;// (idleAnimation.FrameWidth - width) / 2;
-	        int height = 50;//ORG=51;// (int)(idleAnimation.FrameWidth * 0.8);
-	        int top = 14;//ORG=13;// idleAnimation.FrameHeight - height;
+	        int height = 52;//ORG=51;// (int)(idleAnimation.FrameWidth * 0.8);
+	        int top = 12;//ORG=13;// idleAnimation.FrameHeight - height;
             localBounds = new Rectangle(left, top, width, height);
 
             // Load sounds.            
