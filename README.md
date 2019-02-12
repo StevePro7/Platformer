@@ -1,4 +1,14 @@
 # Platformer
+12/02/2019
+Player localBounds width, left, height, top used for Player BoundingRectangle X, Y, Width, Height
+and believe never changes - just used to offset BoundingRectangle for Sprite Origin
+
+localBounds
+width	25
+left	19	X
+height	51
+top		13	Y
+
 11/02/2019
 TODO
 Compare that Math.Floor() and Math.Ceiling() will give same answers on SMS

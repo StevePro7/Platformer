@@ -22,7 +22,7 @@ namespace Platformer
     class Player
     {
 	    private KeyboardState prevKeyboardState;
-	    private const int deltaM = 2;
+	    private const int deltaM = 1;
 	    private bool shouldLog;
 
 		// Position deltas.
@@ -121,10 +121,17 @@ namespace Platformer
         {
             get
             {
-                int left = (int)Math.Round(Position.X - sprite.Origin.X) + localBounds.X;
+	            int localBoundsWidth = 24;
+	            int localBoundsHeight = 50;
+	            int localBoundsX = 20;//localBounds.X;
+	            int localBoundsY = 14;//localBounds.Y;
+
+	            int left = (int)Math.Round(Position.X - sprite.Origin.X) + localBounds.X;
                 int top = (int)Math.Round(Position.Y - sprite.Origin.Y) + localBounds.Y;
 
-                return new Rectangle(left, top, localBounds.Width, localBounds.Height);
+				Rectangle br = new Rectangle(left, top, localBounds.Width, localBounds.Height);
+	            return br;
+	            //return new Rectangle(left, top, localBounds.Width, localBounds.Height);
             }
         }
 
@@ -153,10 +160,10 @@ namespace Platformer
             dieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Die"), 0.1f, false);
 
             // Calculate bounds within texture size.            
-            int width = (int)(idleAnimation.FrameWidth * 0.4);
-            int left = (idleAnimation.FrameWidth - width) / 2;
-            int height = (int)(idleAnimation.FrameWidth * 0.8);
-            int top = idleAnimation.FrameHeight - height;
+	        int width = 24;//ORG=25;// (int)(idleAnimation.FrameWidth * 0.4);
+	        int left = 20;//ORG=19;// (idleAnimation.FrameWidth - width) / 2;
+	        int height = 50;//ORG=51;// (int)(idleAnimation.FrameWidth * 0.8);
+	        int top = 14;//ORG=13;// idleAnimation.FrameHeight - height;
             localBounds = new Rectangle(left, top, width, height);
 
             // Load sounds.            
@@ -242,13 +249,13 @@ namespace Platformer
 		        offset = 2;
 	        }
             // If any digital horizontal movement input is found, override the analog movement.
-	        if (keyboardState.IsKeyDown(Keys.Left))
-			//if (keyboardState.IsKeyDown(Keys.Left) && prevKeyboardState.IsKeyUp(Keys.Left))
+	        //if (keyboardState.IsKeyDown(Keys.Left))
+			if (keyboardState.IsKeyDown(Keys.Left) && prevKeyboardState.IsKeyUp(Keys.Left))
 	        {
 		        moveX = -deltaM * offset;
 	        }
-			if (keyboardState.IsKeyDown(Keys.Right))
-			//if (keyboardState.IsKeyDown(Keys.Right) && prevKeyboardState.IsKeyUp(Keys.Right))
+			//if (keyboardState.IsKeyDown(Keys.Right))
+			if (keyboardState.IsKeyDown(Keys.Right) && prevKeyboardState.IsKeyUp(Keys.Right))
 			{
 				moveX = deltaM * offset;
 			}
