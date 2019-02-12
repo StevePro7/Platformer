@@ -245,7 +245,8 @@ namespace Platformer
 			//}
 	        shouldLog = false;
 	        int offset = 1;
-	        if (keyboardState.IsKeyDown(Keys.Space))
+			#region Movement
+			if (keyboardState.IsKeyDown(Keys.Space))
 	        {
 		        offset = 2;
 	        }
@@ -305,8 +306,9 @@ namespace Platformer
 		        {
 			        moveY = deltaM * offset;
 		        }
-	        }
-	        // //if (keyboardState.IsKeyDown(Keys.Left) ||
+			}
+			#endregion
+			// //if (keyboardState.IsKeyDown(Keys.Left) ||
 			//    keyboardState.IsKeyDown(Keys.A))
 			//{
 			//    movement = -1.0f;
