@@ -117,7 +117,9 @@ namespace Platformer
                 int left = (int)Math.Round(Position.X - sprite.Origin.X) + localBounds.X;
                 int top = (int)Math.Round(Position.Y - sprite.Origin.Y) + localBounds.Y;
 
-                return new Rectangle(left, top, localBounds.Width, localBounds.Height);
+				Rectangle br = new Rectangle(left, top, localBounds.Width, localBounds.Height);
+	            return br;
+	            //return new Rectangle(left, top, localBounds.Width, localBounds.Height);
             }
         }
 

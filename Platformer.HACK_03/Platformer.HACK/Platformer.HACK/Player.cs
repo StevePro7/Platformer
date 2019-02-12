@@ -21,6 +21,7 @@ namespace Platformer
     /// </summary>
     class Player
     {
+	    private static bool MovePlayer = true; 
 	    private KeyboardState prevKeyboardState;
 	    private const int deltaM = 1;
 	    private bool shouldLog;
@@ -249,25 +250,63 @@ namespace Platformer
 		        offset = 2;
 	        }
             // If any digital horizontal movement input is found, override the analog movement.
-	        //if (keyboardState.IsKeyDown(Keys.Left))
-			if (keyboardState.IsKeyDown(Keys.Left) && prevKeyboardState.IsKeyUp(Keys.Left))
+	        if (MovePlayer)
 	        {
-		        moveX = -deltaM * offset;
+		        if (keyboardState.IsKeyDown(Keys.Left))
+		        {
+			        moveX = -deltaM * offset;
+		        }
 	        }
-			//if (keyboardState.IsKeyDown(Keys.Right))
-			if (keyboardState.IsKeyDown(Keys.Right) && prevKeyboardState.IsKeyUp(Keys.Right))
-			{
-				moveX = deltaM * offset;
-			}
-			if (keyboardState.IsKeyDown(Keys.Up))// && prevKeyboardState.IsKeyUp(Keys.Up))
+	        else
 	        {
-				moveY = -deltaM * offset;
+		        if (keyboardState.IsKeyDown(Keys.Left) && prevKeyboardState.IsKeyUp(Keys.Left))
+		        {
+			        moveX = -deltaM * offset;
+		        }
 	        }
-			if (keyboardState.IsKeyDown(Keys.Down))// && prevKeyboardState.IsKeyUp(Keys.Down))
-			{
-				moveY = deltaM * offset;
-			}
-            // //if (keyboardState.IsKeyDown(Keys.Left) ||
+	        if (MovePlayer)
+	        {
+		        if (keyboardState.IsKeyDown(Keys.Right))
+		        {
+			        moveX = deltaM * offset;
+		        }
+	        }
+	        else
+	        {
+		        if (keyboardState.IsKeyDown(Keys.Right) && prevKeyboardState.IsKeyUp(Keys.Right))
+		        {
+			        moveX = deltaM * offset;
+		        }
+	        }
+	        if (MovePlayer)
+	        {
+		        if (keyboardState.IsKeyDown(Keys.Up)) // && prevKeyboardState.IsKeyUp(Keys.Up))
+		        {
+			        moveY = -deltaM * offset;
+		        }
+	        }
+			else
+	        {
+		        if (keyboardState.IsKeyDown(Keys.Up) && prevKeyboardState.IsKeyUp(Keys.Up))
+		        {
+			        moveY = -deltaM * offset;
+		        }
+	        }
+	        if (MovePlayer)
+	        {
+		        if (keyboardState.IsKeyDown(Keys.Down)) // && prevKeyboardState.IsKeyUp(Keys.Down))
+		        {
+			        moveY = deltaM * offset;
+		        }
+	        }
+	        else
+	        {
+		        if (keyboardState.IsKeyDown(Keys.Down) && prevKeyboardState.IsKeyUp(Keys.Down))
+		        {
+			        moveY = deltaM * offset;
+		        }
+	        }
+	        // //if (keyboardState.IsKeyDown(Keys.Left) ||
 			//    keyboardState.IsKeyDown(Keys.A))
 			//{
 			//    movement = -1.0f;
