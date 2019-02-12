@@ -41,53 +41,58 @@ namespace Platformer
         /// </summary>
         private float time;
 
-        /// <summary>
-        /// Gets a texture origin at the bottom center of each frame.
-        /// </summary>
-        public Vector2 Origin
-        {
-            get { return new Vector2(Animation.FrameWidth / 2.0f, Animation.FrameHeight); }
-        }
+	    /// <summary>
+	    /// Gets a texture origin at the bottom center of each frame.
+	    /// </summary>
+	    public Vector2 Origin
+	    {
+		    get
+		    {
+			    Vector2 bob = new Vector2(16, Animation.FrameHeight);
+			    return bob;
+			    //return new Vector2(Animation.FrameWidth / 2.0f, Animation.FrameHeight);
+		    }
+	    }
 
-        /// <summary>
+	    /// <summary>
         /// Begins or continues playback of an animation.
         /// </summary>
-        public void PlayAnimation(Animation animation)
-        {
-            // If this animation is already running, do not restart it.
-            if (Animation == animation)
-                return;
+		public void PlayAnimation(Animation animation)
+		{
+			// If this animation is already running, do not restart it.
+			if (Animation == animation)
+				return;
 
-            // Start the new animation.
-            this.animation = animation;
-            this.frameIndex = 0;
-            this.time = 0.0f;
-        }
+			// Start the new animation.
+			this.animation = animation;
+			this.frameIndex = 0;
+			this.time = 0.0f;
+		}
 
         /// <summary>
         /// Advances the time position and draws the current frame of the animation.
         /// </summary>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 position, SpriteEffects spriteEffects)
         {
-            if (Animation == null)
-                throw new NotSupportedException("No animation is currently playing.");
+			//if (Animation == null)
+			//    throw new NotSupportedException("No animation is currently playing.");
 
-            // Process passing time.
-            time += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            while (time > Animation.FrameTime)
-            {
-                time -= Animation.FrameTime;
+			//// Process passing time.
+			//time += (float)gameTime.ElapsedGameTime.TotalSeconds;
+			//while (time > Animation.FrameTime)
+			//{
+			//    time -= Animation.FrameTime;
 
-                // Advance the frame index; looping or clamping as appropriate.
-                if (Animation.IsLooping)
-                {
-                    frameIndex = (frameIndex + 1) % Animation.FrameCount;
-                }
-                else
-                {
-                    frameIndex = Math.Min(frameIndex + 1, Animation.FrameCount - 1);
-                }
-            }
+			//    // Advance the frame index; looping or clamping as appropriate.
+			//    if (Animation.IsLooping)
+			//    {
+			//        frameIndex = (frameIndex + 1) % Animation.FrameCount;
+			//    }
+			//    else
+			//    {
+			//        frameIndex = Math.Min(frameIndex + 1, Animation.FrameCount - 1);
+			//    }
+			//}
 
             // Calculate the source rectangle of the current frame.
             Rectangle source = new Rectangle(FrameIndex * Animation.Texture.Height, 0, Animation.Texture.Height, Animation.Texture.Height);

@@ -124,7 +124,7 @@ namespace Platformer
             {
 	            int localBoundsWidth = 24;
 	            int localBoundsHeight = 52;
-	            int localBoundsX = 20;//localBounds.X;
+	            int localBoundsX = 4;//localBounds.X;		//ORG=20
 	            int localBoundsY = 12;//localBounds.Y;
 
 	            int left = (int)Math.Round(Position.X - sprite.Origin.X) + localBounds.X;
@@ -155,14 +155,14 @@ namespace Platformer
         {
             // Load animated textures.
             idleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Idle"), 0.1f, true);
-            runAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Run"), 0.1f, true);
-            jumpAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Jump"), 0.1f, false);
-            celebrateAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Celebrate"), 0.1f, false);
-            dieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Die"), 0.1f, false);
+            //runAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Run"), 0.1f, true);
+            //jumpAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Jump"), 0.1f, false);
+            //celebrateAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Celebrate"), 0.1f, false);
+            //dieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Die"), 0.1f, false);
 
             // Calculate bounds within texture size.            
-	        int width = 24;//ORG=25;// (int)(idleAnimation.FrameWidth * 0.4);
-	        int left = 20;//ORG=19;// (idleAnimation.FrameWidth - width) / 2;
+	        int width = 24;//ORG=25;// (int)(idleAnimation.FrameWidth * 0.4);		//NEW=24;
+	        int left = 4;//ORG=19;// (idleAnimation.FrameWidth - width) / 2;		//ORG=20;
 	        int height = 52;//ORG=51;// (int)(idleAnimation.FrameWidth * 0.8);
 	        int top = 12;//ORG=13;// idleAnimation.FrameHeight - height;
             localBounds = new Rectangle(left, top, width, height);
@@ -203,14 +203,14 @@ namespace Platformer
 
             if (IsAlive && IsOnGround)
             {
-                if (Math.Abs(Velocity.X) - 0.02f > 0)
-                {
-                    sprite.PlayAnimation(runAnimation);
-                }
-                else
-                {
+                //if (Math.Abs(Velocity.X) - 0.02f > 0)
+                //{
+                //    sprite.PlayAnimation(runAnimation);
+                //}
+                //else
+                //{
                     sprite.PlayAnimation(idleAnimation);
-                }
+                //}
             }
 
             // Clear input.
@@ -419,7 +419,7 @@ namespace Platformer
                         jumpSound.Play();
 
                     jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    sprite.PlayAnimation(jumpAnimation);
+                    //sprite.PlayAnimation(jumpAnimation);
                 }
 
                 // If we are in the ascent of the jump
@@ -536,7 +536,7 @@ namespace Platformer
             else
                 fallSound.Play();
 
-            sprite.PlayAnimation(dieAnimation);
+            //sprite.PlayAnimation(dieAnimation);
         }
 
         /// <summary>
@@ -544,7 +544,7 @@ namespace Platformer
         /// </summary>
         public void OnReachedExit()
         {
-            sprite.PlayAnimation(celebrateAnimation);
+            //sprite.PlayAnimation(celebrateAnimation);
         }
 
         /// <summary>
@@ -560,6 +560,7 @@ namespace Platformer
 
             // Draw that sprite.
             sprite.Draw(gameTime, spriteBatch, Position, flip);
+	        //sprite.Draw(gameTime, spriteBatch, Vector2.Zero, flip);
         }
     }
 }
