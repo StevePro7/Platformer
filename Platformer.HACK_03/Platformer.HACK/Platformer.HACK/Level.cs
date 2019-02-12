@@ -481,7 +481,7 @@ namespace Platformer
         /// The enemy who killed the player. This is null if the player was not killed by an
         /// enemy, such as when a player falls into a hole.
         /// </param>
-        private void OnPlayerKilled(Enemy killedBy)
+		private void OnPlayerKilled(Enemy killedBy)
         {
             Player.OnKilled(killedBy);
         }
