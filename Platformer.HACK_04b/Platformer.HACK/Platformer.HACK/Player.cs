@@ -554,21 +554,23 @@ namespace Platformer
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
 			// Flip the sprite to face the way we are moving.
-	        //if (Velocity.X > 0)
-	        //    flip = SpriteEffects.FlipHorizontally;
-	        //else if (Velocity.X < 0)
-	        //    flip = SpriteEffects.None;
+			//if (Velocity.X > 0)
+			//    flip = SpriteEffects.FlipHorizontally;
+			//else if (Velocity.X < 0)
+			//    flip = SpriteEffects.None;
 
-	        // Draw that sprite.
-	        //sprite.Draw(gameTime, spriteBatch, Position, flip);
+			// Draw that sprite.
+			//sprite.Draw(gameTime, spriteBatch, Position, flip);
 
-	        int localBoundsWidth = 24;
-	        //int localBoundsHeight = 52;
-	        int rendX = (int)position.X - localBoundsWidth / 2;
-	        int rendY = (int)position.Y - 2 * (int)Tile.Size.Y;
-	        Vector2 renderer = new Vector2(rendX, rendY);
-	        sprite.Draw(spriteBatch, renderer);
-	        spriteBatch.Draw(BoundImage, new Vector2(BoundingRectangle.X, BoundingRectangle.Y), Color.White);
+			// Cache at start because tile size static.
+			int halfTileSizeX = ((int)Tile.Size.X / 2);
+			int twiceTileSizeY = 2 * (int)Tile.Size.Y;
+
+			int rendX = (int)position.X - halfTileSizeX;
+			int rendY = (int)position.Y - twiceTileSizeY;
+			Vector2 renderer = new Vector2(rendX, rendY);
+			sprite.Draw(spriteBatch, renderer);
+			spriteBatch.Draw(BoundImage, new Vector2(BoundingRectangle.X, BoundingRectangle.Y), Color.White);
         }
     }
 }

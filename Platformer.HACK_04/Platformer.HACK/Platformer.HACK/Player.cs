@@ -562,10 +562,12 @@ namespace Platformer
 			// Draw that sprite.
 	        //sprite.Draw(gameTime, spriteBatch, Position, flip);
 
-	        int localBoundsWidth = 24;
-	        //int localBoundsHeight = 52;
-	        int rendX = (int)position.X - localBoundsWidth / 2;
-	        int rendY = (int)position.Y - 2 * (int)Tile.Size.Y;
+			// Cache at start because tile size static.
+			int halfTileSizeX = ((int)Tile.Size.X / 2);
+			int twiceTileSizeY = 2 * (int)Tile.Size.Y;
+
+			int rendX = (int)position.X - halfTileSizeX;
+			int rendY = (int)position.Y - twiceTileSizeY;
 	        Vector2 renderer = new Vector2(rendX, rendY);
 	        sprite.Draw(spriteBatch, renderer);
 	        spriteBatch.Draw(BoundImage, new Vector2(BoundingRectangle.X, BoundingRectangle.Y), Color.White);
