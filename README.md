@@ -1,4 +1,11 @@
 # Platformer
+13/02/2019
+TODO need to determine the jump direction when hit head on block above...
+Player jump animation kicks in and sometimes forces player left or right
+
+Need to compare Math Floor() and Ceiling() float with int for comparison
+and also the Math.Abs()
+
 12/02/2019
 Player localBounds width, left, height, top used for Player BoundingRectangle X, Y, Width, Height
 and believe never changes - just used to offset BoundingRectangle for Sprite Origin

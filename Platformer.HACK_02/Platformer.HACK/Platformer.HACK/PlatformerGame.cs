@@ -128,6 +128,7 @@ namespace Platformer
 		{
 			// move to the next level
 			levelIndex = (levelIndex + 1) % numberOfLevels;
+			levelIndex = 1;
 
 			// Unloads the content for the current level before loading the next one.
 			if (level != null)
