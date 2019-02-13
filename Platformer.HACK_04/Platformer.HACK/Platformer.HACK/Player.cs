@@ -25,6 +25,7 @@ namespace Platformer
 	    private KeyboardState prevKeyboardState;
 	    private const int deltaM = 1;
 	    private bool shouldLog;
+	    private Texture2D BoundImage;
 
 		// Position deltas.
 	    private int[] posDeltaAirX = new[] { 0, 1, 2, 3, 4, 5 };
@@ -33,11 +34,11 @@ namespace Platformer
 
         // Animations
         private Animation idleAnimation;
-        private Animation runAnimation;
-        private Animation jumpAnimation;
-        private Animation celebrateAnimation;
-        private Animation dieAnimation;
-        private SpriteEffects flip = SpriteEffects.None;
+		//private Animation runAnimation;
+		//private Animation jumpAnimation;
+		//private Animation celebrateAnimation;
+		//private Animation dieAnimation;
+        //private SpriteEffects flip = SpriteEffects.None;
         private AnimationPlayer sprite;
 
         // Sounds
@@ -114,26 +115,27 @@ namespace Platformer
         private bool wasJumping;
         private float jumpTime;
 
-        private Rectangle localBounds;
+        //private Rectangle localBounds;
         /// <summary>
         /// Gets a rectangle which bounds this player in world space.
         /// </summary>
         public Rectangle BoundingRectangle
         {
-            get
-            {
-	            int localBoundsWidth = 24;
-	            int localBoundsHeight = 52;
-	            int localBoundsX = 4;//localBounds.X;		//ORG=20
-	            int localBoundsY = 12;//localBounds.Y;
+			get
+			{
+				int localBoundsWidth = 24;
+				int localBoundsHeight = 52;
+				//int localBoundsX = 20;//localBounds.X;
+				//int localBoundsY = 12;//localBounds.Y;
 
-	            int left = (int)Math.Round(Position.X - sprite.Origin.X) + localBounds.X;
-                int top = (int)Math.Round(Position.Y - sprite.Origin.Y) + localBounds.Y;
+				int halfBoundsWidth = localBoundsWidth / 2;//12;
+				int left = (int)Position.X - halfBoundsWidth;		//=8
+				int top = (int)Position.Y - localBoundsHeight;		//=12
 
-				Rectangle br = new Rectangle(left, top, localBounds.Width, localBounds.Height);
-	            return br;
-	            //return new Rectangle(left, top, localBounds.Width, localBounds.Height);
-            }
+				Rectangle br = new Rectangle(left, top, localBoundsWidth, localBoundsHeight);
+				return br;
+				//return new Rectangle(left, top, localBounds.Width, localBounds.Height);
+			}
         }
 
         /// <summary>
@@ -154,6 +156,7 @@ namespace Platformer
         public void LoadContent()
         {
             // Load animated textures.
+	        BoundImage = Level.Content.Load<Texture2D>("Sprites/Player/Rect");
             idleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Idle"), 0.1f, true);
             //runAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Run"), 0.1f, true);
             //jumpAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Jump"), 0.1f, false);
@@ -161,11 +164,11 @@ namespace Platformer
             //dieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Die"), 0.1f, false);
 
             // Calculate bounds within texture size.            
-	        int width = 24;//ORG=25;// (int)(idleAnimation.FrameWidth * 0.4);		//NEW=24;
-	        int left = 4;//ORG=19;// (idleAnimation.FrameWidth - width) / 2;		//ORG=20;
-	        int height = 52;//ORG=51;// (int)(idleAnimation.FrameWidth * 0.8);
-	        int top = 12;//ORG=13;// idleAnimation.FrameHeight - height;
-            localBounds = new Rectangle(left, top, width, height);
+			//int width = 24;//ORG=25;// (int)(idleAnimation.FrameWidth * 0.4);		//NEW=24;
+			//int left = 4;//ORG=19;// (idleAnimation.FrameWidth - width) / 2;		//ORG=20;
+			//int height = 52;//ORG=51;// (int)(idleAnimation.FrameWidth * 0.8);
+			//int top = 12;//ORG=13;// idleAnimation.FrameHeight - height;
+			//localBounds = new Rectangle(left, top, width, height);
 
             // Load sounds.            
             killedSound = Level.Content.Load<SoundEffect>("Sounds/PlayerKilled");
@@ -558,9 +561,16 @@ namespace Platformer
 			//else if (Velocity.X < 0)
 			//    flip = SpriteEffects.None;
 
-            // Draw that sprite.
-            sprite.Draw(gameTime, spriteBatch, Position, flip);
-	        //sprite.Draw(gameTime, spriteBatch, Vector2.Zero, flip);
+			// Draw that sprite.
+	        //sprite.Draw(gameTime, spriteBatch, Position, flip);
+
+	        int localBoundsWidth = 24;
+	        //int localBoundsHeight = 52;
+	        int rendX = (int)position.X - localBoundsWidth / 2;
+	        int rendY = (int)position.Y - 2 * (int)Tile.Size.Y;
+	        Vector2 renderer = new Vector2(rendX, rendY);
+	        sprite.Draw(spriteBatch, renderer);
+	        spriteBatch.Draw(BoundImage, new Vector2(BoundingRectangle.X, BoundingRectangle.Y), Color.White);
         }
     }
 }

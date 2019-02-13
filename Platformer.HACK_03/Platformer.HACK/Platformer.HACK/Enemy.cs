@@ -61,7 +61,7 @@ namespace Platformer
 		}
 
 		// Animations
-		private Animation runAnimation;
+		//private Animation runAnimation;
 		private Animation idleAnimation;
 		private AnimationPlayer sprite;
 

@@ -34,10 +34,10 @@ namespace Platformer
 
         // Animations
         private Animation idleAnimation;
-        private Animation runAnimation;
-        private Animation jumpAnimation;
-        private Animation celebrateAnimation;
-        private Animation dieAnimation;
+		//private Animation runAnimation;
+		//private Animation jumpAnimation;
+		//private Animation celebrateAnimation;
+		//private Animation dieAnimation;
         //private SpriteEffects flip = SpriteEffects.None;
         private AnimationPlayer sprite;
 
@@ -158,10 +158,10 @@ namespace Platformer
             // Load animated textures.
 	        BoundImage = Level.Content.Load<Texture2D>("Sprites/Player/Rect");
             idleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Idle"), 0.1f, true);
-            runAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Run"), 0.1f, true);
-            jumpAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Jump"), 0.1f, false);
-            celebrateAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Celebrate"), 0.1f, false);
-            dieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Die"), 0.1f, false);
+			//runAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Run"), 0.1f, true);
+	        //jumpAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Jump"), 0.1f, false);
+	        //celebrateAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Celebrate"), 0.1f, false);
+	        //dieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Die"), 0.1f, false);
 
             // Calculate bounds within texture size.            
 			//int width = 24;//ORG=25;// (int)(idleAnimation.FrameWidth * 0.4);
@@ -186,12 +186,6 @@ namespace Platformer
             Velocity = Vector2.Zero;
             isAlive = true;
             sprite.PlayAnimation(idleAnimation);
-
-			//int localBoundsWidth = 24;
-			////int localBoundsHeight = 52;
-			//int rendX = (int)position.X - localBoundsWidth / 2;
-			//int rendY = (int) position.Y - 2 * (int)Tile.Size.Y;
-			//renderer = new Vector2(rendX, rendY);
         }
 
         /// <summary>
