@@ -103,7 +103,7 @@ namespace Platformer
 		{
 			// Load animations.
 			spriteSet = "Sprites/" + spriteSet + "/";
-			runAnimation = new Animation(Level.Content.Load<Texture2D>(spriteSet + "Run"), 0.1f, true);
+			//runAnimation = new Animation(Level.Content.Load<Texture2D>(spriteSet + "Run"), 0.1f, true);
 			idleAnimation = new Animation(Level.Content.Load<Texture2D>(spriteSet + "Idle"), 0.15f, true);
 			sprite.PlayAnimation(idleAnimation);
 
@@ -170,14 +170,14 @@ namespace Platformer
 		public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
 		{
 			// Stop running when the game is paused or before turning around.
-			if (!Level.Player.IsAlive || Level.ReachedExit || Level.TimeRemaining == TimeSpan.Zero || waitTime > 0)
-			{
+			//if (!Level.Player.IsAlive || Level.ReachedExit || Level.TimeRemaining == TimeSpan.Zero || waitTime > 0)
+			//{
 				sprite.PlayAnimation(idleAnimation);
-			}
-			else
-			{
-				sprite.PlayAnimation(runAnimation);
-			}
+			//}
+			//else
+			//{
+			//	sprite.PlayAnimation(runAnimation);
+			//}
 
 
 			// Draw facing the way the enemy is moving.
