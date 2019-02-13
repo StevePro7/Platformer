@@ -311,13 +311,11 @@ namespace Platformer
 		        }
 			}
 			#endregion
-			// //if (keyboardState.IsKeyDown(Keys.Left) ||
-			//    keyboardState.IsKeyDown(Keys.A))
+			// //if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
 			//{
 			//    movement = -1.0f;
 			//}
-			//else if (keyboardState.IsKeyDown(Keys.Right) ||
-			//         keyboardState.IsKeyDown(Keys.D))
+			//else if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
 			//{
 			//    movement = 1.0f;
 			//}

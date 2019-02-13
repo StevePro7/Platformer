@@ -130,7 +130,7 @@ namespace Platformer
 		{
 			// move to the next level
 			levelIndex = (levelIndex + 1) % numberOfLevels;
-			levelIndex = 1;
+			levelIndex = 1;		// TODO remove this override - could make this configurable...!
 			// Unloads the content for the current level before loading the next one.
 			if (level != null)
 				level.Dispose();

@@ -64,7 +64,7 @@ namespace Platformer
         public int FrameWidth
         {
             // Assume square frames.
-            get { return Texture.Height; }
+			get { return Texture.Width; }
         }
 
         /// <summary>

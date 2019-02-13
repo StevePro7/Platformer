@@ -61,7 +61,7 @@ namespace Platformer
 		}
 
 		// Animations
-		private Animation runAnimation;
+		//private Animation runAnimation;
 		private Animation idleAnimation;
 		private AnimationPlayer sprite;
 
@@ -105,7 +105,7 @@ namespace Platformer
 			spriteSet = "Sprites/" + spriteSet + "/";
 			//runAnimation = new Animation(Level.Content.Load<Texture2D>(spriteSet + "Run"), 0.1f, true);
 			idleAnimation = new Animation(Level.Content.Load<Texture2D>(spriteSet + "Idle"), 0.15f, true);
-			//sprite.PlayAnimation(idleAnimation);
+			sprite.PlayAnimation(idleAnimation);
 
 			// Calculate bounds within texture size.
 			int width = (int) (idleAnimation.FrameWidth*0.35);
