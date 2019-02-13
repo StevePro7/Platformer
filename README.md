@@ -1,5 +1,15 @@
 # Platformer
 13/02/2019
+DrawY	0
+PosY	64
+BoundTop	12
+BoundBottom	64
+TopTile	0.375
+BottomTile	2
+TopTile	0
+BottomTile	1
+DIFF	TRUE
+
 TODO need to determine the jump direction when hit head on block above...
 Player jump animation kicks in and sometimes forces player left or right
 
