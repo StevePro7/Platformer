@@ -95,5 +95,10 @@ namespace Platformer
             // Draw the current frame.
             spriteBatch.Draw(Animation.Texture, position, source, Color.White, 0.0f, Origin, 1.0f, spriteEffects, 0.0f);
         }
+
+	    public void Draw(SpriteBatch spriteBatch, Vector2 position)
+	    {
+		    spriteBatch.Draw(Animation.Texture, position, Color.White);
+	    }
     }
 }
