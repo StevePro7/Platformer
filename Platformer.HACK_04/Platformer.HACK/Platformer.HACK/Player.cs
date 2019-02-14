@@ -8,13 +8,10 @@
 #endregion
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Platformer
 {
@@ -458,58 +455,117 @@ namespace Platformer
             // Get the player's bounding rectangle and find neighboring tiles.
             Rectangle bounds = BoundingRectangle;
 
-	        int posX = (int)Position.X;
-	        int posY = (int)Position.Y;
+	        //int posX = 16;
+	        //int posX = 49;//(int)Position.X;
+	        //int posY = 64;//(int)Position.Y;
+	        int[] ltArray = new[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 };
+			int[] rtArray = new[] { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+			int[] ttArray = new[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+			int[] btArray = new[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
 
-	        int boundsLeft = bounds.Left;
-	        int boundsRight = bounds.Right;
-	        int boundsTop = bounds.Top;
-	        int boundsBottom = bounds.Bottom;
+	        int leftTile = 0;
+	        int rightTile = 0;
+			int topTile = 0;
+	        int bottomTile = 0;
 
-	        Vector2 drawPosn = GetDrawPosn();
+			// TODO stay wihin the bounds i.e. do not go too far left / right / up / down otherwise will crash
+			// will work these constraints out another way
+			Vector2 drawPosn = GetDrawPosn();
+			//if (drawPosn.X < 0)
+			//{
+			//    leftTile = drawPosn.X < -4 ? -1 : 0;
+			//}
+			//else
+			//{
+				int idxX = (int)drawPosn.X;
+				int quoX = (int)(idxX / Tile.Size.X);
+				int remX = (int)(idxX % Tile.Size.X);
+				if (remX < 0)
+				{
+					remX = 0;
+				}
+				int idxLeftTile = ltArray[remX];
+				int idxRightTile = rtArray[remX];
+
+				leftTile = idxLeftTile + quoX;
+				rightTile = idxRightTile + quoX;
+	        //}
+
+			//if (drawPosn.Y < 0)
+			//{
+			//    topTile = drawPosn.Y < -12 ? -1 : 0;
+			//}
+			//else
+			//{
+				int idxY = (int)drawPosn.Y;
+				int quoY = (int)(idxY / Tile.Size.Y);
+				int remY = (int)(idxY % Tile.Size.Y);
+			// this won't crash at least but will go off the sides
+	        if (remY < 0)
+	        {
+		        remY = 0;
+			}
+				int idxTopTile = ttArray[remY];
+				int idxBottomTile = btArray[remY];
+
+				topTile = idxTopTile + quoY;
+				bottomTile = idxBottomTile + quoY;
+	        //}
+
+			int leftTile2 = (int)Math.Floor((float)bounds.Left / Tile.Width);
+			int rightTile2 = (int)Math.Ceiling(((float)bounds.Right / Tile.Width)) - 1;
+			int topTile2 = (int)Math.Floor((float)bounds.Top / Tile.Height);
+			int bottomTile2 = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
+
+	        if (leftTile != leftTile2 || rightTile != rightTile2 || topTile != topTile2 || bottomTile != bottomTile2)
+	        {
+				int bob = 7;    
+	        }
+
+	        int sgb = 10;
+			//int boundsLeft = bounds.Left;
+			//int boundsRight = bounds.Right;
+			//int boundsTop = bounds.Top;
+			//int boundsBottom = bounds.Bottom;
+
+	        
 
 	        //int start = (int)drawPosn.X - boundsLeft - 1;
-	        int start = (int)drawPosn.Y - boundsTop - 1;
-	        int finsh = 800;
+			//int start = (int)drawPosn.Y - boundsTop - 1;
+			//int finsh = 800;
 
-	        string head = String.Format("DrawX{0}PosX{0}LeftTile{0}RightTile", "\t\t");
+	        //string head = String.Format("DrawX{0}PosX{0}LeftTile{0}RightTile", "\t\t");
 	        //Logger.Info(head);
+			//IList<string> lines = new List<string>();
+			//for (int index = start; index <= finsh; index++)
+			//{
+			//    //posX = (int)Position.X + index;
+			//    posY = (int) Position.Y + index;
+			//    int localBoundsWidth = 24;
+			//    int localBoundsHeight = 52;
 
-			IList<string> lines = new List<string>();
-	        for (int index = start; index <= finsh; index++)
-	        {
-		        //posX = (int)Position.X + index;
-		        posY = (int) Position.Y + index;
-				int localBoundsWidth = 24;
-		        int localBoundsHeight = 52;
+			//    int halfBoundsWidth = localBoundsWidth / 2;//12;
+			//    boundsLeft = (int)posX - halfBoundsWidth;		//=8
+			//    boundsRight = boundsLeft + localBoundsWidth;
 
-		        int halfBoundsWidth = localBoundsWidth / 2;//12;
-		        boundsLeft = (int)posX - halfBoundsWidth;		//=8
-		        boundsRight = boundsLeft + localBoundsWidth;
+			//    boundsTop = (int)posY - localBoundsHeight;		//=12
+			//    boundsBottom = boundsTop + localBoundsHeight;
 
-		        boundsTop = (int)posY - localBoundsHeight;		//=12
-		        boundsBottom = boundsTop + localBoundsHeight;
+			//    //int leftTile2 = (int)Math.Floor((float)boundsLeft / Tile.Width);
+			//    //int rightTile2 = (int)Math.Ceiling(((float)boundsRight / Tile.Width)) - 1;
+			//    //int topTile2 = (int)Math.Floor((float)boundsTop / Tile.Height);
+			//    //int bottomTile2 = (int)Math.Ceiling(((float)boundsBottom / Tile.Height)) - 1;
+			//    //lines.Add(bottomTile2.ToString());
 
-				//int leftTile2 = (int)Math.Floor((float)boundsLeft / Tile.Width);
-				//int rightTile2 = (int)Math.Ceiling(((float)boundsRight / Tile.Width)) - 1;
-		        //int topTile2 = (int)Math.Floor((float)boundsTop / Tile.Height);
-		        int bottomTile2 = (int)Math.Ceiling(((float)boundsBottom / Tile.Height)) - 1;
+			//    //string msg1 = String.Format("{1}{0}{2}{0}{3}{0}{4}", "\t\t\t", index, posX, leftTile2,rightTile2);
+			//    //Logger.Info(msg1);
+			//}
+			//foreach (var line in lines)
+			//{
+			//    System.Diagnostics.Trace.WriteLine(line);
+			//}
 
-				lines.Add(bottomTile2.ToString());
-
-		        //string msg1 = String.Format("{1}{0}{2}{0}{3}{0}{4}", "\t\t\t", index, posX, leftTile2,rightTile2);
-				//Logger.Info(msg1);
-	        }
-
-	        foreach (var line in lines)
-	        {
-		        System.Diagnostics.Trace.WriteLine(line);
-	        }
-
-            int leftTile = (int)Math.Floor((float)bounds.Left / Tile.Width);
-            int rightTile = (int)Math.Ceiling(((float)bounds.Right / Tile.Width)) - 1;
-            int topTile = (int)Math.Floor((float)bounds.Top / Tile.Height);
-            int bottomTile = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
+            
 
 	        if (shouldLog)
 	        {
@@ -601,15 +657,25 @@ namespace Platformer
 
 	    private Vector2 GetDrawPosn()
 	    {
-		    int halfTileSizeX = ((int)Tile.Size.X / 2);
-		    int twiceTileSizeY = 2 * (int)Tile.Size.Y;
+			//int halfTileSizeX = ((int)Tile.Size.X / 2);
+			//int twiceTileSizeY = 2 * (int)Tile.Size.Y;
 
-		    int rendX = (int)position.X - halfTileSizeX;
-		    int rendY = (int)position.Y - twiceTileSizeY;
+			//int rendX = (int)position.X - halfTileSizeX;
+			//int rendY = (int)position.Y - twiceTileSizeY;
+			//Vector2 drawPosn = new Vector2(rendX, rendY);
+			//return drawPosn;
+		    return GetDrawPosn((int)position.X, (int)position.Y);
+	    }
+		private Vector2 GetDrawPosn(int posX, int posY)
+		{
+			int halfTileSizeX = ((int)Tile.Size.X / 2);
+			int twiceTileSizeY = 2 * (int)Tile.Size.Y;
+
+			int rendX = (int)posX - halfTileSizeX;
+			int rendY = (int)posY - twiceTileSizeY;
 			Vector2 drawPosn = new Vector2(rendX, rendY);
 			return drawPosn;
-	    }
-
+		}
         /// <summary>
         /// Draws the animated player.
         /// </summary>
