@@ -20,11 +20,26 @@ namespace Platformer
     /// </summary>
     class Player
     {
+	    private readonly int[] ltArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 };
+	    private readonly int[] rtArray = { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+	    private readonly int[] ttArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+	    private readonly int[] btArray = { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
+
+	    const int COUNT = 17;
+	    const int MAX_X = 5;
+	    private readonly int[] velocityX = { 1, 2, 2, 2, 2 };
+	    private readonly int[] velocityY = { -11, -9, -7, -6, -6, -5, -4, -4, -3, -3, -2, -2, -2, -1, -1, -1, -1 };
+	    private readonly int[] gravity = { 1, 1, 2, 2, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 };
+	    private int player_idxX;
+	    private int deltaX;
+	    private int deltaY;
+
 	    //private static bool MovePlayer = true; 
 	    private KeyboardState prevKeyboardState;
 	    private const int deltaM = 1;
 	    private bool shouldLog;
 	    private Texture2D BoundImage;
+	    private enum_move_type player_move_type;
 
 		// Position deltas.
 	    private int[] posDeltaAirX = new[] { 0, 1, 2, 3, 4, 5 };
@@ -185,6 +200,7 @@ namespace Platformer
             Velocity = Vector2.Zero;
             isAlive = true;
             sprite.PlayAnimation(idleAnimation);
+	        player_move_type = enum_move_type.move_type_idle;
         }
 
         /// <summary>
@@ -218,7 +234,6 @@ namespace Platformer
             // Clear input.
             movement = 0.0f;
             isJumping = false;
-
 			//moveX = 0;
 			//moveY = 0;
         }
@@ -313,10 +328,43 @@ namespace Platformer
 			if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
 			{
 				movement = -1.0f;
+				if (enum_move_type.move_type_left != player_move_type)
+				{
+					player_idxX = 0;
+					deltaX = velocityX[player_idxX];
+					player_move_type = enum_move_type.move_type_left;
+				}
+				else if (enum_move_type.move_type_left == player_move_type)
+				{
+					player_idxX++;
+					if (player_idxX > MAX_X - 1)
+					{
+						player_idxX = MAX_X - 1;
+					}
+					deltaX = velocityX[player_idxX];
+					//player_move_type = enum_move_type.move_type_left;
+				}
+				player_move_type = enum_move_type.move_type_left;
 			}
 			else if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
 			{
 				movement = 1.0f;
+				if (enum_move_type.move_type_rght != player_move_type)
+				{
+					player_idxX = 0;
+					deltaX = velocityX[player_idxX];
+					player_move_type = enum_move_type.move_type_rght;
+				}
+				else if (enum_move_type.move_type_rght == player_move_type)
+				{
+					player_idxX++;
+					if (player_idxX > MAX_X - 1)
+					{
+						player_idxX = MAX_X - 1;
+					}
+					deltaX = velocityX[player_idxX];
+					//player_move_type = move_type_rght;
+				}
 			}
 
 	        shouldLog = keyboardState.IsKeyDown(Keys.Enter) && prevKeyboardState.IsKeyUp(Keys.Enter);
@@ -348,16 +396,26 @@ namespace Platformer
 
             // Base velocity is a combination of horizontal movement control and
             // acceleration downward due to gravity.
-            velocity.X += movement * MoveAcceleration * elapsed;
+	        if (0 == movement)
+	        {
+		        player_move_type = enum_move_type.move_type_idle;
+		        velocity.X = 0;
+	        }
+	        if (enum_move_type.move_type_idle != player_move_type)
+	        {
+		        velocity.X = (int) (player_move_type - 1) * deltaX * 2;
+	        }
+
+	        //velocity.X += movement * MoveAcceleration * elapsed;
 			velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
 
             velocity.Y = DoJump(velocity.Y, gameTime);
 	        
             // Apply pseudo-drag horizontally.
-			if (IsOnGround)
-				velocity.X *= GroundDragFactor;
-			else
-				velocity.X *= AirDragFactor;
+			//if (IsOnGround)
+			//    velocity.X *= GroundDragFactor;
+			//else
+			//    velocity.X *= AirDragFactor;
 	        //velocity.X *= GroundDragFactor;
 	        //velocity.X *= AirDragFactor;
 
@@ -365,7 +423,19 @@ namespace Platformer
             velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
 
             // Apply velocity.
-            Position += velocity * elapsed;
+	        //var bob = velocity * elapsed;
+	        var bobX = velocity.X;// * elapsed;		// IMPORTANT pre-calc'd so don't multiply by game tile delta elapsed
+	        var bobY = velocity.Y * elapsed;
+	        //velocity.X *= elapsed;
+	        //velocity.Y *= elapsed;
+
+            //Position += velocity * elapsed;
+	        //Position += velocity;
+	        //Position += bob;
+	        var bobPos = Position;
+	        bobPos.X += bobX;
+	        bobPos.Y += bobY;
+	        Position = bobPos;
             Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
 
 	        int currPosY = (int) Position.Y;
@@ -376,7 +446,7 @@ namespace Platformer
 		        int velX = (int)(velocity.X);
 		        int delta = currPosX - prevPosX;
 		        string msg = String.Format("{0}\t\t{1}\t\t{2}\t\t{3}", velX, currPosX, prevPosX, delta);
-		        Logger.Info(msg);
+		        //Logger.Info(msg);
 	        }
 
             // If the player is now colliding with the level, separate them.
@@ -519,10 +589,12 @@ namespace Platformer
 
 			if (leftTile != leftTile2 || rightTile != rightTile2 || topTile != topTile2 || bottomTile != bottomTile2)
 			{
-				int bob = 7;
+				String msg = String.Format("(X,Y)=({0},{1}), L:{2} R:{3} T:{4} B:{5}", (int)position.X, (int)position.Y, leftTile, rightTile, topTile, bottomTile);
+				//String msg = String.Format("BoundL:{0} BoundT:{1} BoundW:{2} BoundH:{3}", bounds.Left, bounds.Top, bounds.Width, bounds.Height);
+				Logger.Info(msg);
 			}
 
-			int sgb = 10;
+			//int sgb = 10;
 			//int boundsLeft = bounds.Left;
 			//int boundsRight = bounds.Right;
 			//int boundsTop = bounds.Top;
@@ -533,7 +605,7 @@ namespace Platformer
 	        {
 		        String msg = String.Format("(X,Y)=({0},{1}), L:{2} R:{3} T:{4} B:{5}", (int) position.X, (int) position.Y, leftTile, rightTile, topTile, bottomTile);
 		        //String msg = String.Format("BoundL:{0} BoundT:{1} BoundW:{2} BoundH:{3}", bounds.Left, bounds.Top, bounds.Width, bounds.Height);
-		        Logger.Info(msg);
+		        //Logger.Info(msg);
 	        }
 
 	        // Reset flag to search for ground collision.
