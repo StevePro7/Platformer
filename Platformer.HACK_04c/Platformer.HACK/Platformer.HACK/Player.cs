@@ -26,8 +26,8 @@ namespace Platformer
 	    private readonly int[] btArray = { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
 
 	    const int COUNT = 17;
-	    const int MAX_X = 5;
-	    private readonly int[] velocityX = { 1, 2, 2, 2, 2 };
+	    const int MAX_X = 10;
+	    private readonly int[] velocityX = { 1, 2, 2, 2, 2, 3, 3, 3, 3, 3 };
 	    private readonly int[] velocityY = { -11, -9, -7, -6, -6, -5, -4, -4, -3, -3, -2, -2, -2, -1, -1, -1, -1 };
 	    private readonly int[] gravity = { 1, 1, 2, 2, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 };
 	    private int player_idxX;
