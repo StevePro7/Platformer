@@ -3,5 +3,7 @@ Platformer.HACK_04b
 Clone of Platformer.HACK_04
 Add gridlines
 Tiles become 32x32 for tiles and change Player to be 32x64
-Replace with original movement including jump and gravity to compare tile collisions
-vs. original 40x32 tile size
+Retain original movement left / right / jump / fall
+BUT implement tile collision look ups from int array
+Compare against actual original calculations;
+They all work fine except when player is near the edges - this needs to be tweaked not to check Tile collision
