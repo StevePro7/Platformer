@@ -122,8 +122,8 @@ namespace Platformer
         {
 			get
 			{
-				int localBoundsWidth = 24;
-				int localBoundsHeight = 52;
+				int localBoundsWidth = 12;//24;		//IMP
+				int localBoundsHeight = 26;//52;	//IMP
 				//int localBoundsX = 20;//localBounds.X;
 				//int localBoundsY = 12;//localBounds.Y;
 

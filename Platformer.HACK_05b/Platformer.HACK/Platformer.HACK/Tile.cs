@@ -45,8 +45,8 @@ namespace Platformer
         public Texture2D Texture;
         public TileCollision Collision;
 
-	    public const int Width = 32;//ORG=40;
-        public const int Height = 32;
+		public const int Width = 16;//32;//ORG=40;		//IMP
+	    public const int Height = 16;//32;				//IMP
 
         public static readonly Vector2 Size = new Vector2(Width, Height);
 
