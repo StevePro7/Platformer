@@ -20,7 +20,7 @@ namespace Platformer
     /// </summary>
     class Player
     {
-	    private static bool MovePlayer = true; 
+	    //private static bool MovePlayer = true; 
 	    private KeyboardState prevKeyboardState;
 	    private const int deltaM = 1;
 	    private bool shouldLog;
@@ -106,8 +106,8 @@ namespace Platformer
         /// </summary>
         private float movement;
 
-	    private int moveX;
-	    private int moveY;
+	    //private int moveX;
+	    //private int moveY;
 
         // Jumping state
         private bool isJumping;
@@ -219,8 +219,8 @@ namespace Platformer
             movement = 0.0f;
             isJumping = false;
 
-	        moveX = 0;
-	        moveY = 0;
+	        //moveX = 0;
+	        //moveY = 0;
         }
 
         /// <summary>
@@ -246,84 +246,84 @@ namespace Platformer
 			//        movement = -movement;
 			//}
 	        shouldLog = false;
-	        int offset = 1;
+	        //int offset = 1;
 			#region Movement
-			if (keyboardState.IsKeyDown(Keys.Space))
-	        {
-		        offset = 2;
-	        }
-            // If any digital horizontal movement input is found, override the analog movement.
-	        if (MovePlayer)
-	        {
-		        if (keyboardState.IsKeyDown(Keys.Left))
-		        {
-			        moveX = -deltaM * offset;
-		        }
-	        }
-	        else
-	        {
-		        if (keyboardState.IsKeyDown(Keys.Left) && prevKeyboardState.IsKeyUp(Keys.Left))
-		        {
-			        moveX = -deltaM * offset;
-		        }
-	        }
-	        if (MovePlayer)
-	        {
-		        if (keyboardState.IsKeyDown(Keys.Right))
-		        {
-			        moveX = deltaM * offset;
-		        }
-	        }
-	        else
-	        {
-		        if (keyboardState.IsKeyDown(Keys.Right) && prevKeyboardState.IsKeyUp(Keys.Right))
-		        {
-			        moveX = deltaM * offset;
-		        }
-	        }
-	        if (MovePlayer)
-	        {
-		        if (keyboardState.IsKeyDown(Keys.Up)) // && prevKeyboardState.IsKeyUp(Keys.Up))
-		        {
-			        moveY = -deltaM * offset;
-		        }
-	        }
-			else
-	        {
-		        if (keyboardState.IsKeyDown(Keys.Up) && prevKeyboardState.IsKeyUp(Keys.Up))
-		        {
-			        moveY = -deltaM * offset;
-		        }
-	        }
-	        if (MovePlayer)
-	        {
-		        if (keyboardState.IsKeyDown(Keys.Down)) // && prevKeyboardState.IsKeyUp(Keys.Down))
-		        {
-			        moveY = deltaM * offset;
-		        }
-	        }
-	        else
-	        {
-		        if (keyboardState.IsKeyDown(Keys.Down) && prevKeyboardState.IsKeyUp(Keys.Down))
-		        {
-			        moveY = deltaM * offset;
-		        }
-			}
+			//if (keyboardState.IsKeyDown(Keys.Space))
+			//{
+			//    offset = 2;
+			//}
+			//// If any digital horizontal movement input is found, override the analog movement.
+			//if (MovePlayer)
+			//{
+			//    if (keyboardState.IsKeyDown(Keys.Left))
+			//    {
+			//        moveX = -deltaM * offset;
+			//    }
+			//}
+			//else
+			//{
+			//    if (keyboardState.IsKeyDown(Keys.Left) && prevKeyboardState.IsKeyUp(Keys.Left))
+			//    {
+			//        moveX = -deltaM * offset;
+			//    }
+			//}
+			//if (MovePlayer)
+			//{
+			//    if (keyboardState.IsKeyDown(Keys.Right))
+			//    {
+			//        moveX = deltaM * offset;
+			//    }
+			//}
+			//else
+			//{
+			//    if (keyboardState.IsKeyDown(Keys.Right) && prevKeyboardState.IsKeyUp(Keys.Right))
+			//    {
+			//        moveX = deltaM * offset;
+			//    }
+			//}
+			//if (MovePlayer)
+			//{
+			//    if (keyboardState.IsKeyDown(Keys.Up)) // && prevKeyboardState.IsKeyUp(Keys.Up))
+			//    {
+			//        moveY = -deltaM * offset;
+			//    }
+			//}
+			//else
+			//{
+			//    if (keyboardState.IsKeyDown(Keys.Up) && prevKeyboardState.IsKeyUp(Keys.Up))
+			//    {
+			//        moveY = -deltaM * offset;
+			//    }
+			//}
+			//if (MovePlayer)
+			//{
+			//    if (keyboardState.IsKeyDown(Keys.Down)) // && prevKeyboardState.IsKeyUp(Keys.Down))
+			//    {
+			//        moveY = deltaM * offset;
+			//    }
+			//}
+			//else
+			//{
+			//    if (keyboardState.IsKeyDown(Keys.Down) && prevKeyboardState.IsKeyUp(Keys.Down))
+			//    {
+			//        moveY = deltaM * offset;
+			//    }
+			//}
 			#endregion
-			// //if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
-			//{
-			//    movement = -1.0f;
-			//}
-			//else if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
-			//{
-			//    movement = 1.0f;
-			//}
+			if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
+			{
+			    movement = -1.0f;
+			}
+			else if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
+			{
+			    movement = 1.0f;
+			}
 
 	        shouldLog = keyboardState.IsKeyDown(Keys.Enter) && prevKeyboardState.IsKeyUp(Keys.Enter);
             // Check if the player wants to jump.
-	        isJumping = false;
+	        isJumping = 
                 //gamePadState.IsButtonDown(JumpButton) ||
-                //keyboardState.IsKeyDown(Keys.Space) ||
+                keyboardState.IsKeyDown(Keys.Space);// ||
                 //keyboardState.IsKeyDown(Keys.Up) ||
                 //keyboardState.IsKeyDown(Keys.W);// ||
                 //touchState.AnyTouch();
@@ -338,34 +338,39 @@ namespace Platformer
         {
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-			velocity = Vector2.Zero;
+			//velocity = Vector2.Zero;
             Vector2 previousPosition = Position;
 	        int prevPosY = (int) previousPosition.Y;
 	        int prevPosX = (int) previousPosition.X;
 
+	        //velocity.X += moveX;
+	        //velocity.Y += moveY;
+
             // Base velocity is a combination of horizontal movement control and
             // acceleration downward due to gravity.
-            //velocity.X += movement * MoveAcceleration * elapsed;
-	        velocity.X += moveX;
-	        velocity.Y += moveY;
-            //velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
+            velocity.X += movement * MoveAcceleration * elapsed;
+            velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
 
-            //velocity.Y = DoJump(velocity.Y, gameTime);
+            velocity.Y = DoJump(velocity.Y, gameTime);
 	        
             // Apply pseudo-drag horizontally.
-			//if (IsOnGround)
-			//    velocity.X *= GroundDragFactor;
-			//else
-			//    velocity.X *= AirDragFactor;
+			if (IsOnGround)
+				velocity.X *= GroundDragFactor;
+			else
+				velocity.X *= AirDragFactor;
 	        //velocity.X *= GroundDragFactor;
 	        //velocity.X *= AirDragFactor;
 
-            // Prevent the player from running faster than his top speed.            
-            //velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
+			// Prevent the player from running faster than his top speed.            
+	        velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
+	        var bob = velocity * elapsed;
+	        if (0 != bob.X)
+	        {
+		        Logger.Info(bob.X.ToString());
+	        }
 
             // Apply velocity.
-            //Position += velocity * elapsed;
-	        Position += velocity;
+            Position += velocity * elapsed;
             Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
 
 	        int currPosY = (int) Position.Y;
@@ -376,7 +381,7 @@ namespace Platformer
 		        int velX = (int)(velocity.X);
 		        int delta = currPosX - prevPosX;
 		        string msg = String.Format("{0}\t\t{1}\t\t{2}\t\t{3}", velX, currPosX, prevPosX, delta);
-		        Logger.Info(msg);
+		        //Logger.Info(msg);
 	        }
 
             // If the player is now colliding with the level, separate them.
@@ -519,7 +524,7 @@ namespace Platformer
 
 	        if (leftTile != leftTile2 || rightTile != rightTile2 || topTile != topTile2 || bottomTile != bottomTile2)
 	        {
-				int bob = 7;    
+				int bob = 7;
 	        }
 
 	        int sgb = 10;
@@ -528,50 +533,11 @@ namespace Platformer
 			//int boundsTop = bounds.Top;
 			//int boundsBottom = bounds.Bottom;
 
-	        
-
-	        //int start = (int)drawPosn.X - boundsLeft - 1;
-			//int start = (int)drawPosn.Y - boundsTop - 1;
-			//int finsh = 800;
-
-	        //string head = String.Format("DrawX{0}PosX{0}LeftTile{0}RightTile", "\t\t");
-	        //Logger.Info(head);
-			//IList<string> lines = new List<string>();
-			//for (int index = start; index <= finsh; index++)
-			//{
-			//    //posX = (int)Position.X + index;
-			//    posY = (int) Position.Y + index;
-			//    int localBoundsWidth = 24;
-			//    int localBoundsHeight = 52;
-
-			//    int halfBoundsWidth = localBoundsWidth / 2;//12;
-			//    boundsLeft = (int)posX - halfBoundsWidth;		//=8
-			//    boundsRight = boundsLeft + localBoundsWidth;
-
-			//    boundsTop = (int)posY - localBoundsHeight;		//=12
-			//    boundsBottom = boundsTop + localBoundsHeight;
-
-			//    //int leftTile2 = (int)Math.Floor((float)boundsLeft / Tile.Width);
-			//    //int rightTile2 = (int)Math.Ceiling(((float)boundsRight / Tile.Width)) - 1;
-			//    //int topTile2 = (int)Math.Floor((float)boundsTop / Tile.Height);
-			//    //int bottomTile2 = (int)Math.Ceiling(((float)boundsBottom / Tile.Height)) - 1;
-			//    //lines.Add(bottomTile2.ToString());
-
-			//    //string msg1 = String.Format("{1}{0}{2}{0}{3}{0}{4}", "\t\t\t", index, posX, leftTile2,rightTile2);
-			//    //Logger.Info(msg1);
-			//}
-			//foreach (var line in lines)
-			//{
-			//    System.Diagnostics.Trace.WriteLine(line);
-			//}
-
-            
-
 	        if (shouldLog)
 	        {
 		        String msg = String.Format("(X,Y)=({0},{1}), L:{2} R:{3} T:{4} B:{5}", (int) position.X, (int) position.Y, leftTile, rightTile, topTile, bottomTile);
 		        //String msg = String.Format("BoundL:{0} BoundT:{1} BoundW:{2} BoundH:{3}", bounds.Left, bounds.Top, bounds.Width, bounds.Height);
-		        Logger.Info(msg);
+		        //Logger.Info(msg);
 	        }
 
 	        // Reset flag to search for ground collision.

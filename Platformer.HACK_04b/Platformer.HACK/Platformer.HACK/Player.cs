@@ -368,7 +368,6 @@ namespace Platformer
 	        {
 		        Logger.Info(bob.X.ToString());
 	        }
-			
 
             // Apply velocity.
             Position += velocity * elapsed;
@@ -533,7 +532,6 @@ namespace Platformer
 			//int boundsRight = bounds.Right;
 			//int boundsTop = bounds.Top;
 			//int boundsBottom = bounds.Bottom;
-
 
 	        if (shouldLog)
 	        {
