@@ -450,183 +450,75 @@ namespace Platformer
         /// axis to prevent overlapping. There is some special logic for the Y axis to
         /// handle platforms which behave differently depending on direction of movement.
         /// </summary>
-        private void HandleCollisions()
-        {
-            // Get the player's bounding rectangle and find neighboring tiles.
-            Rectangle bounds = BoundingRectangle;
+		private void HandleCollisions()
+		{
+			// Get the player's bounding rectangle and find neighboring tiles.
+			Rectangle bounds = BoundingRectangle;
+			int leftTile = (int)Math.Floor((float)bounds.Left / Tile.Width);
+			int rightTile = (int)Math.Ceiling(((float)bounds.Right / Tile.Width)) - 1;
+			int topTile = (int)Math.Floor((float)bounds.Top / Tile.Height);
+			int bottomTile = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
 
-	        //int posX = 16;
-	        //int posX = 49;//(int)Position.X;
-	        //int posY = 64;//(int)Position.Y;
-	        int[] ltArray = new[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 };
-			int[] rtArray = new[] { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-			int[] ttArray = new[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-			int[] btArray = new[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
-
-	        int leftTile = 0;
-	        int rightTile = 0;
-			int topTile = 0;
-	        int bottomTile = 0;
-
-			// TODO stay wihin the bounds i.e. do not go too far left / right / up / down otherwise will crash
-			// will work these constraints out another way
-			Vector2 drawPosn = GetDrawPosn();
-			//if (drawPosn.X < 0)
-			//{
-			//    leftTile = drawPosn.X < -4 ? -1 : 0;
-			//}
-			//else
-			//{
-				int idxX = (int)drawPosn.X;
-				int quoX = (int)(idxX / Tile.Size.X);
-				int remX = (int)(idxX % Tile.Size.X);
-				if (remX < 0)
-				{
-					remX = 0;
-				}
-				int idxLeftTile = ltArray[remX];
-				int idxRightTile = rtArray[remX];
-
-				leftTile = idxLeftTile + quoX;
-				rightTile = idxRightTile + quoX;
-	        //}
-
-			//if (drawPosn.Y < 0)
-			//{
-			//    topTile = drawPosn.Y < -12 ? -1 : 0;
-			//}
-			//else
-			//{
-				int idxY = (int)drawPosn.Y;
-				int quoY = (int)(idxY / Tile.Size.Y);
-				int remY = (int)(idxY % Tile.Size.Y);
-			// this won't crash at least but will go off the sides
-	        if (remY < 0)
-	        {
-		        remY = 0;
+			if (shouldLog)
+			{
+				String msg = String.Format("(X,Y)=({0},{1}), L:{2} R:{3} T:{4} B:{5}", (int)position.X, (int)position.Y, leftTile, rightTile, topTile, bottomTile);
+				//String msg = String.Format("BoundL:{0} BoundT:{1} BoundW:{2} BoundH:{3}", bounds.Left, bounds.Top, bounds.Width, bounds.Height);
+				Logger.Info(msg);
 			}
-				int idxTopTile = ttArray[remY];
-				int idxBottomTile = btArray[remY];
 
-				topTile = idxTopTile + quoY;
-				bottomTile = idxBottomTile + quoY;
-	        //}
+			// Reset flag to search for ground collision.
+			isOnGround = false;
 
-			int leftTile2 = (int)Math.Floor((float)bounds.Left / Tile.Width);
-			int rightTile2 = (int)Math.Ceiling(((float)bounds.Right / Tile.Width)) - 1;
-			int topTile2 = (int)Math.Floor((float)bounds.Top / Tile.Height);
-			int bottomTile2 = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
+			// For each potentially colliding tile,
+			for (int y = topTile; y <= bottomTile; ++y)
+			{
+				for (int x = leftTile; x <= rightTile; ++x)
+				{
+					// If this tile is collidable,
+					TileCollision collision = Level.GetCollision(x, y);
+					if (collision != TileCollision.Passable)
+					{
+						// Determine collision depth (with direction) and magnitude.
+						Rectangle tileBounds = Level.GetBounds(x, y);
+						Vector2 depth = RectangleExtensions.GetIntersectionDepth(bounds, tileBounds);
+						if (depth != Vector2.Zero)
+						{
+							float absDepthX = Math.Abs(depth.X);
+							float absDepthY = Math.Abs(depth.Y);
 
-	        if (leftTile != leftTile2 || rightTile != rightTile2 || topTile != topTile2 || bottomTile != bottomTile2)
-	        {
-				int bob = 7;    
-	        }
+							// Resolve the collision along the shallow axis.
+							if (absDepthY < absDepthX || collision == TileCollision.Platform)
+							{
+								// If we crossed the top of a tile, we are on the ground.
+								if (previousBottom <= tileBounds.Top)
+									isOnGround = true;
 
-	        int sgb = 10;
-			//int boundsLeft = bounds.Left;
-			//int boundsRight = bounds.Right;
-			//int boundsTop = bounds.Top;
-			//int boundsBottom = bounds.Bottom;
+								// Ignore platforms, unless we are on the ground.
+								if (collision == TileCollision.Impassable || IsOnGround)
+								{
+									// Resolve the collision along the Y axis.
+									Position = new Vector2(Position.X, Position.Y + depth.Y);
 
-	        
+									// Perform further collisions with the new bounds.
+									bounds = BoundingRectangle;
+								}
+							}
+							else if (collision == TileCollision.Impassable) // Ignore platforms.
+							{
+								// Resolve the collision along the X axis.
+								Position = new Vector2(Position.X + depth.X, Position.Y);
 
-	        //int start = (int)drawPosn.X - boundsLeft - 1;
-			//int start = (int)drawPosn.Y - boundsTop - 1;
-			//int finsh = 800;
+								// Perform further collisions with the new bounds.
+								bounds = BoundingRectangle;
+							}
+						}
+					}
+				}
+			}
 
-	        //string head = String.Format("DrawX{0}PosX{0}LeftTile{0}RightTile", "\t\t");
-	        //Logger.Info(head);
-			//IList<string> lines = new List<string>();
-			//for (int index = start; index <= finsh; index++)
-			//{
-			//    //posX = (int)Position.X + index;
-			//    posY = (int) Position.Y + index;
-			//    int localBoundsWidth = 24;
-			//    int localBoundsHeight = 52;
-
-			//    int halfBoundsWidth = localBoundsWidth / 2;//12;
-			//    boundsLeft = (int)posX - halfBoundsWidth;		//=8
-			//    boundsRight = boundsLeft + localBoundsWidth;
-
-			//    boundsTop = (int)posY - localBoundsHeight;		//=12
-			//    boundsBottom = boundsTop + localBoundsHeight;
-
-			//    //int leftTile2 = (int)Math.Floor((float)boundsLeft / Tile.Width);
-			//    //int rightTile2 = (int)Math.Ceiling(((float)boundsRight / Tile.Width)) - 1;
-			//    //int topTile2 = (int)Math.Floor((float)boundsTop / Tile.Height);
-			//    //int bottomTile2 = (int)Math.Ceiling(((float)boundsBottom / Tile.Height)) - 1;
-			//    //lines.Add(bottomTile2.ToString());
-
-			//    //string msg1 = String.Format("{1}{0}{2}{0}{3}{0}{4}", "\t\t\t", index, posX, leftTile2,rightTile2);
-			//    //Logger.Info(msg1);
-			//}
-			//foreach (var line in lines)
-			//{
-			//    System.Diagnostics.Trace.WriteLine(line);
-			//}
-
-            
-
-	        if (shouldLog)
-	        {
-		        String msg = String.Format("(X,Y)=({0},{1}), L:{2} R:{3} T:{4} B:{5}", (int) position.X, (int) position.Y, leftTile, rightTile, topTile, bottomTile);
-		        //String msg = String.Format("BoundL:{0} BoundT:{1} BoundW:{2} BoundH:{3}", bounds.Left, bounds.Top, bounds.Width, bounds.Height);
-		        Logger.Info(msg);
-	        }
-
-	        // Reset flag to search for ground collision.
-            isOnGround = false;
-
-            // For each potentially colliding tile,
-            for (int y = topTile; y <= bottomTile; ++y)
-            {
-                for (int x = leftTile; x <= rightTile; ++x)
-                {
-                    // If this tile is collidable,
-                    TileCollision collision = Level.GetCollision(x, y);
-                    if (collision != TileCollision.Passable)
-                    {
-                        // Determine collision depth (with direction) and magnitude.
-                        Rectangle tileBounds = Level.GetBounds(x, y);
-                        Vector2 depth = RectangleExtensions.GetIntersectionDepth(bounds, tileBounds);
-                        if (depth != Vector2.Zero)
-                        {
-                            float absDepthX = Math.Abs(depth.X);
-                            float absDepthY = Math.Abs(depth.Y);
-
-                            // Resolve the collision along the shallow axis.
-                            if (absDepthY < absDepthX || collision == TileCollision.Platform)
-                            {
-                                // If we crossed the top of a tile, we are on the ground.
-                                if (previousBottom <= tileBounds.Top)
-                                    isOnGround = true;
-
-                                // Ignore platforms, unless we are on the ground.
-                                if (collision == TileCollision.Impassable || IsOnGround)
-                                {
-                                    // Resolve the collision along the Y axis.
-                                    Position = new Vector2(Position.X, Position.Y + depth.Y);
-
-                                    // Perform further collisions with the new bounds.
-                                    bounds = BoundingRectangle;
-                                }
-                            }
-                            else if (collision == TileCollision.Impassable) // Ignore platforms.
-                            {
-                                // Resolve the collision along the X axis.
-                                Position = new Vector2(Position.X + depth.X, Position.Y);
-
-                                // Perform further collisions with the new bounds.
-                                bounds = BoundingRectangle;
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Save the new bounds bottom.
-            previousBottom = bounds.Bottom;
-        }
+			// Save the new bounds bottom.
+			previousBottom = bounds.Bottom;
+		}
 
         /// <summary>
         /// Called when the player has been killed.
