@@ -245,7 +245,7 @@ namespace Platformer
 			//    if (orientation == DisplayOrientation.LandscapeRight)
 			//        movement = -movement;
 			//}
-	        shouldLog = false;
+	        shouldLog = true;
 	        int offset = 1;
 			#region Movement
 			if (keyboardState.IsKeyDown(Keys.Space))
@@ -319,7 +319,7 @@ namespace Platformer
 			//    movement = 1.0f;
 			//}
 
-	        shouldLog = keyboardState.IsKeyDown(Keys.Enter) && prevKeyboardState.IsKeyUp(Keys.Enter);
+	        //shouldLog = keyboardState.IsKeyDown(Keys.Enter) && prevKeyboardState.IsKeyUp(Keys.Enter);
             // Check if the player wants to jump.
 	        isJumping = false;
                 //gamePadState.IsButtonDown(JumpButton) ||
@@ -461,7 +461,8 @@ namespace Platformer
 
 			if (shouldLog)
 			{
-				String msg = String.Format("(X,Y)=({0},{1}), L:{2} R:{3} T:{4} B:{5}", (int)position.X, (int)position.Y, leftTile, rightTile, topTile, bottomTile);
+				//String msg = String.Format("(X,Y)=({0},{1}), L:{2} R:{3}", (int)position.X, (int)position.Y, leftTile, rightTile);
+				String msg = String.Format("(X,Y)=({0},{1}), T:{2} B:{3}", (int)position.X, (int)position.Y, topTile, bottomTile);
 				//String msg = String.Format("BoundL:{0} BoundT:{1} BoundW:{2} BoundH:{3}", bounds.Left, bounds.Top, bounds.Width, bounds.Height);
 				Logger.Info(msg);
 			}
