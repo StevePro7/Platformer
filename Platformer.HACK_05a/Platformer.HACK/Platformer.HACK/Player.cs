@@ -454,10 +454,71 @@ namespace Platformer
 		{
 			// Get the player's bounding rectangle and find neighboring tiles.
 			Rectangle bounds = BoundingRectangle;
-			int leftTile = (int)Math.Floor((float)bounds.Left / Tile.Width);
-			int rightTile = (int)Math.Ceiling(((float)bounds.Right / Tile.Width)) - 1;
-			int topTile = (int)Math.Floor((float)bounds.Top / Tile.Height);
-			int bottomTile = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
+
+			int[] ltArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 };
+			int[] rtArray = { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+			int[] ttArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 };
+			int[] btArray = { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
+
+			int leftTile = 0;
+			int rightTile = 0;
+			int topTile = 0;
+			int bottomTile = 0;
+
+			// TODO stay wihin the bounds i.e. do not go too far left / right / up / down otherwise will crash
+			// will work these constraints out another way
+			Vector2 drawPosn = GetDrawPosn();
+			//if (drawPosn.X < 0)
+			//{
+			//    leftTile = drawPosn.X < -4 ? -1 : 0;
+			//}
+			//else
+			//{
+			int idxX = (int)drawPosn.X;
+			int quoX = (int)(idxX / Tile.Size.X);
+			int remX = (int)(idxX % Tile.Size.X);
+			if (remX < 0)
+			{
+				remX = 0;
+			}
+			int idxLeftTile = ltArray[remX];
+			int idxRightTile = rtArray[remX];
+
+			leftTile = idxLeftTile + quoX;
+			rightTile = idxRightTile + quoX;
+			//}
+
+			//if (drawPosn.Y < 0)
+			//{
+			//    topTile = drawPosn.Y < -12 ? -1 : 0;
+			//}
+			//else
+			//{
+			int idxY = (int)drawPosn.Y;
+			int quoY = (int)(idxY / Tile.Size.Y);
+			int remY = (int)(idxY % Tile.Size.Y);
+			// this won't crash at least but will go off the sides
+			if (remY < 0)
+			{
+				remY = 0;
+			}
+			int idxTopTile = ttArray[remY];
+			int idxBottomTile = btArray[remY];
+
+			topTile = idxTopTile + quoY;
+			bottomTile = idxBottomTile + quoY;
+			//}
+			int leftTile2 = (int)Math.Floor((float)bounds.Left / Tile.Width);
+			int rightTile2 = (int)Math.Ceiling(((float)bounds.Right / Tile.Width)) - 1;
+			int topTile2 = (int)Math.Floor((float)bounds.Top / Tile.Height);
+			int bottomTile2 = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
+
+			if (leftTile != leftTile2 || rightTile != rightTile2 || topTile != topTile2 || bottomTile != bottomTile2)
+			{
+				int bob = 7;
+			}
+
+			int sgb = 10;
 
 			if (shouldLog)
 			{
