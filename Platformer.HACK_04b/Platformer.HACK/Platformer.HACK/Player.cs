@@ -363,6 +363,12 @@ namespace Platformer
 
             // Prevent the player from running faster than his top speed.            
             velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
+			var bob = velocity * elapsed;
+	        if (0 != bob.X)
+	        {
+		        Logger.Info(bob.X.ToString());
+	        }
+			
 
             // Apply velocity.
             Position += velocity * elapsed;
@@ -376,7 +382,7 @@ namespace Platformer
 		        int velX = (int)(velocity.X);
 		        int delta = currPosX - prevPosX;
 		        string msg = String.Format("{0}\t\t{1}\t\t{2}\t\t{3}", velX, currPosX, prevPosX, delta);
-		        Logger.Info(msg);
+		        //Logger.Info(msg);
 	        }
 
             // If the player is now colliding with the level, separate them.
@@ -533,7 +539,7 @@ namespace Platformer
 	        {
 		        String msg = String.Format("(X,Y)=({0},{1}), L:{2} R:{3} T:{4} B:{5}", (int) position.X, (int) position.Y, leftTile, rightTile, topTile, bottomTile);
 		        //String msg = String.Format("BoundL:{0} BoundT:{1} BoundW:{2} BoundH:{3}", bounds.Left, bounds.Top, bounds.Width, bounds.Height);
-		        Logger.Info(msg);
+		        //Logger.Info(msg);
 	        }
 
 	        // Reset flag to search for ground collision.
