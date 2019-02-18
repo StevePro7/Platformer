@@ -44,8 +44,8 @@ namespace Platformer
 		public PlatformerGame()
 		{
 			graphics = new GraphicsDeviceManager(this);
-			graphics.PreferredBackBufferWidth = 640;
-			graphics.PreferredBackBufferHeight= 480;
+			graphics.PreferredBackBufferWidth = 320;
+			graphics.PreferredBackBufferHeight= 240;
 			Content.RootDirectory = "Content";
 			Logger.Initialize();
 		}
@@ -130,7 +130,7 @@ namespace Platformer
 		{
 			// move to the next level
 			levelIndex = (levelIndex + 1) % numberOfLevels;
-
+			levelIndex = 0;
 			// Unloads the content for the current level before loading the next one.
 			if (level != null)
 				level.Dispose();
