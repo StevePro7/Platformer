@@ -3,8 +3,15 @@ Platformer.HACK_04c
 Clone of Platformer.HACK_04b
 
 MAIN
+Actually should employ velY + gravity here
+
+Save HandleCollisions() rectangle comparison for 16x16
 Test code for HandleCollisions() rectangle comparison
-This should be straight port to PlatformerSMS
+
+
+HandleCollisions()
+Vector2 depth = RectangleExtensions.GetIntersectionDepth(bounds, tileBounds);
+
 
 Add gridlines
 Tiles become 32x32 for tiles and change Player to be 32x64
