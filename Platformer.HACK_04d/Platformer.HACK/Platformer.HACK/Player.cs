@@ -127,7 +127,7 @@ namespace Platformer
         // Jumping state
         private bool isJumping;
         private bool wasJumping;
-        private float jumpTime;
+        //private float jumpTime;
 
         //private Rectangle localBounds;
         /// <summary>
@@ -373,12 +373,12 @@ namespace Platformer
 
 	        shouldLog = keyboardState.IsKeyDown(Keys.Enter) && prevKeyboardState.IsKeyUp(Keys.Enter);
             // Check if the player wants to jump.
-	        isJumping = false;
-                //gamePadState.IsButtonDown(JumpButton) ||
-                //keyboardState.IsKeyDown(Keys.Space);// ||
-                //keyboardState.IsKeyDown(Keys.Up) ||
-                //keyboardState.IsKeyDown(Keys.W);// ||
-                //touchState.AnyTouch();
+	        isJumping =
+			    //gamePadState.IsButtonDown(JumpButton) ||
+			    keyboardState.IsKeyDown(Keys.Space); // ||
+		        //keyboardState.IsKeyDown(Keys.Up) ||
+		        //keyboardState.IsKeyDown(Keys.W);// ||
+		        //touchState.AnyTouch();
 
 	        prevKeyboardState = keyboardState;
         }
@@ -412,6 +412,8 @@ namespace Platformer
 
 	        //velocity.X += movement * MoveAcceleration * elapsed;
 
+			// TODO stevepro - this is the problem line:
+			// once hit the apex of the jump the DoJump() method will reset velocityY to 0 so as not harshly fall.
 	        if (!isOnGround)
 	        {
 		        player_grav++;
@@ -428,7 +430,7 @@ namespace Platformer
 			velocity.Y = deltaY * 2;											// IMPORTANT must multiply by 2 as pre-calc's for 16px
 			//velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
 
-            //velocity.Y = DoJump(velocity.Y, gameTime);
+            velocity.Y = DoJump(velocity.Y, gameTime);
 	        
             // Apply pseudo-drag horizontally.
 			//if (IsOnGround)
@@ -493,48 +495,73 @@ namespace Platformer
         /// over. The jump velocity is controlled by the jumpTime field
         /// which measures time into the accent of the current jump.
         /// </remarks>
-        /// <param name="velocityY">
+		/// <param name="inpVelocityY">
         /// The player's current velocity along the Y axis.
         /// </param>
         /// <returns>
         /// A new Y velocity if beginning or continuing a jump.
         /// Otherwise, the existing Y velocity.
         /// </returns>
-        private float DoJump(float velocityY, GameTime gameTime)
+        private float DoJump(float inpVelocityY, GameTime gameTime)
         {
+	        //if (isJumping && jumpFrame >= COUNT)
+	        //if (!isJumping && jumpFrame > 0)
+	        if (!isJumping && jumpFrame > 0 || isJumping && jumpFrame >= COUNT)
+	        {
+				player_grav = 0;
+		        inpVelocityY = 0;
+	        }
             // If the player wants to jump
             if (isJumping)
             {
                 // Begin or continue a jump
-                if ((!wasJumping && IsOnGround) || jumpTime > 0.0f)
+                //if ((!wasJumping && IsOnGround) || jumpTime > 0.0f)
+	            if ((!wasJumping && IsOnGround) || jumpFrame > 0)
                 {
-                    if (jumpTime == 0.0f)
-                        jumpSound.Play();
+					//if (jumpTime == 0.0f)
+					//    jumpSound.Play();
 
-                    jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    //sprite.PlayAnimation(jumpAnimation);
+                    //jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+	                jumpFrame++;
+	                
+	                //sprite.PlayAnimation(jumpAnimation);
                 }
 
                 // If we are in the ascent of the jump
-                if (0.0f < jumpTime && jumpTime <= MaxJumpTime)
+                //if (0.0f < jumpTime && jumpTime <= MaxJumpTime)
+	            if (0 < jumpFrame && jumpFrame <= COUNT)
                 {
                     // Fully override the vertical velocity with a power curve that gives players more control over the top of the jump
-                    velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower));
+                    //velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower));
+
+					deltaY = velocityY[player_idxY];
+	                inpVelocityY = deltaY * 2;							// IMPORTANT must multiply by 2 as pre-calc's for 16px
+
+	                player_idxY++;
+	                if (player_idxY > COUNT - 1)
+	                {
+		                player_idxY = COUNT - 1;
+	                }
                 }
                 else
                 {
                     // Reached the apex of the jump
-                    jumpTime = 0.0f;
+	                player_idxY = 0;
+	                //player_grav = 0;
+	                jumpFrame = 0;
                 }
             }
             else
             {
                 // Continues not jumping or cancels a jump in progress
-                jumpTime = 0.0f;
+                //jumpTime = 0.0f;
+	            player_idxY = 0;
+	            //player_grav = 0;
+	            jumpFrame = 0;
             }
-            wasJumping = isJumping;
 
-            return velocityY;
+            wasJumping = isJumping;
+			return inpVelocityY;
         }
 
         /// <summary>
