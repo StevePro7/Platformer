@@ -60,6 +60,8 @@ namespace Platformer
 
 			//Byte framesPerSecond = 50;
 			Byte framesPerSecond = Convert.ToByte(ConfigurationManager.AppSettings["FramesPerSecond"]);
+			Byte configLevelNext = Convert.ToByte(ConfigurationManager.AppSettings["BeginStartLevel"]);
+			levelIndex = configLevelNext - 1;
 			IsFixedTimeStep = true;
 			TargetElapsedTime = TimeSpan.FromSeconds(1.0f / framesPerSecond);
 

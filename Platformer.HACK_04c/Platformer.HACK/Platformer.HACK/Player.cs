@@ -458,6 +458,12 @@ namespace Platformer
 
             if (Position.Y == previousPosition.Y)
                 velocity.Y = 0;
+
+	        if (velocity.Y != 0)
+	        {
+		        float check = Position.Y - previousPosition.Y;
+				//Logger.Info(velocity.Y.ToString() + "    " + check.ToString());
+	        }
         }
 
         /// <summary>
