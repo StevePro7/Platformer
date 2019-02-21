@@ -81,6 +81,7 @@
     <Compile Include="AnimationPlayer.cs" />
     <Compile Include="Circle.cs" />
     <Compile Include="Enemy.cs" />
+    <Compile Include="EnumManager.cs" />
     <Compile Include="Gem.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Logger.cs" />

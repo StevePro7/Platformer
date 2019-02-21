@@ -432,7 +432,7 @@ namespace Platformer
 			velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
 
             velocity.Y = DoJump(velocity.Y, gameTime);
-	        
+
             // Apply pseudo-drag horizontally.
 			//if (IsOnGround)
 			//    velocity.X *= GroundDragFactor;
@@ -627,7 +627,6 @@ namespace Platformer
 			//int boundsRight = bounds.Right;
 			//int boundsTop = bounds.Top;
 			//int boundsBottom = bounds.Bottom;
-
 
 	        if (shouldLog)
 	        {
