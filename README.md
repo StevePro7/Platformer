@@ -1,4 +1,12 @@
 # Platformer
+21/02/2019
+Level summary
+04*	32x64
+04a	move player pixel by pixel up, down, left, right to check fine-grained collisions
+04b	test collision index lookup  for left, right, top, bottom ensure match calculations
+04c	replace velocityX calculations with velocityX index lookup for ground and air move
+04d replace velocityY calculations with velocityY index lookup for gravity and jumping
+
 13/02/2019
 DrawY	0
 PosY	64

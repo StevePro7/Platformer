@@ -27,7 +27,8 @@ namespace Platformer
 
 	    const int COUNT = 17;
 	    const int MAX_X = 10;
-	    private readonly int[] velocityX = { 1, 2, 2, 2, 2, 3, 3, 3, 3, 3 };
+	    private readonly int[] velocityXgnd = { 1, 2, 2, 2, 2, 2, 2, 2, 3, 3 };
+	    private readonly int[] velocityXair = { 1, 2, 3, 3, 3, 3, 3, 3, 3, 3 };
 	    //private readonly int[] velocityY = { -11, -9, -7, -6, -6, -5, -4, -4, -3, -3, -2, -2, -2, -1, -1, -1, -1 };
 	    //private readonly int[] gravity = { 1, 1, 2, 2, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 };
 	    private int player_idxX;
@@ -331,7 +332,8 @@ namespace Platformer
 				if (enum_move_type.move_type_left != player_move_type)
 				{
 					player_idxX = 0;
-					deltaX = velocityX[player_idxX];
+					//deltaX = velocityX[player_idxX];
+					deltaX = GetVelocityX(player_idxX);
 					player_move_type = enum_move_type.move_type_left;
 				}
 				else if (enum_move_type.move_type_left == player_move_type)
@@ -341,7 +343,8 @@ namespace Platformer
 					{
 						player_idxX = MAX_X - 1;
 					}
-					deltaX = velocityX[player_idxX];
+					//deltaX = velocityX[player_idxX];
+					deltaX = GetVelocityX(player_idxX);
 					//player_move_type = enum_move_type.move_type_left;
 				}
 				player_move_type = enum_move_type.move_type_left;
@@ -352,7 +355,8 @@ namespace Platformer
 				if (enum_move_type.move_type_rght != player_move_type)
 				{
 					player_idxX = 0;
-					deltaX = velocityX[player_idxX];
+					//deltaX = velocityX[player_idxX];
+					deltaX = GetVelocityX(player_idxX);
 					player_move_type = enum_move_type.move_type_rght;
 				}
 				else if (enum_move_type.move_type_rght == player_move_type)
@@ -362,7 +366,8 @@ namespace Platformer
 					{
 						player_idxX = MAX_X - 1;
 					}
-					deltaX = velocityX[player_idxX];
+					//deltaX = velocityX[player_idxX];
+					deltaX = GetVelocityX(player_idxX);
 					//player_move_type = move_type_rght;
 				}
 			}
@@ -379,7 +384,24 @@ namespace Platformer
 	        prevKeyboardState = keyboardState;
         }
 
-        /// <summary>
+	    private int GetVelocityX(int index)
+	    {
+			//int tempDeltaX = velocityXgnd[index];
+		    int tempDeltaX = 0;
+		    if (isOnGround)
+		    {
+
+			    tempDeltaX = velocityXgnd[index];
+		    }
+		    else
+		    {
+				tempDeltaX = velocityXair[index];
+		    }
+
+		    return tempDeltaX;
+	    }
+
+	    /// <summary>
         /// Updates the player's velocity and position based on input, gravity, etc.
         /// </summary>
         public void ApplyPhysics(GameTime gameTime)
@@ -739,7 +761,7 @@ namespace Platformer
 			//Vector2 renderer = new Vector2(rendX, rendY);
 			Vector2 drawPosn = GetDrawPosn();
 			sprite.Draw(spriteBatch, drawPosn);
-			spriteBatch.Draw(BoundImage, new Vector2(BoundingRectangle.X, BoundingRectangle.Y), Color.White);
+			//spriteBatch.Draw(BoundImage, new Vector2(BoundingRectangle.X, BoundingRectangle.Y), Color.White);
         }
     }
 }
