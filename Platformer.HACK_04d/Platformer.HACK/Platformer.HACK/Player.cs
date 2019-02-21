@@ -453,7 +453,7 @@ namespace Platformer
 			//velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
 
             velocity.Y = DoJump(velocity.Y, gameTime);
-	        
+
             // Apply pseudo-drag horizontally.
 			//if (IsOnGround)
 			//    velocity.X *= GroundDragFactor;
@@ -545,7 +545,7 @@ namespace Platformer
 
                     //jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 	                jumpFrame++;
-	                
+
 	                //sprite.PlayAnimation(jumpAnimation);
                 }
 
@@ -671,7 +671,6 @@ namespace Platformer
 			//int boundsRight = bounds.Right;
 			//int boundsTop = bounds.Top;
 			//int boundsBottom = bounds.Bottom;
-
 
 	        if (shouldLog)
 	        {
@@ -805,7 +804,7 @@ namespace Platformer
 			//Vector2 renderer = new Vector2(rendX, rendY);
 			Vector2 drawPosn = GetDrawPosn();
 			sprite.Draw(spriteBatch, drawPosn);
-			spriteBatch.Draw(BoundImage, new Vector2(BoundingRectangle.X, BoundingRectangle.Y), Color.White);
+			//spriteBatch.Draw(BoundImage, new Vector2(BoundingRectangle.X, BoundingRectangle.Y), Color.White);
         }
     }
 }
