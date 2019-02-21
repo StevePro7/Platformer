@@ -79,8 +79,6 @@ namespace Platformer
         }
         ContentManager content;
 
-        private SoundEffect exitReachedSound;
-
         #region Loading
 
         /// <summary>
@@ -112,9 +110,6 @@ namespace Platformer
             }
 			stripHorz = Content.Load<Texture2D>("Tiles/StripHorz");
 			stripVert = Content.Load<Texture2D>("Tiles/StripVert");
-
-            // Load sounds.
-            exitReachedSound = Content.Load<SoundEffect>("Sounds/ExitReached");
         }
 
         /// <summary>
@@ -492,7 +487,6 @@ namespace Platformer
         private void OnExitReached()
         {
             Player.OnReachedExit();
-            exitReachedSound.Play();
             reachedExit = true;
         }
 

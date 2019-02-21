@@ -26,11 +26,6 @@ namespace Platformer
 	    private bool shouldLog;
 	    private Texture2D BoundImage;
 
-		// Position deltas.
-	    private int[] posDeltaAirX = new[] { 0, 1, 2, 3, 4, 5 };
-	    private int[] posDeltaGndX = new[] { 0, 1, 2, 3, 4, 5 };
-	    private int[] posDeltaY = new[] { 0, 1, 2, 3, 4, 5 };
-
         // Animations
         private Animation idleAnimation;
 		//private Animation runAnimation;
@@ -39,11 +34,6 @@ namespace Platformer
 		//private Animation dieAnimation;
         //private SpriteEffects flip = SpriteEffects.None;
         private AnimationPlayer sprite;
-
-        // Sounds
-        private SoundEffect killedSound;
-        private SoundEffect jumpSound;
-        private SoundEffect fallSound;
 
         public Level Level
         {
@@ -168,11 +158,6 @@ namespace Platformer
 			//int height = 52;//ORG=51;// (int)(idleAnimation.FrameWidth * 0.8);
 			//int top = 12;//ORG=13;// idleAnimation.FrameHeight - height;
 			//localBounds = new Rectangle(left, top, width, height);
-
-            // Load sounds.            
-            killedSound = Level.Content.Load<SoundEffect>("Sounds/PlayerKilled");
-            jumpSound = Level.Content.Load<SoundEffect>("Sounds/PlayerJump");
-            fallSound = Level.Content.Load<SoundEffect>("Sounds/PlayerFall");
         }
 
         /// <summary>
@@ -420,8 +405,8 @@ namespace Platformer
                 // Begin or continue a jump
                 if ((!wasJumping && IsOnGround) || jumpTime > 0.0f)
                 {
-                    if (jumpTime == 0.0f)
-                        jumpSound.Play();
+					//if (jumpTime == 0.0f)
+					//    jumpSound.Play();
 
                     jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
                     //sprite.PlayAnimation(jumpAnimation);
@@ -524,18 +509,12 @@ namespace Platformer
 
 			if (leftTile != leftTile2 || rightTile != rightTile2 || topTile != topTile2 || bottomTile != bottomTile2)
 			{
-				int bob = 7;
+				//int bob = 7;
 			}
-
-			int sgb = 10;
-			//int boundsLeft = bounds.Left;
-			//int boundsRight = bounds.Right;
-			//int boundsTop = bounds.Top;
-			//int boundsBottom = bounds.Bottom;
 
 	        if (shouldLog)
 	        {
-		        String msg = String.Format("(X,Y)=({0},{1}), L:{2} R:{3} T:{4} B:{5}", (int) position.X, (int) position.Y, leftTile, rightTile, topTile, bottomTile);
+		        //String msg = String.Format("(X,Y)=({0},{1}), L:{2} R:{3} T:{4} B:{5}", (int) position.X, (int) position.Y, leftTile, rightTile, topTile, bottomTile);
 		        //String msg = String.Format("BoundL:{0} BoundT:{1} BoundW:{2} BoundH:{3}", bounds.Left, bounds.Top, bounds.Width, bounds.Height);
 		        //Logger.Info(msg);
 	        }
@@ -604,12 +583,6 @@ namespace Platformer
         public void OnKilled(Enemy killedBy)
         {
             isAlive = false;
-
-            if (killedBy != null)
-                killedSound.Play();
-            else
-                fallSound.Play();
-
             //sprite.PlayAnimation(dieAnimation);
         }
 

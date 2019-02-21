@@ -21,7 +21,6 @@ namespace Platformer
     {
         private Texture2D texture;
         private Vector2 origin;
-        private SoundEffect collectedSound;
 
         public const int PointValue = 30;
         public readonly Color Color = Color.Yellow;
@@ -76,7 +75,6 @@ namespace Platformer
         {
             texture = Level.Content.Load<Texture2D>("Sprites/Gem");
             origin = new Vector2(texture.Width / 2.0f, texture.Height / 2.0f);
-            collectedSound = Level.Content.Load<SoundEffect>("Sounds/GemCollected");
         }
 
         /// <summary>
