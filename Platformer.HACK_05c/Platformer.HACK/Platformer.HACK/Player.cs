@@ -56,11 +56,6 @@ namespace Platformer
         //private SpriteEffects flip = SpriteEffects.None;
         private AnimationPlayer sprite;
 
-        // Sounds
-        private SoundEffect killedSound;
-        private SoundEffect jumpSound;
-        private SoundEffect fallSound;
-
         public Level Level
         {
             get { return level; }
@@ -184,11 +179,6 @@ namespace Platformer
 			//int height = 52;//ORG=51;// (int)(idleAnimation.FrameWidth * 0.8);
 			//int top = 12;//ORG=13;// idleAnimation.FrameHeight - height;
 			//localBounds = new Rectangle(left, top, width, height);
-
-            // Load sounds.            
-            killedSound = Level.Content.Load<SoundEffect>("Sounds/PlayerKilled");
-            jumpSound = Level.Content.Load<SoundEffect>("Sounds/PlayerJump");
-            fallSound = Level.Content.Load<SoundEffect>("Sounds/PlayerFall");
         }
 
         /// <summary>
@@ -513,8 +503,8 @@ namespace Platformer
                 // Begin or continue a jump
                 if ((!wasJumping && IsOnGround) || jumpTime > 0.0f)
                 {
-                    if (jumpTime == 0.0f)
-                        jumpSound.Play();
+					//if (jumpTime == 0.0f)
+					//    jumpSound.Play();
 
                     jumpTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
                     //sprite.PlayAnimation(jumpAnimation);
@@ -699,12 +689,6 @@ namespace Platformer
         public void OnKilled(Enemy killedBy)
         {
             isAlive = false;
-
-            if (killedBy != null)
-                killedSound.Play();
-            else
-                fallSound.Play();
-
             //sprite.PlayAnimation(dieAnimation);
         }
 
