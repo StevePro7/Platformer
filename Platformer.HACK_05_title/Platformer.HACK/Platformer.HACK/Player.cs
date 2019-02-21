@@ -651,9 +651,10 @@ namespace Platformer
 			//int rendX = (int)position.X - halfTileSizeX;
 			//int rendY = (int)position.Y - twiceTileSizeY;
 			//Vector2 renderer = new Vector2(rendX, rendY);
-	        Vector2 drawPosn = GetDrawPosn();
-			sprite.Draw(spriteBatch, drawPosn);
-	        spriteBatch.Draw(BoundImage, new Vector2(BoundingRectangle.X, BoundingRectangle.Y), Color.White);
+
+	        //Vector2 drawPosn = GetDrawPosn();
+			//sprite.Draw(spriteBatch, drawPosn);
+	        //spriteBatch.Draw(BoundImage, new Vector2(BoundingRectangle.X, BoundingRectangle.Y), Color.White);
         }
     }
 }

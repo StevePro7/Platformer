@@ -45,8 +45,8 @@ namespace Platformer
 		{
 			graphics = new GraphicsDeviceManager(this);
 			graphics.IsFullScreen = false;
-			graphics.PreferredBackBufferWidth = 320;
-			graphics.PreferredBackBufferHeight= 240;
+			graphics.PreferredBackBufferWidth = 784;
+			graphics.PreferredBackBufferHeight= 17*16;
 			Content.RootDirectory = "Content";
 			Logger.Initialize();
 		}
@@ -156,7 +156,7 @@ namespace Platformer
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Draw(GameTime gameTime)
 		{
-			graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+			graphics.GraphicsDevice.Clear(Color.Black);
 
 
 			spriteBatch.Begin();

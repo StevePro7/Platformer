@@ -517,7 +517,7 @@ namespace Platformer
 			//    spriteBatch.Draw(layers[i], Vector2.Zero, Color.White);
 
             DrawTiles(spriteBatch);
-	        DrawStrip(spriteBatch);
+	        //DrawStrip(spriteBatch);
             foreach (Gem gem in gems)
                 gem.Draw(gameTime, spriteBatch);
 
