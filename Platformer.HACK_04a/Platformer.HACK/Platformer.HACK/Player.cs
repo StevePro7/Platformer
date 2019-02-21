@@ -455,13 +455,10 @@ namespace Platformer
             // Get the player's bounding rectangle and find neighboring tiles.
             Rectangle bounds = BoundingRectangle;
 
-	        //int posX = 16;
-	        //int posX = 49;//(int)Position.X;
-	        //int posY = 64;//(int)Position.Y;
-	        int[] ltArray = new[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 };
-			int[] rtArray = new[] { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-			int[] ttArray = new[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-			int[] btArray = new[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
+	        int[] ltArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 };
+			int[] rtArray = { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+			int[] ttArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+			int[] btArray = { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
 
 	        int leftTile = 0;
 	        int rightTile = 0;
@@ -519,59 +516,16 @@ namespace Platformer
 
 	        if (leftTile != leftTile2 || rightTile != rightTile2 || topTile != topTile2 || bottomTile != bottomTile2)
 	        {
-				int bob = 7;    
+				//int bob = 7;
 	        }
 
-	        int sgb = 10;
-			//int boundsLeft = bounds.Left;
-			//int boundsRight = bounds.Right;
-			//int boundsTop = bounds.Top;
-			//int boundsBottom = bounds.Bottom;
-
-	        
-
-	        //int start = (int)drawPosn.X - boundsLeft - 1;
-			//int start = (int)drawPosn.Y - boundsTop - 1;
-			//int finsh = 800;
-
-	        //string head = String.Format("DrawX{0}PosX{0}LeftTile{0}RightTile", "\t\t");
-	        //Logger.Info(head);
-			//IList<string> lines = new List<string>();
-			//for (int index = start; index <= finsh; index++)
-			//{
-			//    //posX = (int)Position.X + index;
-			//    posY = (int) Position.Y + index;
-			//    int localBoundsWidth = 24;
-			//    int localBoundsHeight = 52;
-
-			//    int halfBoundsWidth = localBoundsWidth / 2;//12;
-			//    boundsLeft = (int)posX - halfBoundsWidth;		//=8
-			//    boundsRight = boundsLeft + localBoundsWidth;
-
-			//    boundsTop = (int)posY - localBoundsHeight;		//=12
-			//    boundsBottom = boundsTop + localBoundsHeight;
-
-			//    //int leftTile2 = (int)Math.Floor((float)boundsLeft / Tile.Width);
-			//    //int rightTile2 = (int)Math.Ceiling(((float)boundsRight / Tile.Width)) - 1;
-			//    //int topTile2 = (int)Math.Floor((float)boundsTop / Tile.Height);
-			//    //int bottomTile2 = (int)Math.Ceiling(((float)boundsBottom / Tile.Height)) - 1;
-			//    //lines.Add(bottomTile2.ToString());
-
-			//    //string msg1 = String.Format("{1}{0}{2}{0}{3}{0}{4}", "\t\t\t", index, posX, leftTile2,rightTile2);
-			//    //Logger.Info(msg1);
-			//}
-			//foreach (var line in lines)
-			//{
-			//    System.Diagnostics.Trace.WriteLine(line);
-			//}
-
-            
-
+	        //int sgb = 10;
 	        if (shouldLog)
 	        {
-		        String msg = String.Format("(X,Y)=({0},{1}), L:{2} R:{3} T:{4} B:{5}", (int) position.X, (int) position.Y, leftTile, rightTile, topTile, bottomTile);
-		        //String msg = String.Format("BoundL:{0} BoundT:{1} BoundW:{2} BoundH:{3}", bounds.Left, bounds.Top, bounds.Width, bounds.Height);
-		        Logger.Info(msg);
+		        //String msg = String.Format("(X,Y)=({0},{1}), L:{2} R:{3}", (int)position.X, (int)position.Y, leftTile, rightTile);
+				String msg = String.Format("(X,Y)=({0},{1}), T:{2} B:{3}", (int)position.X, (int)position.Y, topTile, bottomTile);
+				//String msg = String.Format("BoundL:{0} BoundT:{1} BoundW:{2} BoundH:{3}", bounds.Left, bounds.Top, bounds.Width, bounds.Height);
+				Logger.Info(msg);
 	        }
 
 	        // Reset flag to search for ground collision.

@@ -245,7 +245,7 @@ namespace Platformer
 			//    if (orientation == DisplayOrientation.LandscapeRight)
 			//        movement = -movement;
 			//}
-	        shouldLog = true;
+	        shouldLog = false;
 	        int offset = 1;
 			#region Movement
 			if (keyboardState.IsKeyDown(Keys.Space))
@@ -319,7 +319,7 @@ namespace Platformer
 			//    movement = 1.0f;
 			//}
 
-	        //shouldLog = keyboardState.IsKeyDown(Keys.Enter) && prevKeyboardState.IsKeyUp(Keys.Enter);
+	        shouldLog = keyboardState.IsKeyDown(Keys.Enter) && prevKeyboardState.IsKeyUp(Keys.Enter);
             // Check if the player wants to jump.
 	        isJumping = false;
                 //gamePadState.IsButtonDown(JumpButton) ||
@@ -508,6 +508,7 @@ namespace Platformer
 			topTile = idxTopTile + quoY;
 			bottomTile = idxBottomTile + quoY;
 			//}
+
 			int leftTile2 = (int)Math.Floor((float)bounds.Left / Tile.Width);
 			int rightTile2 = (int)Math.Ceiling(((float)bounds.Right / Tile.Width)) - 1;
 			int topTile2 = (int)Math.Floor((float)bounds.Top / Tile.Height);
@@ -515,11 +516,10 @@ namespace Platformer
 
 			if (leftTile != leftTile2 || rightTile != rightTile2 || topTile != topTile2 || bottomTile != bottomTile2)
 			{
-				int bob = 7;
+				//int bob = 7;
 			}
 
-			int sgb = 10;
-
+			//int sgb = 10;
 			if (shouldLog)
 			{
 				//String msg = String.Format("(X,Y)=({0},{1}), L:{2} R:{3}", (int)position.X, (int)position.Y, leftTile, rightTile);
