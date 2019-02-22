@@ -20,16 +20,14 @@ namespace Platformer
     /// </summary>
     class Player
     {
+	    // (16 - 24) / 2		16=tileWidth	24=playerWidth
+	    private const int drawOffsetX = -4;
+
 	    private static bool MovePlayer = true; 
 	    private KeyboardState prevKeyboardState;
 	    private const int deltaM = 1;
 	    private bool shouldLog;
 	    private Texture2D BoundImage;
-
-		// Position deltas.
-	    private int[] posDeltaAirX = new[] { 0, 1, 2, 3, 4, 5 };
-	    private int[] posDeltaGndX = new[] { 0, 1, 2, 3, 4, 5 };
-	    private int[] posDeltaY = new[] { 0, 1, 2, 3, 4, 5 };
 
         // Animations
         private Animation idleAnimation;
@@ -455,16 +453,15 @@ namespace Platformer
 			int topTile = 0;
 			int bottomTile = 0;
 
-			// TODO stay wihin the bounds i.e. do not go too far left / right / up / down otherwise will crash
-			// will work these constraints out another way
-			Vector2 drawPosn = GetDrawPosn();
+			//Vector2 drawPosn = GetDrawPosn();
+			Vector2 collPosn = GetCollPosn();
 			//if (drawPosn.X < 0)
 			//{
 			//    leftTile = drawPosn.X < -4 ? -1 : 0;
 			//}
 			//else
 			//{
-			int idxX = (int)drawPosn.X;
+			int idxX = (int)collPosn.X;
 			int quoX = (int)(idxX / Tile.Size.X);
 			int remX = (int)(idxX % Tile.Size.X);
 			if (remX < 0)
@@ -484,7 +481,7 @@ namespace Platformer
 			//}
 			//else
 			//{
-			int idxY = (int)drawPosn.Y;
+			int idxY = (int)collPosn.Y;
 			int quoY = (int)(idxY / Tile.Size.Y);
 			int remY = (int)(idxY % Tile.Size.Y);
 			// this won't crash at least but will go off the sides
@@ -593,48 +590,30 @@ namespace Platformer
             //sprite.PlayAnimation(celebrateAnimation);
         }
 
+	    private Vector2 GetCollPosn()
+	    {
+		    return GetCommonPosn((int)position.X, (int)position.Y, 0);
+	    }
 	    private Vector2 GetDrawPosn()
 	    {
-			//int halfTileSizeX = ((int)Tile.Size.X / 2);
-			//int twiceTileSizeY = 2 * (int)Tile.Size.Y;
-
-			//int rendX = (int)position.X - halfTileSizeX;
-			//int rendY = (int)position.Y - twiceTileSizeY;
-			//Vector2 drawPosn = new Vector2(rendX, rendY);
-			//return drawPosn;
-		    return GetDrawPosn((int)position.X, (int)position.Y);
+		    return GetCommonPosn((int)position.X, (int)position.Y, drawOffsetX);
 	    }
-		private Vector2 GetDrawPosn(int posX, int posY)
-		{
-			int halfTileSizeX = ((int)Tile.Size.X / 2);
-			int twiceTileSizeY = 2 * (int)Tile.Size.Y;
+	    private static Vector2 GetCommonPosn(int posX, int posY, int offsetX)
+	    {
+		    int halfTileSizeX = ((int)Tile.Size.X / 2);
+		    int twiceTileSizeY = 2 * (int)Tile.Size.Y;
 
-			int rendX = (int)posX - halfTileSizeX;
-			int rendY = (int)posY - twiceTileSizeY;
-			Vector2 drawPosn = new Vector2(rendX, rendY);
-			return drawPosn;
-		}
+		    int commX = (int)posX - halfTileSizeX + offsetX;
+		    int commY = (int)posY - twiceTileSizeY;
+		    Vector2 commPosn = new Vector2(commX, commY);
+		    return commPosn;
+	    }
+
         /// <summary>
         /// Draws the animated player.
         /// </summary>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            // Flip the sprite to face the way we are moving.
-			//if (Velocity.X > 0)
-			//    flip = SpriteEffects.FlipHorizontally;
-			//else if (Velocity.X < 0)
-			//    flip = SpriteEffects.None;
-
-			// Draw that sprite.
-	        //sprite.Draw(gameTime, spriteBatch, Position, flip);
-
-			// Cache at start because tile size static.
-			//int halfTileSizeX = ((int)Tile.Size.X / 2);
-			//int twiceTileSizeY = 2 * (int)Tile.Size.Y;
-
-			//int rendX = (int)position.X - halfTileSizeX;
-			//int rendY = (int)position.Y - twiceTileSizeY;
-			//Vector2 renderer = new Vector2(rendX, rendY);
 	        Vector2 drawPosn = GetDrawPosn();
 			sprite.Draw(spriteBatch, drawPosn);
 	        spriteBatch.Draw(BoundImage, new Vector2(BoundingRectangle.X, BoundingRectangle.Y), Color.White);
