@@ -20,16 +20,14 @@ namespace Platformer
     /// </summary>
     class Player
     {
+	    // (16 - 24) / 2		16=tileWidth	24=playerWidth
+	    private const int drawOffsetX = -4;
+
 	    //private static bool MovePlayer = true; 
 	    private KeyboardState prevKeyboardState;
 	    private const int deltaM = 1;
 	    private bool shouldLog;
 	    private Texture2D BoundImage;
-
-		// Position deltas.
-	    private int[] posDeltaAirX = new[] { 0, 1, 2, 3, 4, 5 };
-	    private int[] posDeltaGndX = new[] { 0, 1, 2, 3, 4, 5 };
-	    private int[] posDeltaY = new[] { 0, 1, 2, 3, 4, 5 };
 
         // Animations
         private Animation idleAnimation;
@@ -100,9 +98,6 @@ namespace Platformer
         /// Current user movement input.
         /// </summary>
         private float movement;
-
-	    //private int moveX;
-	    //private int moveY;
 
         // Jumping state
         private bool isJumping;
@@ -208,9 +203,6 @@ namespace Platformer
             // Clear input.
             movement = 0.0f;
             isJumping = false;
-
-	        //moveX = 0;
-	        //moveY = 0;
         }
 
         /// <summary>
@@ -236,70 +228,7 @@ namespace Platformer
 			//        movement = -movement;
 			//}
 	        shouldLog = false;
-	        //int offset = 1;
-			#region Movement
-			//if (keyboardState.IsKeyDown(Keys.Space))
-			//{
-			//    offset = 2;
-			//}
-			//// If any digital horizontal movement input is found, override the analog movement.
-			//if (MovePlayer)
-			//{
-			//    if (keyboardState.IsKeyDown(Keys.Left))
-			//    {
-			//        moveX = -deltaM * offset;
-			//    }
-			//}
-			//else
-			//{
-			//    if (keyboardState.IsKeyDown(Keys.Left) && prevKeyboardState.IsKeyUp(Keys.Left))
-			//    {
-			//        moveX = -deltaM * offset;
-			//    }
-			//}
-			//if (MovePlayer)
-			//{
-			//    if (keyboardState.IsKeyDown(Keys.Right))
-			//    {
-			//        moveX = deltaM * offset;
-			//    }
-			//}
-			//else
-			//{
-			//    if (keyboardState.IsKeyDown(Keys.Right) && prevKeyboardState.IsKeyUp(Keys.Right))
-			//    {
-			//        moveX = deltaM * offset;
-			//    }
-			//}
-			//if (MovePlayer)
-			//{
-			//    if (keyboardState.IsKeyDown(Keys.Up)) // && prevKeyboardState.IsKeyUp(Keys.Up))
-			//    {
-			//        moveY = -deltaM * offset;
-			//    }
-			//}
-			//else
-			//{
-			//    if (keyboardState.IsKeyDown(Keys.Up) && prevKeyboardState.IsKeyUp(Keys.Up))
-			//    {
-			//        moveY = -deltaM * offset;
-			//    }
-			//}
-			//if (MovePlayer)
-			//{
-			//    if (keyboardState.IsKeyDown(Keys.Down)) // && prevKeyboardState.IsKeyUp(Keys.Down))
-			//    {
-			//        moveY = deltaM * offset;
-			//    }
-			//}
-			//else
-			//{
-			//    if (keyboardState.IsKeyDown(Keys.Down) && prevKeyboardState.IsKeyUp(Keys.Down))
-			//    {
-			//        moveY = deltaM * offset;
-			//    }
-			//}
-			#endregion
+
 			if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
 			{
 			    movement = -1.0f;
@@ -328,13 +257,9 @@ namespace Platformer
         {
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-			//velocity = Vector2.Zero;
             Vector2 previousPosition = Position;
 	        int prevPosY = (int) previousPosition.Y;
 	        int prevPosX = (int) previousPosition.X;
-
-	        //velocity.X += moveX;
-	        //velocity.Y += moveY;
 
             // Base velocity is a combination of horizontal movement control and
             // acceleration downward due to gravity.
@@ -434,8 +359,8 @@ namespace Platformer
                 // Continues not jumping or cancels a jump in progress
                 jumpTime = 0.0f;
             }
-            wasJumping = isJumping;
 
+            wasJumping = isJumping;
             return velocityY;
         }
 
@@ -450,9 +375,6 @@ namespace Platformer
             // Get the player's bounding rectangle and find neighboring tiles.
             Rectangle bounds = BoundingRectangle;
 
-	        //int posX = 16;
-	        //int posX = 49;//(int)Position.X;
-	        //int posY = 64;//(int)Position.Y;
 	        int[] ltArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 };
 			int[] rtArray = { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 			int[] ttArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 };
@@ -463,16 +385,15 @@ namespace Platformer
 			int topTile = 0;
 	        int bottomTile = 0;
 
-			// TODO stay wihin the bounds i.e. do not go too far left / right / up / down otherwise will crash
-			// will work these constraints out another way
-			Vector2 drawPosn = GetDrawPosn();
+	        //Vector2 drawPosn = GetDrawPosn();
+	        Vector2 collPosn = GetCollPosn();
 			//if (drawPosn.X < 0)
 			//{
 			//    leftTile = drawPosn.X < -4 ? -1 : 0;
 			//}
 			//else
 			//{
-				int idxX = (int)drawPosn.X;
+			int idxX = (int)collPosn.X;
 				int quoX = (int)(idxX / Tile.Size.X);
 				int remX = (int)(idxX % Tile.Size.X);
 				if (remX < 0)
@@ -492,7 +413,7 @@ namespace Platformer
 			//}
 			//else
 			//{
-				int idxY = (int)drawPosn.Y;
+				int idxY = (int)collPosn.Y;
 				int quoY = (int)(idxY / Tile.Size.Y);
 				int remY = (int)(idxY % Tile.Size.Y);
 			// this won't crash at least but will go off the sides
@@ -519,7 +440,7 @@ namespace Platformer
 
 	        if (shouldLog)
 	        {
-		        String msg = String.Format("(X,Y)=({0},{1}), L:{2} R:{3} T:{4} B:{5}", (int) position.X, (int) position.Y, leftTile, rightTile, topTile, bottomTile);
+		        //String msg = String.Format("(X,Y)=({0},{1}), L:{2} R:{3} T:{4} B:{5}", (int) position.X, (int) position.Y, leftTile, rightTile, topTile, bottomTile);
 		        //String msg = String.Format("BoundL:{0} BoundT:{1} BoundW:{2} BoundH:{3}", bounds.Left, bounds.Top, bounds.Width, bounds.Height);
 		        //Logger.Info(msg);
 	        }
@@ -599,48 +520,30 @@ namespace Platformer
             //sprite.PlayAnimation(celebrateAnimation);
         }
 
+		private Vector2 GetCollPosn()
+	    {
+		    return GetCommonPosn((int)position.X, (int)position.Y, 0);
+	    }
 	    private Vector2 GetDrawPosn()
 	    {
-			//int halfTileSizeX = ((int)Tile.Size.X / 2);
-			//int twiceTileSizeY = 2 * (int)Tile.Size.Y;
-
-			//int rendX = (int)position.X - halfTileSizeX;
-			//int rendY = (int)position.Y - twiceTileSizeY;
-			//Vector2 drawPosn = new Vector2(rendX, rendY);
-			//return drawPosn;
-		    return GetDrawPosn((int)position.X, (int)position.Y);
+		    return GetCommonPosn((int)position.X, (int)position.Y, drawOffsetX);
 	    }
-		private Vector2 GetDrawPosn(int posX, int posY)
-		{
-			int halfTileSizeX = ((int)Tile.Size.X / 2);
-			int twiceTileSizeY = 2 * (int)Tile.Size.Y;
+	    private static Vector2 GetCommonPosn(int posX, int posY, int offsetX)
+	    {
+		    int halfTileSizeX = ((int)Tile.Size.X / 2);
+		    int twiceTileSizeY = 2 * (int)Tile.Size.Y;
 
-			int rendX = (int)posX - halfTileSizeX;
-			int rendY = (int)posY - twiceTileSizeY;
-			Vector2 drawPosn = new Vector2(rendX, rendY);
-			return drawPosn;
-		}
+		    int commX = (int)posX - halfTileSizeX + offsetX;
+		    int commY = (int)posY - twiceTileSizeY;
+		    Vector2 commPosn = new Vector2(commX, commY);
+		    return commPosn;
+	    }
+
         /// <summary>
         /// Draws the animated player.
         /// </summary>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            // Flip the sprite to face the way we are moving.
-			//if (Velocity.X > 0)
-			//    flip = SpriteEffects.FlipHorizontally;
-			//else if (Velocity.X < 0)
-			//    flip = SpriteEffects.None;
-
-			// Draw that sprite.
-	        //sprite.Draw(gameTime, spriteBatch, Position, flip);
-
-			// Cache at start because tile size static.
-			//int halfTileSizeX = ((int)Tile.Size.X / 2);
-			//int twiceTileSizeY = 2 * (int)Tile.Size.Y;
-
-			//int rendX = (int)position.X - halfTileSizeX;
-			//int rendY = (int)position.Y - twiceTileSizeY;
-			//Vector2 renderer = new Vector2(rendX, rendY);
 	        Vector2 drawPosn = GetDrawPosn();
 			sprite.Draw(spriteBatch, drawPosn);
 	        spriteBatch.Draw(BoundImage, new Vector2(BoundingRectangle.X, BoundingRectangle.Y), Color.White);

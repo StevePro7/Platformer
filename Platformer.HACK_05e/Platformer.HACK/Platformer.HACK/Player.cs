@@ -17,6 +17,9 @@ namespace Platformer
 {
     class Player
     {
+	    // (16 - 24) / 2		16=tileWidth	24=playerWidth
+	    private const int drawOffsetX = -4;
+
 		private readonly int[] ltArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 };
 	    private readonly int[] rtArray = { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 	    private readonly int[] ttArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 };
@@ -188,7 +191,7 @@ namespace Platformer
         {
             // Get analog horizontal movement.
 	        shouldLog = false;
-			
+
 			if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
 			{
 				movement = -1.0f;
@@ -265,7 +268,9 @@ namespace Platformer
 	        }
 
             //velocity.X += movement * MoveAcceleration * elapsed;
-			// Apply pseudo-drag horizontally.
+
+	        // TODO stevepro - this is the problem line:
+	        // once hit the apex of the jump the DoJump() method will reset velocityY to 0 so as not harshly fall.
 	        if (!isOnGround)
 	        {
 		        player_grav++;
@@ -377,18 +382,20 @@ namespace Platformer
             // Get the player's bounding rectangle and find neighboring tiles.
             Rectangle bounds = BoundingRectangle;
 
-	        int[] ltArray = new[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 };
-			int[] rtArray = new[] { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-			int[] ttArray = new[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-			int[] btArray = new[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
+			//int[] ltArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 };
+			//int[] rtArray = { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+			//int[] ttArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+			//int[] btArray = { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
 
 	        int leftTile = 0;
 	        int rightTile = 0;
 			int topTile = 0;
 	        int bottomTile = 0;
 
-			Vector2 drawPosn = GetDrawPosn();
-			int idxX = (int)drawPosn.X;
+	        //Vector2 drawPosn = GetDrawPosn();
+	        Vector2 collPosn = GetCollPosn();
+
+			int idxX = (int)collPosn.X;
 			int quoX = (int)(idxX / Tile.Size.X);
 			int remX = (int)(idxX % Tile.Size.X);
 			if (remX < 0)
@@ -401,7 +408,7 @@ namespace Platformer
 			leftTile = idxLeftTile + quoX;
 			rightTile = idxRightTile + quoX;
 
-			int idxY = (int)drawPosn.Y;
+			int idxY = (int)collPosn.Y;
 			int quoY = (int)(idxY / Tile.Size.Y);
 			int remY = (int)(idxY % Tile.Size.Y);
 			// this won't crash at least but will go off the sides
@@ -500,20 +507,24 @@ namespace Platformer
             //sprite.PlayAnimation(celebrateAnimation);
         }
 
+		private Vector2 GetCollPosn()
+	    {
+		    return GetCommonPosn((int)position.X, (int)position.Y, 0);
+	    }
 	    private Vector2 GetDrawPosn()
 	    {
-		    return GetDrawPosn((int)position.X, (int)position.Y);
+		    return GetCommonPosn((int)position.X, (int)position.Y, drawOffsetX);
 	    }
-		private Vector2 GetDrawPosn(int posX, int posY)
-		{
-			int halfTileSizeX = ((int)Tile.Size.X / 2);
-			int twiceTileSizeY = 2 * (int)Tile.Size.Y;
+	    private static Vector2 GetCommonPosn(int posX, int posY, int offsetX)
+	    {
+		    int halfTileSizeX = ((int)Tile.Size.X / 2);
+		    int twiceTileSizeY = 2 * (int)Tile.Size.Y;
 
-			int rendX = (int)posX - halfTileSizeX;
-			int rendY = (int)posY - twiceTileSizeY;
-			Vector2 drawPosn = new Vector2(rendX, rendY);
-			return drawPosn;
-		}
+		    int commX = (int)posX - halfTileSizeX + offsetX;
+		    int commY = (int)posY - twiceTileSizeY;
+		    Vector2 commPosn = new Vector2(commX, commY);
+		    return commPosn;
+	    }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
