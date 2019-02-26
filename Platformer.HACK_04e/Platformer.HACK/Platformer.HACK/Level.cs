@@ -510,12 +510,12 @@ namespace Platformer
 			//for (int i = 0; i <= EntityLayer; ++i)
 			//    spriteBatch.Draw(layers[i], Vector2.Zero, Color.White);
 
+	        Player.Draw(gameTime, spriteBatch);
             DrawTiles(spriteBatch);
 	        DrawStrip(spriteBatch);
+
             foreach (Gem gem in gems)
                 gem.Draw(gameTime, spriteBatch);
-
-            Player.Draw(gameTime, spriteBatch);
 
             foreach (Enemy enemy in enemies)
                 enemy.Draw(gameTime, spriteBatch);

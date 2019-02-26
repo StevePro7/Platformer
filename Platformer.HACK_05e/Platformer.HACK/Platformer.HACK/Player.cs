@@ -246,7 +246,7 @@ namespace Platformer
 
         public void ApplyPhysics(GameTime gameTime)
         {
-            float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             Vector2 previousPosition = Position;
 	        int prevPosY = (int) previousPosition.Y;
@@ -519,7 +519,7 @@ namespace Platformer
         {
 	        Vector2 drawPosn = GetDrawPosn();
 			sprite.Draw(spriteBatch, drawPosn);
-	        //spriteBatch.Draw(BoundImage, new Vector2(BoundingRectangle.X, BoundingRectangle.Y), Color.White);
+	        spriteBatch.Draw(BoundImage, new Vector2(BoundingRectangle.X, BoundingRectangle.Y), Color.White);
         }
     }
 }

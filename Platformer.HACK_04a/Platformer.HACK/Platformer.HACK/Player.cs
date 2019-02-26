@@ -506,13 +506,12 @@ namespace Platformer
 				//int bob = 7;
 	        }
 
-	        //int sgb = 10;
 	        if (shouldLog)
 	        {
 		        //String msg = String.Format("(X,Y)=({0},{1}), L:{2} R:{3}", (int)position.X, (int)position.Y, leftTile, rightTile);
-				String msg = String.Format("(X,Y)=({0},{1}), T:{2} B:{3}", (int)position.X, (int)position.Y, topTile, bottomTile);
+				//String msg = String.Format("(X,Y)=({0},{1}), T:{2} B:{3}", (int)position.X, (int)position.Y, topTile, bottomTile);
 				//String msg = String.Format("BoundL:{0} BoundT:{1} BoundW:{2} BoundH:{3}", bounds.Left, bounds.Top, bounds.Width, bounds.Height);
-				Logger.Info(msg);
+				//Logger.Info(msg);
 	        }
 
 	        // Reset flag to search for ground collision.
