@@ -19,6 +19,11 @@ namespace Platformer
 	    // (16 - 24) / 2		16=tileWidth	24=playerWidth
 	    private const int drawOffsetX = -4;
 
+	    int[] ltArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 };
+	    int[] rtArray = { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+	    int[] ttArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 };
+	    int[] btArray = { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
+
 		const int localBoundsWidth = 12;//24;
 		const int localBoundsHeight = 26;//52;
 	    const int halfBoundsWidth = localBoundsWidth / 2;//12;
@@ -74,13 +79,6 @@ namespace Platformer
             set { velocity = value; }
         }
         Vector2 velocity;
-
-        // Constants for controlling vertical movement
-        //private const float MaxJumpTime = 0.35f;
-        //private const float JumpLaunchVelocity = -3500.0f;
-        //private const float GravityAcceleration = 3400.0f;
-        //private const float MaxFallSpeed = 550.0f;
-        //private const float JumpControlPower = 0.14f; 
 
         public bool IsOnGround
         {
@@ -273,10 +271,10 @@ namespace Platformer
 
 	        if (0.0 != movement)
 	        {
-		        int velX = (int)(velocity.X);
-		        int delta = currPosX - prevPosX;
-		        string msg = String.Format("{0}\t\t{1}\t\t{2}\t\t{3}", velX, currPosX, prevPosX, delta);
-		        Logger.Info(msg);
+				//int velX = (int)(velocity.X);
+				//int delta = currPosX - prevPosX;
+				//string msg = String.Format("{0}\t\t{1}\t\t{2}\t\t{3}", velX, currPosX, prevPosX, delta);
+				//Logger.Info(msg);
 	        }
 
             // If the player is now colliding with the level, separate them.
@@ -347,11 +345,6 @@ namespace Platformer
 			//int boundsRight= bounds2.Right;
 			//int boundsTop = bounds2.Top;
 			//int boundsBottom = bounds2.Bottom;
-
-			int[] ltArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 };
-			int[] rtArray = { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-			int[] ttArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 };
-			int[] btArray = { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
 
 			int leftTile = 0;
 			int rightTile = 0;

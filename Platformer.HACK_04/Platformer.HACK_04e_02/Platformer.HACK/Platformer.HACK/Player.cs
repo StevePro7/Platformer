@@ -9,15 +9,11 @@
 
 using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace Platformer
 {
-	/// <summary>
-	/// Our fearless adventurer!
-	/// </summary>
     class Player
     {
 	    // (32 - 48) / 2		32=tileWidth	48=playerWidth
@@ -27,6 +23,23 @@ namespace Platformer
 	    private readonly int[] rtArray = { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 	    private readonly int[] ttArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 	    private readonly int[] btArray = { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
+
+	    const int localBoundsWidth = 24;
+	    const int localBoundsHeight = 52;
+	    const int halfBoundsWidth = localBoundsWidth / 2;//12;
+
+	    const int rectAWidth = localBoundsWidth;
+	    const int rectAHeight = localBoundsHeight;
+	    const int rectBWidth = Tile.Width;
+	    const int rectBHeight = Tile.Height;
+
+	    const int halfWidthA = rectAWidth / 2;
+	    const int halfHeightA = rectAHeight / 2;
+	    const int halfWidthB = rectBWidth / 2;
+	    const int halfHeightB = rectBHeight / 2;
+
+	    private int depthX;
+	    private int depthY;
 
 	    const int COUNT = 17;
 	    const int MAX_X = 10;
@@ -45,18 +58,8 @@ namespace Platformer
 	    private Texture2D BoundImage;
 	    private enum_move_type player_move_type;
 
-		// Position deltas.
-	    private int[] posDeltaAirX = new[] { 0, 1, 2, 3, 4, 5 };
-	    private int[] posDeltaGndX = new[] { 0, 1, 2, 3, 4, 5 };
-	    private int[] posDeltaY = new[] { 0, 1, 2, 3, 4, 5 };
-
         // Animations
         private Animation idleAnimation;
-		//private Animation runAnimation;
-		//private Animation jumpAnimation;
-		//private Animation celebrateAnimation;
-		//private Animation dieAnimation;
-        //private SpriteEffects flip = SpriteEffects.None;
         private AnimationPlayer sprite;
 
         public Level Level
@@ -89,22 +92,10 @@ namespace Platformer
         Vector2 velocity;
 
         // Constants for controling horizontal movement
-        private const float MoveAcceleration = 13000.0f;
+        //private const float MoveAcceleration = 13000.0f;
         private const float MaxMoveSpeed = 1750.0f;
-        private const float GroundDragFactor = 0.48f;
-        private const float AirDragFactor = 0.58f;
-
-        // Constants for controlling vertical movement
-        private const float MaxJumpTime = 0.35f;
-        private const float JumpLaunchVelocity = -3500.0f;
-        private const float GravityAcceleration = 3400.0f;
-        private const float MaxFallSpeed = 550.0f;
-        private const float JumpControlPower = 0.14f; 
-
-        // Input configuration
-        private const float MoveStickScale = 1.0f;
-        private const float AccelerometerScale = 1.5f;
-        private const Buttons JumpButton = Buttons.A;
+        //private const float GroundDragFactor = 0.48f;
+        //private const float AirDragFactor = 0.58f;
 
         public bool IsOnGround
         {
@@ -148,10 +139,6 @@ namespace Platformer
             // Load animated textures.
 	        BoundImage = Level.Content.Load<Texture2D>("Sprites/Player/Rect");
             idleAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Idle"), 0.1f, true);
-            //runAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Run"), 0.1f, true);
-            //jumpAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Jump"), 0.1f, false);
-            //celebrateAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Celebrate"), 0.1f, false);
-            //dieAnimation = new Animation(Level.Content.Load<Texture2D>("Sprites/Player/Die"), 0.1f, false);
         }
 
         public void Reset(Vector2 position)
@@ -175,14 +162,7 @@ namespace Platformer
 
             if (IsAlive && IsOnGround)
             {
-                //if (Math.Abs(Velocity.X) - 0.02f > 0)
-                //{
-                //    sprite.PlayAnimation(runAnimation);
-                //}
-                //else
-                //{
-                    sprite.PlayAnimation(idleAnimation);
-                //}
+				sprite.PlayAnimation(idleAnimation);
             }
 
             // Clear input.
@@ -244,10 +224,7 @@ namespace Platformer
 
 	    private int GetVelocityX(int index)
 	    {
-		    int tempDeltaX = 0;
-		    tempDeltaX = isOnGround ? velocityXgnd[index] : velocityXair[index];
-
-		    return tempDeltaX;
+		    return isOnGround ? velocityXgnd[index] : velocityXair[index];
 	    }
 
         public void ApplyPhysics(GameTime gameTime)
@@ -382,13 +359,22 @@ namespace Platformer
 
         private void HandleCollisions()
         {
-            // Get the player's bounding rectangle and find neighboring tiles.
-            Rectangle bounds = BoundingRectangle;
+			// Get the player's bounding rectangle and find neighboring tiles.
+	        //Rectangle bounds = BoundingRectangle;
 
-			int[] ltArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 };
-			int[] rtArray = { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-			int[] ttArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-			int[] btArray = { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
+	        int boundsLeft = (int)Position.X - halfBoundsWidth;
+	        int boundsTop = (int)Position.Y - localBoundsHeight;
+	        //int boundsRight = boundsLeft + localBoundsWidth;
+	        //int boundsBottom = boundsTop + localBoundsHeight;
+
+	        //int left = (int)Position.X - halfBoundsWidth;		//=8
+	        //int top = (int)Position.Y - localBoundsHeight;		//=12
+
+	        //Rectangle bounds2 = new Rectangle(left, top, localBoundsWidth, localBoundsHeight);
+	        //int boundsLeft = bounds2.Left;
+	        //int boundsRight= bounds2.Right;
+	        //int boundsTop = bounds2.Top;
+	        //int boundsBottom = bounds2.Bottom;
 
 			int leftTile = 0;
 			int rightTile = 0;
@@ -424,80 +410,105 @@ namespace Platformer
 
 			topTile = idxTopTile + quoY;
 			bottomTile = idxBottomTile + quoY;
-			//}
-
-			int leftTile2 = (int)Math.Floor((float)bounds.Left / Tile.Width);
-			int rightTile2 = (int)Math.Ceiling(((float)bounds.Right / Tile.Width)) - 1;
-			int topTile2 = (int)Math.Floor((float)bounds.Top / Tile.Height);
-			int bottomTile2 = (int)Math.Ceiling(((float)bounds.Bottom / Tile.Height)) - 1;
-
-			if (leftTile != leftTile2 || rightTile != rightTile2 || topTile != topTile2 || bottomTile != bottomTile2)
-			{
-				//String msg = String.Format("(X,Y)=({0},{1}), L:{2} R:{3} T:{4} B:{5}", (int)position.X, (int)position.Y, leftTile, rightTile, topTile, bottomTile);
-				//String msg = String.Format("BoundL:{0} BoundT:{1} BoundW:{2} BoundH:{3}", bounds.Left, bounds.Top, bounds.Width, bounds.Height);
-				//Logger.Info(msg);
-			}
-
-	        if (shouldLog)
-	        {
-		        //String msg = String.Format("(X,Y)=({0},{1}), L:{2} R:{3} T:{4} B:{5}", (int) position.X, (int) position.Y, leftTile, rightTile, topTile, bottomTile);
-		        //String msg = String.Format("BoundL:{0} BoundT:{1} BoundW:{2} BoundH:{3}", bounds.Left, bounds.Top, bounds.Width, bounds.Height);
-		        //Logger.Info(msg);
-	        }
 
 	        // Reset flag to search for ground collision.
             isOnGround = false;
 
-            // For each potentially colliding tile,
-            for (int y = topTile; y <= bottomTile; ++y)
-            {
-                for (int x = leftTile; x <= rightTile; ++x)
-                {
-                    // If this tile is collidable,
-                    TileCollision collision = Level.GetCollision(x, y);
-                    if (collision != TileCollision.Passable)
-                    {
-                        // Determine collision depth (with direction) and magnitude.
-                        Rectangle tileBounds = Level.GetBounds(x, y);
-                        Vector2 depth = RectangleExtensions.GetIntersectionDepth(bounds, tileBounds);
-                        if (depth != Vector2.Zero)
-                        {
-                            float absDepthX = Math.Abs(depth.X);
-                            float absDepthY = Math.Abs(depth.Y);
+			// For each potentially colliding tile,
+			for (int y = topTile; y <= bottomTile; ++y)
+			{
+				for (int x = leftTile; x <= rightTile; ++x)
+				{
+					// If this tile is collidable,
+					TileCollision collision = Level.GetCollision(x, y);
+					if (collision != TileCollision.Passable)
+					{
+						// Determine collision depth (with direction) and magnitude.
+						int tileBoundsLeft = x * Tile.Width;
+						int tileBoundsTop = y * Tile.Height;
 
-                            // Resolve the collision along the shallow axis.
-                            if (absDepthY < absDepthX || collision == TileCollision.Platform)
-                            {
-                                // If we crossed the top of a tile, we are on the ground.
-                                if (previousBottom <= tileBounds.Top)
-                                    isOnGround = true;
+						Process(boundsLeft, boundsTop, tileBoundsLeft, tileBoundsTop);
+						if (depthX != 0 || depthY != 0)
+						{
+							float absDepthX = Math.Abs(depthX);
+							float absDepthY = Math.Abs(depthY);
 
-                                // Ignore platforms, unless we are on the ground.
-                                if (collision == TileCollision.Impassable || IsOnGround)
-                                {
-                                    // Resolve the collision along the Y axis.
-                                    Position = new Vector2(Position.X, Position.Y + depth.Y);
+							// Resolve the collision along the shallow axis.
+							if (absDepthY < absDepthX || collision == TileCollision.Platform)
+							{
+								// If we crossed the top of a tile, we are on the ground.
+								if (previousBottom <= tileBoundsTop)
+								{
+									isOnGround = true;
+								}
 
-                                    // Perform further collisions with the new bounds.
-                                    bounds = BoundingRectangle;
-                                }
-                            }
-                            else if (collision == TileCollision.Impassable) // Ignore platforms.
-                            {
-                                // Resolve the collision along the X axis.
-                                Position = new Vector2(Position.X + depth.X, Position.Y);
+								// Ignore platforms, unless we are on the ground.
+								if (collision == TileCollision.Impassable || IsOnGround)
+								{
+									// Resolve the collision along the Y axis.
+									Position = new Vector2(Position.X, Position.Y + depthY);
 
-                                // Perform further collisions with the new bounds.
-                                bounds = BoundingRectangle;
-                            }
-                        }
-                    }
-                }
-            }
+									// Perform further collisions with the new bounds.
+									//bounds = BoundingRectangle;
+									boundsLeft = (int)Position.X - halfBoundsWidth;
+									boundsTop = (int)Position.Y - localBoundsHeight;
+								}
+							}
+							else if (collision == TileCollision.Impassable) // Ignore platforms.
+							{
+								// Resolve the collision along the X axis.
+								Position = new Vector2(Position.X + depthX, Position.Y);
 
-            // Save the new bounds bottom.
-            previousBottom = bounds.Bottom;
-        }
+								// Perform further collisions with the new bounds.
+								//bounds = BoundingRectangle;
+								boundsLeft = (int)Position.X - halfBoundsWidth;
+								boundsTop = (int)Position.Y - localBoundsHeight;
+							}
+
+						}
+					}
+				}
+			}
+
+			// Save the new bounds bottom.
+			boundsLeft = (int)Position.X - halfBoundsWidth;
+			boundsTop = (int)Position.Y - localBoundsHeight;
+			int boundsBottom = boundsTop + localBoundsHeight;
+			previousBottom = boundsBottom;
+			//previousBottom = bounds.Bottom;
+		}
+
+	    //private void Process(int boundsLeft, int boundsTop, int tileBoundsLeft, int tileBoundsTop)
+	    private void Process(int rectALeft, int rectATop, int rectBLeft, int rectBTop)
+	    {
+		    // Calculate half sizes.	DONE
+
+		    // Calculate centers.
+		    int centerAX = rectALeft + halfWidthA;
+		    int centerAY = rectATop + halfHeightA;
+		    int centerBX = rectBLeft + halfWidthB;
+		    int centerBY = rectBTop + halfHeightB;
+
+		    // Calculate current and minimum-non-intersecting distances between centers.
+		    int distanceX = centerAX - centerBX;
+		    int distanceY = centerAY - centerBY;
+
+		    int minDistanceX = halfWidthA + halfWidthB;
+		    int minDistanceY = halfHeightA + halfHeightB;
+
+		    depthX = 0;
+		    depthY = 0;
+
+		    // If we are not intersecting at all, return (0, 0).
+		    if (Math.Abs(distanceX) >= minDistanceX || Math.Abs(distanceY) >= minDistanceY)
+		    {
+			    return;
+		    }
+
+		    // Calculate and return intersection depths.
+		    depthX = distanceX > 0 ? minDistanceX - distanceX : -minDistanceX - distanceX;
+		    depthY = distanceY > 0 ? minDistanceY - distanceY : -minDistanceY - distanceY;
+	    }
 
         public void OnKilled(Enemy killedBy)
         {

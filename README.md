@@ -14,13 +14,14 @@ rectB	tileBounds
 
 21/02/2019
 Level summary
-04*	32x64
+04*	48x64
 04a	move player pixel by pixel up, down, left, right to check fine-grained collisions
+04a_02	clone of 04a pixel by pixel collision but refactor collision detection
 04b	test collision index lookup  for left, right, top, bottom ensure match calculations
 04c	replace velocityX calculations with velocityX index lookup for ground and air move
 04d replace velocityY calculations with velocityY index lookup for gravity and jumping
 04e	cleanup Player.cs and replace 32x64 [64x64] with 48x64 and 24x32 for smaller one
-05*	16x32
+05*	24x32
 
 13/02/2019
 DrawY	0
