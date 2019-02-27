@@ -47,7 +47,9 @@ namespace Platformer
 
 			// If we are not intersecting at all, return (0, 0).
 			if (Math.Abs(distanceX) >= minDistanceX || Math.Abs(distanceY) >= minDistanceY)
+			{
 				return Vector2.Zero;
+			}
 
 			// Calculate and return intersection depths.
 			float depthX = distanceX > 0 ? minDistanceX - distanceX : -minDistanceX - distanceX;

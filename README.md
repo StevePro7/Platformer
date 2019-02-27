@@ -1,4 +1,17 @@
 # Platformer
+
+25/02/2019
+HandleCollisions()
+tileBounds
+left and top will change depending on the x, y lookup but the width and height of the tile NEVER changes!
+32x32 or 16x16
+
+bounds
+left and top will change depending on the player posX, posY but the widht and height of the bounding rectangle NEVER changes!
+24x52 or 12x26
+rectA	boundingRect
+rectB	tileBounds
+
 21/02/2019
 Level summary
 04*	32x64
