@@ -1,5 +1,10 @@
 # Platformer
 
+28/02/2019
+Potential crash to be aware of!
+When player jumps higher that the top of the screen then the collisionY will be negative
+This is why I originally clamped remY so I must be aware of this when integrating 8-bit
+
 25/02/2019
 HandleCollisions()
 tileBounds
