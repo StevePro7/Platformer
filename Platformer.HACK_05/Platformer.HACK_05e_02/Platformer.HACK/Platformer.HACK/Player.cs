@@ -93,7 +93,7 @@ namespace Platformer
 
         // Constants for controling horizontal movement
 		//private const float MoveAcceleration = 13000.0f;
-		private const float MaxMoveSpeed = 1750.0f;
+		//private const float MaxMoveSpeed = 1750.0f;
 		//private const float GroundDragFactor = 0.48f;
 		//private const float AirDragFactor = 0.58f;
 
@@ -270,7 +270,7 @@ namespace Platformer
             velocity.Y = DoJump(velocity.Y, gameTime);
 
 			// Prevent the player from running faster than his top speed.            
-	        velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
+	        //velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
 
 			// Apply velocity.
 	        //var bob = velocity * elapsed;
@@ -387,10 +387,10 @@ namespace Platformer
 			int idxX = (int)collPosn.X;
 			int quoX = (int)(idxX / Tile.Size.X);
 			int remX = (int)(idxX % Tile.Size.X);
-			if (remX < 0)
-			{
-				remX = 0;
-			}
+			//if (remX < 0)
+			//{
+			//    remX = 0;
+			//}
 			int idxLeftTile = ltArray[remX];
 			int idxRightTile = rtArray[remX];
 
@@ -401,10 +401,10 @@ namespace Platformer
 			int quoY = (int)(idxY / Tile.Size.Y);
 			int remY = (int)(idxY % Tile.Size.Y);
 			// this won't crash at least but will go off the sides
-	        if (remY < 0)
-	        {
-		        remY = 0;
-			}
+			//if (remY < 0)
+			//{
+			//    remY = 0;
+			//}
 			int idxTopTile = ttArray[remY];
 			int idxBottomTile = btArray[remY];
 
