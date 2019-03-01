@@ -464,7 +464,6 @@ namespace Platformer
 								boundsLeft = (int)Position.X - halfBoundsWidth;
 								boundsTop = (int)Position.Y - localBoundsHeight;
 							}
-
 						}
 					}
 				}
