@@ -542,15 +542,112 @@ namespace Platformer
                 {
                     // If there is a visible tile in that position
                     Texture2D texture = tiles[x, y].Texture;
-                    if (texture != null)
-                    {
-                        // Draw it in screen space.
-                        Vector2 position = new Vector2(x, y) * Tile.Size;
-                        spriteBatch.Draw(texture, position, Color.White);
-                    }
+	                if (texture != null)
+	                {
+						// Version #1.
+
+						int offset = 6;
+						// Draw it in screen space.
+						Vector2 pos0 = new Vector2(x, y) * Tile.Size;
+						Vector2 pos1 = new Vector2(pos0.X - offset, pos0.Y - offset);
+						Vector2 pos2 = new Vector2(pos0.X + offset, pos0.Y - offset);
+						Vector2 pos3 = new Vector2(pos0.X - offset, pos0.Y + offset);
+						Vector2 pos4 = new Vector2(pos0.X + offset, pos0.Y + offset);
+
+						//Texture2D texture = GetTexture();
+						spriteBatch.Draw(GetTexture1(), pos1, Color.White);
+						spriteBatch.Draw(GetTexture1(), pos2, Color.White);
+						spriteBatch.Draw(GetTexture1(), pos3, Color.White);
+						spriteBatch.Draw(GetTexture1(), pos4, Color.White);
+	                }
                 }
             }
+
+			// For each tile position
+			for (int y = 0; y < Height; ++y)
+			{
+				for (int x = 0; x < Width; ++x)
+				{
+					// If there is a visible tile in that position
+					Texture2D texture = tiles[x, y].Texture;
+					if (texture != null)
+					{
+						int offset = 4;
+						// Draw it in screen space.
+						Vector2 pos0 = new Vector2(x, y) * Tile.Size;
+						Vector2 pos1 = new Vector2(pos0.X - offset, pos0.Y - offset);
+						Vector2 pos2 = new Vector2(pos0.X + offset, pos0.Y - offset);
+						Vector2 pos3 = new Vector2(pos0.X - offset, pos0.Y + offset);
+						Vector2 pos4 = new Vector2(pos0.X + offset, pos0.Y + offset);
+
+						//Texture2D texture = GetTexture();
+						spriteBatch.Draw(GetTexture2(), pos1, Color.White);
+						spriteBatch.Draw(GetTexture2(), pos2, Color.White);
+						spriteBatch.Draw(GetTexture2(), pos3, Color.White);
+						spriteBatch.Draw(GetTexture2(), pos4, Color.White);
+					}
+				}
+			}
+
         }
+
+		private void DrawTiles1(SpriteBatch spriteBatch)
+		{
+			// For each tile position
+			for (int y = 0; y < Height; ++y)
+			{
+				for (int x = 0; x < Width; ++x)
+				{
+					// If there is a visible tile in that position
+					Texture2D texture = tiles[x, y].Texture;
+					if (texture != null)
+					{
+						// Version #1.
+
+						int offset = 6;
+						// Draw it in screen space.
+						Vector2 pos0 = new Vector2(x, y)*Tile.Size;
+						Vector2 pos1 = new Vector2(pos0.X - offset, pos0.Y - offset);
+						Vector2 pos2 = new Vector2(pos0.X + offset, pos0.Y - offset);
+						Vector2 pos3 = new Vector2(pos0.X - offset, pos0.Y + offset);
+						Vector2 pos4 = new Vector2(pos0.X + offset, pos0.Y + offset);
+
+						//Texture2D texture = GetTexture();
+						spriteBatch.Draw(GetTexture1(), pos1, Color.White);
+						spriteBatch.Draw(GetTexture1(), pos2, Color.White);
+						spriteBatch.Draw(GetTexture1(), pos3, Color.White);
+						spriteBatch.Draw(GetTexture1(), pos4, Color.White);
+
+						offset = 4;
+						// Draw it in screen space.
+						pos0 = new Vector2(x, y)*Tile.Size;
+						pos1 = new Vector2(pos0.X - offset, pos0.Y - offset);
+						pos2 = new Vector2(pos0.X + offset, pos0.Y - offset);
+						pos3 = new Vector2(pos0.X - offset, pos0.Y + offset);
+						pos4 = new Vector2(pos0.X + offset, pos0.Y + offset);
+
+						//Texture2D texture = GetTexture();
+						spriteBatch.Draw(GetTexture2(), pos1, Color.White);
+						spriteBatch.Draw(GetTexture2(), pos2, Color.White);
+						spriteBatch.Draw(GetTexture2(), pos3, Color.White);
+						spriteBatch.Draw(GetTexture2(), pos4, Color.White);
+					}
+				}
+			}
+		}
+
+		private Texture2D GetTexture1()
+		{
+			//int index = random.Next(7);
+			//string name = "BlockA" + index;
+			//return Content.Load<Texture2D>("Tiles/" + name);
+			return Content.Load<Texture2D>("Tiles/white");
+		}
+	    private Texture2D GetTexture2()
+	    {
+			int index = random.Next(7);
+			string name = "BlockA" + index;
+			return Content.Load<Texture2D>("Tiles/Platform");}
 
 		private void DrawStrip(SpriteBatch spriteBatch)
 		{

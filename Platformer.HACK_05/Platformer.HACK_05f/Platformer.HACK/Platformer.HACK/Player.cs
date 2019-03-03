@@ -401,10 +401,10 @@ namespace Platformer
 			int quoY = (int)(idxY / Tile.Size.Y);
 			int remY = (int)(idxY % Tile.Size.Y);
 			// this won't crash at least but will go off the sides
-			//if (remY < 0)
-			//{
-			//    remY = 0;
-			//}
+			if (remY < 0)
+			{
+				remY = 0;
+			}
 			int idxTopTile = ttArray[remY];
 			int idxBottomTile = btArray[remY];
 
@@ -414,6 +414,10 @@ namespace Platformer
 	        // Reset flag to search for ground collision.
             isOnGround = false;
 
+	        if (isJumping)
+	        {
+		        int x = 7;
+	        }
 			// For each potentially colliding tile,
 			for (int y = topTile; y <= bottomTile; ++y)
 			{
