@@ -1,5 +1,9 @@
 # Platformer
 
+01/03/2019
+Fontstruct used for the title
+https://fontstruct.com/fontstructions/show/1406722/opel-lcd-3-1
+
 28/02/2019
 Potential crash to be aware of!
 When player jumps higher that the top of the screen then the collisionY will be negative

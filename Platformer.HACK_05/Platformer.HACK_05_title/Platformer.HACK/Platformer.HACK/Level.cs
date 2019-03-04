@@ -535,6 +535,9 @@ namespace Platformer
         /// </summary>
         private void DrawTiles(SpriteBatch spriteBatch)
         {
+	        Color backColor = Color.Red;
+	        Color foreColor = Color.White;
+
             // For each tile position
             for (int y = 0; y < Height; ++y)
             {
@@ -555,10 +558,10 @@ namespace Platformer
 						Vector2 pos4 = new Vector2(pos0.X + offset, pos0.Y + offset);
 
 						//Texture2D texture = GetTexture();
-						spriteBatch.Draw(GetTexture1(), pos1, Color.White);
-						spriteBatch.Draw(GetTexture1(), pos2, Color.White);
-						spriteBatch.Draw(GetTexture1(), pos3, Color.White);
-						spriteBatch.Draw(GetTexture1(), pos4, Color.White);
+						spriteBatch.Draw(GetTexture1(), pos1, backColor);
+						spriteBatch.Draw(GetTexture1(), pos2, backColor);
+						spriteBatch.Draw(GetTexture1(), pos3, backColor);
+						spriteBatch.Draw(GetTexture1(), pos4, backColor);
 	                }
                 }
             }
@@ -581,10 +584,10 @@ namespace Platformer
 						Vector2 pos4 = new Vector2(pos0.X + offset, pos0.Y + offset);
 
 						//Texture2D texture = GetTexture();
-						spriteBatch.Draw(GetTexture2(), pos1, Color.White);
-						spriteBatch.Draw(GetTexture2(), pos2, Color.White);
-						spriteBatch.Draw(GetTexture2(), pos3, Color.White);
-						spriteBatch.Draw(GetTexture2(), pos4, Color.White);
+						spriteBatch.Draw(GetTexture2(), pos1, foreColor);
+						spriteBatch.Draw(GetTexture2(), pos2, foreColor);
+						spriteBatch.Draw(GetTexture2(), pos3, foreColor);
+						spriteBatch.Draw(GetTexture2(), pos4, foreColor);
 					}
 				}
 			}
