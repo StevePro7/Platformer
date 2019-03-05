@@ -549,7 +549,7 @@ namespace Platformer
 	                {
 						// Version #1.
 
-						int offset = 6;
+		                int offset = 8;
 						// Draw it in screen space.
 						Vector2 pos0 = new Vector2(x, y) * Tile.Size;
 						Vector2 pos1 = new Vector2(pos0.X - offset, pos0.Y - offset);
@@ -584,10 +584,11 @@ namespace Platformer
 						Vector2 pos4 = new Vector2(pos0.X + offset, pos0.Y + offset);
 
 						//Texture2D texture = GetTexture();
-						spriteBatch.Draw(GetTexture2(), pos1, foreColor);
-						spriteBatch.Draw(GetTexture2(), pos2, foreColor);
-						spriteBatch.Draw(GetTexture2(), pos3, foreColor);
-						spriteBatch.Draw(GetTexture2(), pos4, foreColor);
+						spriteBatch.Draw(GetTexture2(), pos0, foreColor);
+						//spriteBatch.Draw(GetTexture2(), pos1, foreColor);
+						//spriteBatch.Draw(GetTexture2(), pos2, foreColor);
+						//spriteBatch.Draw(GetTexture2(), pos3, foreColor);
+						//spriteBatch.Draw(GetTexture2(), pos4, foreColor);
 					}
 				}
 			}
@@ -624,16 +625,17 @@ namespace Platformer
 						offset = 4;
 						// Draw it in screen space.
 						pos0 = new Vector2(x, y)*Tile.Size;
-						pos1 = new Vector2(pos0.X - offset, pos0.Y - offset);
-						pos2 = new Vector2(pos0.X + offset, pos0.Y - offset);
-						pos3 = new Vector2(pos0.X - offset, pos0.Y + offset);
-						pos4 = new Vector2(pos0.X + offset, pos0.Y + offset);
+						//pos1 = new Vector2(pos0.X - offset, pos0.Y - offset);
+						//pos2 = new Vector2(pos0.X + offset, pos0.Y - offset);
+						//pos3 = new Vector2(pos0.X - offset, pos0.Y + offset);
+						//pos4 = new Vector2(pos0.X + offset, pos0.Y + offset);
 
 						//Texture2D texture = GetTexture();
-						spriteBatch.Draw(GetTexture2(), pos1, Color.White);
-						spriteBatch.Draw(GetTexture2(), pos2, Color.White);
-						spriteBatch.Draw(GetTexture2(), pos3, Color.White);
-						spriteBatch.Draw(GetTexture2(), pos4, Color.White);
+						spriteBatch.Draw(GetTexture2(), pos0, Color.White);
+						//spriteBatch.Draw(GetTexture2(), pos1, Color.White);
+						//spriteBatch.Draw(GetTexture2(), pos2, Color.White);
+						//spriteBatch.Draw(GetTexture2(), pos3, Color.White);
+						//spriteBatch.Draw(GetTexture2(), pos4, Color.White);
 					}
 				}
 			}
