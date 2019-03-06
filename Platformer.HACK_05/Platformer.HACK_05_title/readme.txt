@@ -1,3 +1,14 @@
+06/03/2019
+org
+768x299
+
+resize
+800x320
+
+scale
+240x96
+
+
 Platformer.HACK_04
 
 Clone of Platformer.HACK_04a
