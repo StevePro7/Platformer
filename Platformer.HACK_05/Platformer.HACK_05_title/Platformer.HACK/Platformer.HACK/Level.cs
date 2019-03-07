@@ -549,7 +549,7 @@ namespace Platformer
 	                {
 						// Version #1.
 
-		                int offset = 8;
+		                int offset = 6;
 						// Draw it in screen space.
 						Vector2 pos0 = new Vector2(x, y) * Tile.Size;
 						Vector2 pos1 = new Vector2(pos0.X - offset, pos0.Y - offset);

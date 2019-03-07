@@ -46,7 +46,7 @@ namespace Platformer
 			graphics = new GraphicsDeviceManager(this);
 			graphics.IsFullScreen = false;
 			graphics.PreferredBackBufferWidth = 784;
-			graphics.PreferredBackBufferHeight= 17*16;
+			graphics.PreferredBackBufferHeight= 18*16;
 			Content.RootDirectory = "Content";
 			Logger.Initialize();
 		}
