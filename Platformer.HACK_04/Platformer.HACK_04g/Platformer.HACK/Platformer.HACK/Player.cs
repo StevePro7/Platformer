@@ -16,6 +16,8 @@ namespace Platformer
 {
     class Player
     {
+	    private Config config;
+
 	    // (32 - 48) / 2		32=tileWidth	48=playerWidth
 	    private const int drawOffsetX = -8;
 
@@ -125,8 +127,9 @@ namespace Platformer
 	        }
         }
 
-        public Player(Level level, Vector2 position)
+        public Player(Level level, Vector2 position, Config config)
         {
+	        this.config = config;
             this.level = level;
 
             LoadContent();
@@ -278,6 +281,17 @@ namespace Platformer
 			var bobY = velocity.Y;// * elapsed;		// IMPORTANT pre-calc'd so don't multiply by game tile delta elapsed
 	        var bobPos = Position;
 	        bobPos.X += bobX;
+
+			// Boundaries.
+	        if (bobPos.X <= 48.0f)
+	        {
+		        bobPos.X = 48.0f;
+	        }
+	        if (bobPos.X >= 496.0f)
+	        {
+		        bobPos.X = 496.0f;
+	        }
+
 	        bobPos.Y += bobY;
 	        Position = bobPos;
             Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
@@ -517,6 +531,11 @@ namespace Platformer
 
         public void OnKilled(Enemy killedBy)
         {
+			if (config.Invincibility)
+	        {
+		        return;
+	        }
+
             isAlive = false;
             //sprite.PlayAnimation(dieAnimation);
         }

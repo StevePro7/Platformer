@@ -15,6 +15,7 @@ namespace Platformer
 		// Resources for drawing.
 		private GraphicsDeviceManager graphics;
 		private SpriteBatch spriteBatch;
+		private Config config;
 
 		// Global content.
 		private SpriteFont hudFont;
@@ -61,6 +62,11 @@ namespace Platformer
 			//Byte framesPerSecond = 50;
 			Byte framesPerSecond = Convert.ToByte(ConfigurationManager.AppSettings["FramesPerSecond"]);
 			Byte configLevelNext = Convert.ToByte(ConfigurationManager.AppSettings["BeginStartLevel"]);
+
+			Boolean invincibility = Convert.ToBoolean(ConfigurationManager.AppSettings["Invincibility"]);
+			Boolean optionalBlock = Convert.ToBoolean(ConfigurationManager.AppSettings["OptionalBlock"]);
+			config = new Config(invincibility, optionalBlock);
+
 			levelIndex = configLevelNext - 1;
 			IsFixedTimeStep = true;
 			TargetElapsedTime = TimeSpan.FromSeconds(1.0f / framesPerSecond);
@@ -140,7 +146,7 @@ namespace Platformer
 			// Load the level.
 			string levelPath = string.Format("Content/Levels/{0}.txt", levelIndex);
 			using (Stream fileStream = TitleContainer.OpenStream(levelPath))
-				level = new Level(Services, fileStream, levelIndex);
+				level = new Level(Services, fileStream, levelIndex, config);
 		}
 
 		private void ReloadCurrentLevel()

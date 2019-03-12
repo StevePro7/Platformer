@@ -80,6 +80,7 @@
     <Compile Include="Animation.cs" />
     <Compile Include="AnimationPlayer.cs" />
     <Compile Include="Circle.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="EnumManager.cs" />
     <Compile Include="Gem.cs" />

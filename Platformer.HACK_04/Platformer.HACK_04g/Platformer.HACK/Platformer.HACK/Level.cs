@@ -79,6 +79,8 @@ namespace Platformer
         }
         ContentManager content;
 
+	    private Config config;
+
         #region Loading
 
         /// <summary>
@@ -90,8 +92,10 @@ namespace Platformer
         /// <param name="fileStream">
         /// A stream containing the tile data.
         /// </param>
-        public Level(IServiceProvider serviceProvider, Stream fileStream, int levelIndex)
+        public Level(IServiceProvider serviceProvider, Stream fileStream, int levelIndex, Config config)
         {
+	        this.config = config;
+
             // Create a new content manager to load content used just by this level.
             content = new ContentManager(serviceProvider, "Content");
 
@@ -228,6 +232,18 @@ namespace Platformer
                 // Impassable block
                 case '#':
                     return LoadVarietyTile("BlockA", 7, TileCollision.Impassable);
+	            case '$':
+	            {
+		            if (config.OptionalBlock)
+		            {
+			            return new Tile(null, TileCollision.Passable);
+		            }
+		            else
+		            {
+			            return LoadVarietyTile("BlockA", 7, TileCollision.Impassable);    
+		            }
+	            }
+					
 
                 // Unknown tile type character
                 default:
@@ -278,7 +294,7 @@ namespace Platformer
                 throw new NotSupportedException("A level may only have one starting point.");
 
             start = RectangleExtensions.GetBottomCenter(GetBounds(x, y));
-            player = new Player(this, start);
+            player = new Player(this, start, config);
 
             return new Tile(null, TileCollision.Passable);
         }
