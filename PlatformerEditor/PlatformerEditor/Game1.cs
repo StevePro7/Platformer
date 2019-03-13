@@ -13,8 +13,9 @@ namespace PlatformerEditor
 	{
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
+        Texture2D texture;
 
-		public Game1()
+        public Game1()
 		{
 			graphics = new GraphicsDeviceManager(this);
 			Content.RootDirectory = "Content";
@@ -41,8 +42,9 @@ namespace PlatformerEditor
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
 
-			//TODO: use this.Content to load your game content here 
-		}
+            texture = Content.Load<Texture2D>("Sprites/Gem");
+            int x = 7;
+        }
 
 		/// <summary>
 		/// Allows the game to run logic such as updating the world,
@@ -71,7 +73,9 @@ namespace PlatformerEditor
 		{
 			graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 
-			//TODO: Add your drawing code here
+            spriteBatch.Begin();
+            spriteBatch.Draw(texture, Vector2.Zero, Color.White);
+            spriteBatch.End();
 
 			base.Draw(gameTime);
 		}

@@ -114,6 +114,7 @@
     <Content Include="Content\Tiles\BlockA3.xnb" />
     <Content Include="Content\Tiles\BlockA2.xnb" />
     <Content Include="Content\Tiles\BlockA1.xnb" />
+    <Content Include="Content\Sprites\Gem.xnb" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Fonts\" />
