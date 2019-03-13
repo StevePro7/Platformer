@@ -6,6 +6,7 @@ using System.Linq;
 using MonoMac.AppKit;
 using MonoMac.Foundation;
 #endregion
+using Platformer;
 
 namespace PlatformerEditor
 {
@@ -18,8 +19,9 @@ namespace PlatformerEditor
 		{
 			NSApplication.Init();
 
-			using (var game = new Game1())
-			{
+            //using (var game = new Game1())
+            using (PlatformerGame game = new PlatformerGame())
+            {
 				game.Run();
 			}
 		}

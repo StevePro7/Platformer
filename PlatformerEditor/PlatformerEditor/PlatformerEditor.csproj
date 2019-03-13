@@ -71,6 +71,7 @@
     <Compile Include="TouchCollectionExtensions.cs" />
     <Compile Include="Gem.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="PlatformerGame.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainMenu.xib" />
