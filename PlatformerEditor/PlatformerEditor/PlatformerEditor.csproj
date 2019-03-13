@@ -58,6 +58,19 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Accelerometer.cs" />
+    <Compile Include="Animation.cs" />
+    <Compile Include="AnimationPlayer.cs" />
+    <Compile Include="Circle.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="Enemy.cs" />
+    <Compile Include="EnumManager.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="RectangleExtensions.cs" />
+    <Compile Include="Tile.cs" />
+    <Compile Include="TouchCollectionExtensions.cs" />
+    <Compile Include="Gem.cs" />
+    <Compile Include="Level.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainMenu.xib" />
@@ -81,6 +94,18 @@
     <Content Include="libSDL2-2.0.0.dylib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Levels\0.txt" />
+    <Content Include="Content\Levels\00.txt" />
+    <Content Include="Content\Levels\01.txt" />
+    <Content Include="Content\Levels\1.txt" />
+    <Content Include="Content\Levels\2.txt" />
+    <Content Include="Content\Levels\3.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Fonts\" />
+    <Folder Include="Content\Tiles\" />
+    <Folder Include="Content\Levels\" />
+    <Folder Include="Content\Sprites\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
