@@ -12,6 +12,14 @@ namespace Platformer
 	/// </summary>
 	public class PlatformerGame : Microsoft.Xna.Framework.Game
 	{
+
+		// Config hardcoded values.
+		Byte framesPerSecond = 50;
+		Byte configLevelNext = 0;
+		Boolean invincibility = true;
+		Boolean optionalBlock = true;
+
+
 		// Resources for drawing.
 		private GraphicsDeviceManager graphics;
 		private SpriteBatch spriteBatch;
@@ -60,11 +68,11 @@ namespace Platformer
 			IsMouseVisible = true;
 
             //Byte framesPerSecond = 50;
-            Byte framesPerSecond = 50; //Convert.ToByte(ConfigurationManager.AppSettings["FramesPerSecond"]);
-            Byte configLevelNext = 0; //Convert.ToByte(ConfigurationManager.AppSettings["BeginStartLevel"]);
+            //Byte framesPerSecond = 50; //Convert.ToByte(ConfigurationManager.AppSettings["FramesPerSecond"]);
+            //Byte configLevelNext = 0; //Convert.ToByte(ConfigurationManager.AppSettings["BeginStartLevel"]);
 
-            Boolean invincibility = true; //Convert.ToBoolean(ConfigurationManager.AppSettings["Invincibility"]);
-            Boolean optionalBlock = true; //Convert.ToBoolean(ConfigurationManager.AppSettings["OptionalBlock"]);
+            //Boolean invincibility = true; //Convert.ToBoolean(ConfigurationManager.AppSettings["Invincibility"]);
+            //Boolean optionalBlock = true; //Convert.ToBoolean(ConfigurationManager.AppSettings["OptionalBlock"]);
 			config = new Config(invincibility, optionalBlock);
 
 			levelIndex = configLevelNext - 1;
