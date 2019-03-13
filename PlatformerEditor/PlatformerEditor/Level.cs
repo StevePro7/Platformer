@@ -192,7 +192,10 @@ namespace Platformer
 
                 // Gem
                 case 'G':
-                    return LoadGemTile(x, y);
+                    return LoadGemTile(x, y, Color.Yellow);
+
+	            case 'P':
+		            return LoadGemTile(x, y, Color.Red);
 
                 // Floating platform
                 case '-':
@@ -326,10 +329,10 @@ namespace Platformer
         /// <summary>
         /// Instantiates a gem and puts it in the level.
         /// </summary>
-        private Tile LoadGemTile(int x, int y)
+        private Tile LoadGemTile(int x, int y, Color color)
         {
             Point position = GetBounds(x, y).Center;
-            gems.Add(new Gem(this, new Vector2(position.X, position.Y)));
+            gems.Add(new Gem(this, new Vector2(position.X, position.Y), color));
 
             return new Tile(null, TileCollision.Passable);
         }
