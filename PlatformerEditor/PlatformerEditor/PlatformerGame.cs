@@ -16,7 +16,7 @@ namespace Platformer
 		// Config hardcoded values.
 		Byte framesPerSecond = 50;
 		Byte configLevelNext = 0;
-		Boolean invincibility = true;
+		Boolean invincibility = false;
 		Boolean optionalBlock = true;
 
 
@@ -26,11 +26,11 @@ namespace Platformer
 		private Config config;
 
 		// Global content.
-		private SpriteFont hudFont;
+		//private SpriteFont hudFont;
 
-		private Texture2D winOverlay;
-		private Texture2D loseOverlay;
-		private Texture2D diedOverlay;
+		//private Texture2D winOverlay;
+		//private Texture2D loseOverlay;
+		//private Texture2D diedOverlay;
 
 		// Meta-level game state.
 		private int levelIndex = 0;
@@ -84,7 +84,7 @@ namespace Platformer
 			spriteBatch = new SpriteBatch(GraphicsDevice);
 
 			// Load fonts
-			hudFont = Content.Load<SpriteFont>("Fonts/Hud");
+			//hudFont = Content.Load<SpriteFont>("Fonts/Hud");
 
 			// Load overlay textures
 			//winOverlay = Content.Load<Texture2D>("Overlays/you_win");
