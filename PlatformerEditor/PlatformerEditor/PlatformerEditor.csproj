@@ -94,18 +94,40 @@
     <Content Include="libSDL2-2.0.0.dylib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Levels\0.txt" />
-    <Content Include="Content\Levels\00.txt" />
-    <Content Include="Content\Levels\01.txt" />
-    <Content Include="Content\Levels\1.txt" />
-    <Content Include="Content\Levels\2.txt" />
-    <Content Include="Content\Levels\3.txt" />
+    <Content Include="Content\Fonts\Hud.xnb" />
+    <Content Include="Content\Sprites\MonsterA\Idle.xnb" />
+    <Content Include="Content\Sprites\MonsterB\Idle.xnb" />
+    <Content Include="Content\Sprites\MonsterC\Idle.xnb" />
+    <Content Include="Content\Sprites\MonsterD\Idle.xnb" />
+    <Content Include="Content\Sprites\Player\Idle.xnb" />
+    <Content Include="Content\Sprites\Player\Rect.xnb" />
+    <Content Include="Content\Tiles\BlockA0.xnb" />
+    <Content Include="Content\Tiles\StripVert.xnb" />
+    <Content Include="Content\Tiles\StripHorz.xnb" />
+    <Content Include="Content\Tiles\Platform.xnb" />
+    <Content Include="Content\Tiles\Exit.xnb" />
+    <Content Include="Content\Tiles\BlockB1.xnb" />
+    <Content Include="Content\Tiles\BlockB0.xnb" />
+    <Content Include="Content\Tiles\BlockA6.xnb" />
+    <Content Include="Content\Tiles\BlockA5.xnb" />
+    <Content Include="Content\Tiles\BlockA4.xnb" />
+    <Content Include="Content\Tiles\BlockA3.xnb" />
+    <Content Include="Content\Tiles\BlockA2.xnb" />
+    <Content Include="Content\Tiles\BlockA1.xnb" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Fonts\" />
     <Folder Include="Content\Tiles\" />
     <Folder Include="Content\Levels\" />
     <Folder Include="Content\Sprites\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Content\Levels\0.txt" />
+    <BundleResource Include="Content\Levels\00.txt" />
+    <BundleResource Include="Content\Levels\01.txt" />
+    <BundleResource Include="Content\Levels\1.txt" />
+    <BundleResource Include="Content\Levels\2.txt" />
+    <BundleResource Include="Content\Levels\3.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
