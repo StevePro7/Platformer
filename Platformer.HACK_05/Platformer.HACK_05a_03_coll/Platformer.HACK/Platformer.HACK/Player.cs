@@ -384,6 +384,48 @@ namespace Platformer
 			// Reset flag to search for ground collision.
 			isOnGround = false;
 
+			// CHECK Y pos
+			if (shouldLog)
+			{
+				const int ePosX = 40;
+				float diff = Math.Abs(position.X - ePosX);
+				//float diff = position.X - ePosX;
+				string msg = String.Format("PX:{0} EX:{1} Diff:{2}", position.X, ePosX, diff);
+				Logger.Info(msg);
+			}
+
+
+			// CHECK Y pos
+			/*
+			if (shouldLog)
+			{
+				const int enemyTop = 2;
+				const int enemyBot = 3;
+				string msg = String.Format("PT:{0} PB:{1}	ET:{2} EBR:{3}  ", topTile, bottomTile, enemyTop, enemyBot);
+				//if (topTile == enemyTop)
+				//{
+				//    msg += "CHECK1 ";
+				//}
+				//if (topTile + 1 == enemyTop)
+				//{
+				//    msg += "CHECK2 ";
+				//}
+				//if (bottomTile + 0 == enemyTop)
+				//{
+				//    msg += "CHECK3 ";
+				//}
+				if (bottomTile == enemyBot)
+				{
+					msg += "CHECK4 ";
+				}
+				//if (bottomTile + 0 == enemyBot - 1)
+				if (bottomTile == enemyTop)
+				{
+					msg += "CHECK5 ";
+				}
+				Logger.Info(msg);
+			}
+			*/
 			// For each potentially colliding tile,
 			for (int y = topTile; y <= bottomTile; ++y)
 			{
@@ -514,7 +556,7 @@ namespace Platformer
         {
 	        Vector2 drawPosn = GetDrawPosn();
 			sprite.Draw(spriteBatch, drawPosn);
-	        spriteBatch.Draw(BoundImage, new Vector2(BoundingRectangle.X, BoundingRectangle.Y), Color.White);
+	        //spriteBatch.Draw(BoundImage, new Vector2(BoundingRectangle.X, BoundingRectangle.Y), Color.White);
         }
     }
 }

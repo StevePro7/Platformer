@@ -1,5 +1,35 @@
 # Platformer
 
+14/03/2019
+Sprite collision detectione.g.
+Enemy (1,3)
+eo.top = 2	eo.spotY - 1
+eo.bot = 3	eo.spotY = 3
+po.top = 2	po.bot = 3		CHECK
+po.top = 0	po.bot = 1		no
+
+if (player.bot == enemy.bot - 1) then check
+if (player.top + 1 == enemy.bot) then check
+
+CHECK the Y pos
+if (pBot == eBot)	then check4
+if (pBot == eTop)	then check5
+
+CHECK the X pos
+Once above is true:
+Easy calculate the difference playerPosX and enemyNposX
+if (abs(diff) <= offset) then death
+
+NB: offset is 
+min 8	Easy level
+max 12	Hard level
+
+3x checke don't do as can do in 2x
+//if pTop + 0 == eTop then check1
+//if pTop + 1 == eTop then check2
+//if pBot + 0 == eTop then check3
+
+
 01/03/2019
 Fontstruct used for the title
 https://fontstruct.com/fontstructions/show/1406722/opel-lcd-3-1

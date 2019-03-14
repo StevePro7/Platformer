@@ -452,7 +452,7 @@ namespace Platformer
                 // Touching an enemy instantly kills the player
                 if (enemy.BoundingRectangle.Intersects(Player.BoundingRectangle))
                 {
-                    OnPlayerKilled(enemy);
+                    //OnPlayerKilled(enemy);
                 }
             }
         }

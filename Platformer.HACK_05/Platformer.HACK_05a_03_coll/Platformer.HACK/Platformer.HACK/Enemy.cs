@@ -158,7 +158,9 @@ namespace Platformer
 				else
 				{
 					// Move in the current direction.
-					Vector2 velocity = new Vector2((int) direction*MoveSpeed*elapsed, 0.0f);
+					//Vector2 velocity = new Vector2((int) direction*MoveSpeed*elapsed, 0.0f);
+					Vector2 velocity = Vector2.Zero;
+					;
 					position = position + velocity;
 				}
 			}
