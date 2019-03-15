@@ -253,8 +253,9 @@ namespace Platformer
 		            }
 		            else
 		            {
-			            return LoadVarietyTile("BlockA", 7, TileCollision.Impassable);    
-		            }
+			            //return LoadVarietyTile("Platform", 7, TileCollision.Impassable);   
+                        return LoadTile("Platform", TileCollision.Platform);
+                        }
 	            }
 					
 

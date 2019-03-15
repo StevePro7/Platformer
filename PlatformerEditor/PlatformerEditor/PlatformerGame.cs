@@ -17,7 +17,7 @@ namespace Platformer
 		Byte framesPerSecond = 50;
 		Byte configLevelNext = 0;
 		Boolean invincibility = false;
-		Boolean optionalBlock = true;
+        Boolean optionalBlock = false;
 
 
 		// Resources for drawing.
