@@ -1,6 +1,13 @@
 # Platformer
 
 14/03/2019
+TODO - important
+collision difference between player + enemy
+MUST implement this!!	Currenlty hardcoded
+min 8	Easy level
+max 12	Hard level
+
+14/03/2019
 Sprite collision detectione.g.
 Enemy (1,3)
 eo.top = 2	eo.spotY - 1
@@ -10,6 +17,8 @@ po.top = 0	po.bot = 1		no
 
 if (player.bot == enemy.bot - 1) then check
 if (player.top + 1 == enemy.bot) then check
+Just realized that this did not take into consideration velY due to gravity
+i.e. top=0 bot=2 bot is "usually" 2x difference not 1x!
 
 CHECK the Y pos
 if (pBot == eBot)	then check4
