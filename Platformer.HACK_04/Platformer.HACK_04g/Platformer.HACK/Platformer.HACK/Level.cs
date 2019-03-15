@@ -101,7 +101,7 @@ namespace Platformer
 
             timeRemaining = TimeSpan.FromMinutes(2.0);
 
-            LoadTiles(fileStream);
+            LoadTiles(fileStream, config.Invincibility);
 
             // Load background layer textures. For now, all levels must
             // use the same backgrounds and only use the left-most part of them.
@@ -124,7 +124,7 @@ namespace Platformer
         /// <param name="fileStream">
         /// A stream containing the tile data.
         /// </param>
-        private void LoadTiles(Stream fileStream)
+		private void LoadTiles(Stream fileStream, bool invincibility)
         {
             // Load the level and ensure all of the lines are the same length.
             int width;
@@ -152,7 +152,7 @@ namespace Platformer
                 {
                     // to load each tile.
                     char tileType = lines[y][x];
-                    tiles[x, y] = LoadTile(tileType, x, y);
+                    tiles[x, y] = LoadTile(tileType, x, y, invincibility);
                 }
             }
 
@@ -178,13 +178,22 @@ namespace Platformer
         /// The Y location of this tile in tile space.
         /// </param>
         /// <returns>The loaded tile.</returns>
-        private Tile LoadTile(char tileType, int x, int y)
+		private Tile LoadTile(char tileType, int x, int y, bool invincibility)
         {
             switch (tileType)
             {
                 // Blank space
-                case '.':
-                    return new Tile(null, TileCollision.Passable);
+	            case '.':
+	            {
+		            if (11 == y && invincibility)
+		            {
+			            return new Tile(null, TileCollision.Impassable);
+		            }
+		            else
+		            {
+			            return new Tile(null, TileCollision.Passable);    
+		            }
+	            }
 
                 // Exit
                 case 'X':
@@ -198,6 +207,7 @@ namespace Platformer
 		            return LoadGemTile(x, y, Color.Red);
 
                 // Floating platform
+                case '@':
                 case '-':
                     return LoadTile("Platform", TileCollision.Platform);
 
