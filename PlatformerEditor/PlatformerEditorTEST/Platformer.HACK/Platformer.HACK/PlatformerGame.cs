@@ -17,17 +17,20 @@ namespace Platformer
 		private SpriteBatch spriteBatch;
 		private Config config;
 
+		private BoardManager boardManager;
+		private LoadManager loadManager;
+
 		// Global content.
 		private SpriteFont hudFont;
 
-		private Texture2D winOverlay;
-		private Texture2D loseOverlay;
-		private Texture2D diedOverlay;
+		//private Texture2D winOverlay;
+		//private Texture2D loseOverlay;
+		//private Texture2D diedOverlay;
 
 		// Meta-level game state.
 		private int levelIndex = 0;
-		private Level level;
-		private bool wasContinuePressed;
+		//private Level level;
+		//private bool wasContinuePressed;
 
 		// When the time remaining is less than the warning time, it blinks on the hud
 		private static readonly TimeSpan WarningTime = TimeSpan.FromSeconds(30);
@@ -45,10 +48,13 @@ namespace Platformer
 		public PlatformerGame()
 		{
 			graphics = new GraphicsDeviceManager(this);
-			graphics.PreferredBackBufferWidth = 32 * 16;//640;
+			graphics.PreferredBackBufferWidth = 32 * 18;//640;
 			graphics.PreferredBackBufferHeight = 32 * 12;//480;
 			Content.RootDirectory = "Content";
 			Logger.Initialize();
+
+			boardManager = new BoardManager();
+			loadManager = new LoadManager();
 		}
 
 		/// <summary>
@@ -79,11 +85,12 @@ namespace Platformer
 			hudFont = Content.Load<SpriteFont>("Fonts/Hud");
 
 			// Load overlay textures
-			winOverlay = Content.Load<Texture2D>("Overlays/you_win");
-			loseOverlay = Content.Load<Texture2D>("Overlays/you_lose");
-			diedOverlay = Content.Load<Texture2D>("Overlays/you_died");
+			//winOverlay = Content.Load<Texture2D>("Overlays/you_win");
+			//loseOverlay = Content.Load<Texture2D>("Overlays/you_lose");
+			//diedOverlay = Content.Load<Texture2D>("Overlays/you_died");
 
-			LoadNextLevel();
+			loadManager.Load(Content);
+			//LoadNextLevel();
 		}
 
 		/// <summary>
@@ -101,72 +108,72 @@ namespace Platformer
 				Exit();
 			}
 
-			if (currKeyboardState.IsKeyDown(Keys.Enter) && prevKeyboardState.IsKeyUp(Keys.Enter))
-			{
-				LoadNextLevel();
-				//Logger.Info("load");
-			}
+			//if (currKeyboardState.IsKeyDown(Keys.Enter) && prevKeyboardState.IsKeyUp(Keys.Enter))
+			//{
+			//    LoadNextLevel();
+			//    //Logger.Info("load");
+			//}
 
 			// Handle polling for our input and handling high-level input
-			HandleInput();
+			//HandleInput();
 
 			// update our level, passing down the GameTime along with all of our input states
-			level.Update(gameTime, currKeyboardState);
+			//level.Update(gameTime, currKeyboardState);
 
 			prevKeyboardState = currKeyboardState;
 			base.Update(gameTime);
 		}
 
-		private void HandleInput()
-		{
-			bool continuePressed = currKeyboardState.IsKeyDown(Keys.Space);
+		//private void HandleInput()
+		//{
+		//    bool continuePressed = currKeyboardState.IsKeyDown(Keys.Space);
 
-			// Perform the appropriate action to advance the game and
-			// to get the player back to playing.
-			if (!wasContinuePressed && continuePressed)
-			{
-				if (!level.Player.IsAlive)
-				{
-					level.StartNewLife();
-				}
-				else if (level.TimeRemaining == TimeSpan.Zero)
-				{
-					if (level.ReachedExit)
-						LoadNextLevel();
-					else
-						ReloadCurrentLevel();
-				}
-			}
+		//    // Perform the appropriate action to advance the game and
+		//    // to get the player back to playing.
+		//    if (!wasContinuePressed && continuePressed)
+		//    {
+		//        if (!level.Player.IsAlive)
+		//        {
+		//            level.StartNewLife();
+		//        }
+		//        else if (level.TimeRemaining == TimeSpan.Zero)
+		//        {
+		//            if (level.ReachedExit)
+		//                LoadNextLevel();
+		//            else
+		//                ReloadCurrentLevel();
+		//        }
+		//    }
 
-			wasContinuePressed = continuePressed;
-		}
+		//    wasContinuePressed = continuePressed;
+		//}
 
-		private void LoadNextLevel()
-		{
-			// move to the next level
-			//levelIndex = (levelIndex + 1) % numberOfLevels;
-			//levelIndex = 1;		// TODO remove this override - could make this configurable...!
-			levelIndex = 0;
+		//private void LoadNextLevel()
+		//{
+		//    // move to the next level
+		//    //levelIndex = (levelIndex + 1) % numberOfLevels;
+		//    //levelIndex = 1;		// TODO remove this override - could make this configurable...!
+		//    levelIndex = 0;
 
-			// Unloads the content for the current level before loading the next one.
-			if (level != null)
-			{
-				level.Dispose();
-			}
+		//    // Unloads the content for the current level before loading the next one.
+		//    if (level != null)
+		//    {
+		//        level.Dispose();
+		//    }
 
-			// Load the level.
-			string levelPath = string.Format("Content/Levels/{0}.txt", levelIndex);
-			using (Stream fileStream = TitleContainer.OpenStream(levelPath))
-			{
-				level = new Level(Services, fileStream, levelIndex, config);
-			}
-		}
+		//    // Load the level.
+		//    string levelPath = string.Format("Content/Levels/{0}.txt", levelIndex);
+		//    using (Stream fileStream = TitleContainer.OpenStream(levelPath))
+		//    {
+		//        level = new Level(Services, fileStream, levelIndex, config);
+		//    }
+		//}
 
-		private void ReloadCurrentLevel()
-		{
-			--levelIndex;
-			LoadNextLevel();
-		}
+		//private void ReloadCurrentLevel()
+		//{
+		//    --levelIndex;
+		//    LoadNextLevel();
+		//}
 
 		/// <summary>
 		/// Draws the game from background to foreground.
@@ -179,7 +186,9 @@ namespace Platformer
 
 			spriteBatch.Begin();
 
-			level.Draw(gameTime, spriteBatch);
+			boardManager.Draw(spriteBatch);
+
+			//level.Draw(gameTime, spriteBatch);
 
 			//DrawHud();
 

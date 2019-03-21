@@ -79,12 +79,16 @@
   <ItemGroup>
     <Compile Include="Animation.cs" />
     <Compile Include="AnimationPlayer.cs" />
+    <Compile Include="Assets.cs" />
     <Compile Include="Circle.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="LoadManager.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="EnumManager.cs" />
     <Compile Include="Gem.cs" />
+    <Compile Include="ImageManager.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="BoardManager.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -92,6 +96,7 @@
     <Compile Include="PlatformerGame.cs" />
     <Compile Include="RectangleExtensions.cs" />
     <Compile Include="Tile.cs" />
+    <Compile Include="TileManager.cs" />
     <Compile Include="TouchCollectionExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
