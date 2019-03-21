@@ -19,11 +19,7 @@ namespace Platformer
 			Assets.EnemyDTexture = content.Load<Texture2D>("Sprites/MonsterD/Idle");
 			Assets.HorzTexture = content.Load<Texture2D>("Tiles/StripHorz");
 			Assets.VertTexture = content.Load<Texture2D>("Tiles/StripVert");
-		}
-
-		public void Draw()
-		{
-
+			Assets.ErrorTexture = content.Load<Texture2D>("Tiles/error");
 		}
 
 	}

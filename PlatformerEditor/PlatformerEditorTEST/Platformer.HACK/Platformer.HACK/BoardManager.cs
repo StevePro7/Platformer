@@ -30,7 +30,6 @@ namespace Platformer
 			}
 		}
 
-
 		public void Load(string path)
 		{
 			string[] contents = File.ReadAllLines(path);
@@ -44,18 +43,6 @@ namespace Platformer
 				}
 			}
 		}
-		//public void Load(string[] lines)
-		//{
-		//    for (int y = 0; y < lines.Count(); y++)
-		//    {
-		//        string line = lines[y];
-		//        for (int x = 0; x < line.Length; x++)
-		//        {
-		//            string tile = line[x].ToString();
-		//            Tiles[x, y] = tile;
-		//        }
-		//    }
-		//}
 
 		public void Save(string path)
 		{
@@ -205,14 +192,18 @@ namespace Platformer
 			spriteBatch.Draw(Assets.PlatformTexture, new Vector2(w + 0 * 32, h), Color.White);
 			spriteBatch.Draw(Assets.PlatformTexture, new Vector2(w + 1 * 32, h), Color.Gray);
 
-			h = 32 * 6;
+			h = 32 * 5;
+			spriteBatch.Draw(Assets.GemTexture, new Vector2(w + 0 * 32, h), Color.Yellow);
+			spriteBatch.Draw(Assets.GemTexture, new Vector2(w + 1 * 32, h), Color.Red);
+
+			h = 32 * 7;
 			spriteBatch.Draw(Assets.ExitTexture, new Vector2(w + 0 * 32, h - 0), Color.White);
 			spriteBatch.Draw(Assets.PlayerTexture, new Vector2(w + 1 * 32, h - 32), Color.White);
 
-			h = 32 * 7;
+			h = 32 * 8;
 			spriteBatch.Draw(Assets.EnemyATexture, new Vector2(w + 0 * 32, h), Color.White);
 			spriteBatch.Draw(Assets.EnemyBTexture, new Vector2(w + 1 * 32, h), Color.White);
-			h = 32 * 9;
+			h = 32 * 10;
 			spriteBatch.Draw(Assets.EnemyCTexture, new Vector2(w + 0 * 32, h), Color.White);
 			spriteBatch.Draw(Assets.EnemyDTexture, new Vector2(w + 1 * 32, h), Color.White);
 			//h = 32 * 8;
@@ -244,6 +235,65 @@ namespace Platformer
 					}
 				}
 			}
+		}
+
+		public bool ValidateBoard()
+		{
+			int enemy = 0;
+			int guard = 0;
+
+			for (int y = 0; y < 12; y++)
+			{
+				for (int x = 0; x < 16; x++)
+				{
+					String tile = Tiles[x, y];
+					if ("A" == tile || "B" == tile || "C" == tile || "D" == tile)
+					{
+						enemy++;
+					}
+					if ("a" == tile || "b" == tile || "c" == tile || "d" == tile)
+					{
+						guard++;
+					}
+				}
+			}
+
+			int total = enemy + guard;
+			if (enemy > 4 || guard > 4 || total > 4)
+			{
+				string msg = String.Format("Enemy:{0} Guard:{1} Total:{2}", enemy, guard, total);
+				return false;
+			}
+
+			for (int y = 0; y < 11; y++)
+			{
+				for (int x = 0; x < 16; x++)
+				{
+					string tile = Tiles[x, y];
+					if ("G" == tile || "P" == tile)
+					{
+						if (10 == y)
+						{
+							string next1 = Tiles[x, y + 1];
+							if (!("@" == next1 || "#" == next1))
+							{
+								Tiles[x, y] = ".";
+							}
+						}
+						else
+						{
+							string next1 = Tiles[x, y + 1];
+							string next2 = Tiles[x, y + 2];
+							if (!("@" == next1 || "#" == next1 || "@" == next2 || "#" == next2))
+							{
+								Tiles[x, y] = ".";
+							}
+						}
+					}
+				}
+			}
+
+			return true;
 		}
 
 		public string[,] Tiles { get; private set; }

@@ -16,5 +16,6 @@ namespace Platformer
 		public static Texture2D EnemyDTexture;
 		public static Texture2D HorzTexture;
 		public static Texture2D VertTexture;
+		public static Texture2D ErrorTexture;
 	}
 }

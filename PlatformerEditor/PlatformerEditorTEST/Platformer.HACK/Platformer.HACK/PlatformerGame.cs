@@ -38,9 +38,8 @@ namespace Platformer
 		// We store our input states so that we only poll once per frame, 
 		// then we use the same input state wherever needed
 		private KeyboardState currKeyboardState, prevKeyboardState;
-
 		private MouseState mouseState;
-
+		private bool valid;
 		// The number of levels in the Levels directory of our content. We assume that
 		// levels in our content are 0-based and that all numbers under this constant
 		// have a level file present. This allows us to not need to check for the file
@@ -50,18 +49,19 @@ namespace Platformer
 		private string selector = ".";
 		private int fullWide = 18 * 32;
 		private int tileWide = 16 * 32;
-		private int tileWHigh = 12 * 32;
+		private int tileHigh = 12 * 32;
 
 		public PlatformerGame()
 		{
 			graphics = new GraphicsDeviceManager(this);
 			graphics.PreferredBackBufferWidth = fullWide; //32 * 18;//640;
-			graphics.PreferredBackBufferHeight = tileWHigh; //32 * 12;//480;
+			graphics.PreferredBackBufferHeight = tileHigh; //32 * 12;//480;
 			Content.RootDirectory = "Content";
 			Logger.Initialize();
 
 			boardManager = new BoardManager();
 			loadManager = new LoadManager();
+			valid = true;
 		}
 
 		/// <summary>
@@ -122,8 +122,15 @@ namespace Platformer
 			{
 				if (clear)
 				{
+					valid = true;
 					boardManager.Clear();
 				}
+			}
+
+			bool back = currKeyboardState.IsKeyDown(Keys.Back) && prevKeyboardState.IsKeyUp(Keys.Back);
+			if (back)
+			{
+				valid = true;
 			}
 
 			bool load = currKeyboardState.IsKeyDown(Keys.L) && prevKeyboardState.IsKeyUp(Keys.L);
@@ -135,8 +142,12 @@ namespace Platformer
 			bool save = currKeyboardState.IsKeyDown(Keys.S) && prevKeyboardState.IsKeyUp(Keys.S);
 			if (save)
 			{
-				const string path = "Content/Levels/file.txt";
-				boardManager.Save(path);
+				valid = boardManager.ValidateBoard();
+				if (valid)
+				{
+					const string path = "Content/Levels/file.txt";
+					boardManager.Save(path);
+				}
 			}
 
 			mouseState = Mouse.GetState();
@@ -146,7 +157,7 @@ namespace Platformer
 			{
 				int mx = mouseState.X;
 				int my = mouseState.Y;
-				if (mx >= 32 && mx <= tileWide && my >= 0 && my <= tileWHigh)
+				if (mx >= 32 && mx <= tileWide && my >= 0 && my <= tileHigh)
 				{
 					int bx = mx / 32;
 					int by = my / 32;
@@ -166,7 +177,7 @@ namespace Platformer
 					}
 				}
 
-				if (mx >= tileWide && mx <= fullWide && my >= 0 && my <= tileWHigh)
+				if (mx >= tileWide && mx <= fullWide && my >= 0 && my <= tileHigh)
 				{
 					int bx = mx / 32;
 					int by = my / 32;
@@ -180,7 +191,7 @@ namespace Platformer
 			{
 				int mx = mouseState.X;
 				int my = mouseState.Y;
-				if (mx >= 0 && mx <= tileWide && my >= 0 && my <= tileWHigh)
+				if (mx >= 0 && mx <= tileWide && my >= 0 && my <= tileHigh)
 				{
 					int bx = mx / 32;
 					int by = my / 32;
@@ -196,72 +207,9 @@ namespace Platformer
 				Exit();
 			}
 
-			//if (currKeyboardState.IsKeyDown(Keys.Enter) && prevKeyboardState.IsKeyUp(Keys.Enter))
-			//{
-			//    LoadNextLevel();
-			//    //Logger.Info("load");
-			//}
-
-			// Handle polling for our input and handling high-level input
-			//HandleInput();
-
-			// update our level, passing down the GameTime along with all of our input states
-			//level.Update(gameTime, currKeyboardState);
-
 			prevKeyboardState = currKeyboardState;
 			base.Update(gameTime);
 		}
-
-		//private void HandleInput()
-		//{
-		//    bool continuePressed = currKeyboardState.IsKeyDown(Keys.Space);
-
-		//    // Perform the appropriate action to advance the game and
-		//    // to get the player back to playing.
-		//    if (!wasContinuePressed && continuePressed)
-		//    {
-		//        if (!level.Player.IsAlive)
-		//        {
-		//            level.StartNewLife();
-		//        }
-		//        else if (level.TimeRemaining == TimeSpan.Zero)
-		//        {
-		//            if (level.ReachedExit)
-		//                LoadNextLevel();
-		//            else
-		//                ReloadCurrentLevel();
-		//        }
-		//    }
-
-		//    wasContinuePressed = continuePressed;
-		//}
-
-		//private void LoadNextLevel()
-		//{
-		//    // move to the next level
-		//    //levelIndex = (levelIndex + 1) % numberOfLevels;
-		//    //levelIndex = 1;		// TODO remove this override - could make this configurable...!
-		//    levelIndex = 0;
-
-		//    // Unloads the content for the current level before loading the next one.
-		//    if (level != null)
-		//    {
-		//        level.Dispose();
-		//    }
-
-		//    // Load the level.
-		//    string levelPath = string.Format("Content/Levels/{0}.txt", levelIndex);
-		//    using (Stream fileStream = TitleContainer.OpenStream(levelPath))
-		//    {
-		//        level = new Level(Services, fileStream, levelIndex, config);
-		//    }
-		//}
-
-		//private void ReloadCurrentLevel()
-		//{
-		//    --levelIndex;
-		//    LoadNextLevel();
-		//}
 
 		/// <summary>
 		/// Draws the game from background to foreground.
@@ -275,11 +223,10 @@ namespace Platformer
 			spriteBatch.Begin();
 
 			boardManager.Draw(spriteBatch, selector);
-
-			//level.Draw(gameTime, spriteBatch);
-
-			//DrawHud();
-
+			if (!valid)
+			{
+				spriteBatch.Draw(Assets.ErrorTexture, new Vector2((tileWide - Assets.ErrorTexture.Width) / 2, (tileHigh - Assets.ErrorTexture.Height) / 2), Color.White);
+			}
 			spriteBatch.End();
 
 			base.Draw(gameTime);
@@ -298,7 +245,7 @@ namespace Platformer
 			}
 			if (11 == by)
 			{
-				if ("X" == selector)
+				if ("X" == selector || "G" == selector || "P" == selector)
 				{
 					return false;
 				}
@@ -346,27 +293,35 @@ namespace Platformer
 			{
 				selector = "$";
 			}
-			else if (16 == bx && 5 == by || 16 == bx && 6 == by)
+			else if (16 == bx && 5 == by)
+			{
+				selector = "G";
+			}
+			else if (17 == bx && 5 == by)
+			{
+				selector = "P";
+			}
+			else if (16 == bx && 6 == by || 16 == bx && 7 == by)
 			{
 				selector = "X";
 			}
-			else if (17 == bx && 5 == by || 17 == bx && 6 == by)
+			else if (17 == bx && 6 == by || 17 == bx && 7 == by)
 			{
 				selector = "1";
 			}
-			else if (16 == bx && 7 == by || 16 == bx && 8 == by)
+			else if (16 == bx && 8 == by || 16 == bx && 9 == by)
 			{
 				selector = "A";
 			}
-			else if (17 == bx && 7 == by || 17 == bx && 8 == by)
+			else if (17 == bx && 8 == by || 17 == bx && 9 == by)
 			{
 				selector = "B";
 			}
-			else if (16 == bx && 9 == by || 16 == bx && 10 == by)
+			else if (16 == bx && 10 == by || 16 == bx && 11 == by)
 			{
 				selector = "C";
 			}
-			else if (17 == bx && 9 == by || 17 == bx && 10 == by)
+			else if (17 == bx && 10 == by || 17 == bx && 11 == by)
 			{
 				selector = "D";
 			}
@@ -398,38 +353,38 @@ namespace Platformer
 			{
 				selector = "1";
 			}
-			if (currKeyboardState.IsKeyDown(Keys.A))
-			{
-				selector = "A";
-			}
-			if (currKeyboardState.IsKeyDown(Keys.S))
-			{
-				selector = "B";
-			}
-			if (currKeyboardState.IsKeyDown(Keys.D))
-			{
-				selector = "C";
-			}
-			if (currKeyboardState.IsKeyDown(Keys.F))
-			{
-				selector = "D";
-			}
-			if (currKeyboardState.IsKeyDown(Keys.Z))
-			{
-				selector = "a";
-			}
-			if (currKeyboardState.IsKeyDown(Keys.X))
-			{
-				selector = "b";
-			}
-			if (currKeyboardState.IsKeyDown(Keys.C))
-			{
-				selector = "c";
-			}
-			if (currKeyboardState.IsKeyDown(Keys.V))
-			{
-				selector = "d";
-			}
+			//if (currKeyboardState.IsKeyDown(Keys.A))
+			//{
+			//    selector = "A";
+			//}
+			//if (currKeyboardState.IsKeyDown(Keys.S))
+			//{
+			//    selector = "B";
+			//}
+			//if (currKeyboardState.IsKeyDown(Keys.D))
+			//{
+			//    selector = "C";
+			//}
+			//if (currKeyboardState.IsKeyDown(Keys.F))
+			//{
+			//    selector = "D";
+			//}
+			//if (currKeyboardState.IsKeyDown(Keys.Z))
+			//{
+			//    selector = "a";
+			//}
+			//if (currKeyboardState.IsKeyDown(Keys.X))
+			//{
+			//    selector = "b";
+			//}
+			//if (currKeyboardState.IsKeyDown(Keys.C))
+			//{
+			//    selector = "c";
+			//}
+			//if (currKeyboardState.IsKeyDown(Keys.V))
+			//{
+			//    selector = "d";
+			//}
 		}
 		private void DrawHud()
 		{
