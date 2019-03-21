@@ -34,7 +34,7 @@ namespace Platformer
 
 		// We store our input states so that we only poll once per frame, 
 		// then we use the same input state wherever needed
-		private KeyboardState keyboardState;
+		private KeyboardState currKeyboardState, prevKeyboardState;
 
 		// The number of levels in the Levels directory of our content. We assume that
 		// levels in our content are 0-based and that all numbers under this constant
@@ -93,26 +93,33 @@ namespace Platformer
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Update(GameTime gameTime)
 		{
-			if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+			// get all of our input states
+			currKeyboardState = Keyboard.GetState();
+
+			if (currKeyboardState.IsKeyDown(Keys.Escape))
 			{
 				Exit();
+			}
+
+			if (currKeyboardState.IsKeyDown(Keys.Enter) && prevKeyboardState.IsKeyUp(Keys.Enter))
+			{
+				LoadNextLevel();
+				//Logger.Info("load");
 			}
 
 			// Handle polling for our input and handling high-level input
 			HandleInput();
 
 			// update our level, passing down the GameTime along with all of our input states
-			 level.Update(gameTime, keyboardState);
+			level.Update(gameTime, currKeyboardState);
 
+			prevKeyboardState = currKeyboardState;
 			base.Update(gameTime);
 		}
 
 		private void HandleInput()
 		{
-			// get all of our input states
-			keyboardState = Keyboard.GetState();
-
-			bool continuePressed = keyboardState.IsKeyDown(Keys.Space);
+			bool continuePressed = currKeyboardState.IsKeyDown(Keys.Space);
 
 			// Perform the appropriate action to advance the game and
 			// to get the player back to playing.
@@ -137,16 +144,22 @@ namespace Platformer
 		private void LoadNextLevel()
 		{
 			// move to the next level
-			levelIndex = (levelIndex + 1) % numberOfLevels;
+			//levelIndex = (levelIndex + 1) % numberOfLevels;
 			//levelIndex = 1;		// TODO remove this override - could make this configurable...!
+			levelIndex = 0;
+
 			// Unloads the content for the current level before loading the next one.
 			if (level != null)
+			{
 				level.Dispose();
+			}
 
 			// Load the level.
 			string levelPath = string.Format("Content/Levels/{0}.txt", levelIndex);
 			using (Stream fileStream = TitleContainer.OpenStream(levelPath))
+			{
 				level = new Level(Services, fileStream, levelIndex, config);
+			}
 		}
 
 		private void ReloadCurrentLevel()

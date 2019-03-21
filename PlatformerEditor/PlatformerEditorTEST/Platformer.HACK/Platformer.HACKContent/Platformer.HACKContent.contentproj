@@ -34,14 +34,6 @@
       <Name>0</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Levels\1.txt">
-      <Name>1</Name>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Levels\2.txt">
-      <Name>2</Name>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Compile Include="Overlays\you_died.png">
       <Name>you_died</Name>
       <Importer>TextureImporter</Importer>
@@ -151,12 +143,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Levels\3.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Name>3</Name>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Tiles\StripVert.png">
       <Name>StripVert</Name>
       <Importer>TextureImporter</Importer>
@@ -169,18 +155,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Levels\00.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Name>00</Name>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Levels\01.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Name>01</Name>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sprites\Player\Rect.png">

@@ -427,7 +427,7 @@ namespace Platformer
 
 	        if (1 == bottomTile - topTile)
 	        {
-				Logger.Info("falling in between tiles due gravity");
+				//Logger.Info("falling in between tiles due gravity");
 	        }
 
 	        // Reset flag to search for ground collision.
