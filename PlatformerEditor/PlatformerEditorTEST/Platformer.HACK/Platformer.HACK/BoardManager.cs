@@ -61,6 +61,9 @@ namespace Platformer
 
 			string[] contents = lines.ToArray();
 			File.WriteAllLines(path, contents);
+
+			path = path.Replace("file", "file2");
+			File.WriteAllLines(path, contents);
 		}
 
 		public void Update(int x, int y, String tile)
@@ -241,6 +244,24 @@ namespace Platformer
 		{
 			int enemy = 0;
 			int guard = 0;
+			bool blank = true;
+			for (int y = 0; y < 12; y++)
+			{
+				for (int x = 0; x < 16; x++)
+				{
+					String tile = Tiles[x, y];
+					if ("." != tile)
+					{
+						blank = false;
+						break;
+					}
+				}
+			}
+			if (blank)
+			{
+				Logger.Error("Board is blank!");
+				return false;
+			}
 
 			for (int y = 0; y < 12; y++)
 			{
@@ -262,6 +283,7 @@ namespace Platformer
 			if (enemy > 4 || guard > 4 || total > 4)
 			{
 				string msg = String.Format("Enemy:{0} Guard:{1} Total:{2}", enemy, guard, total);
+				Logger.Error(msg);
 				return false;
 			}
 
