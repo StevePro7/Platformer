@@ -7,6 +7,7 @@ namespace Platformer
 	{
 		public void Load(Microsoft.Xna.Framework.Content.ContentManager content)
 		{
+			Assets.BlankTexture = content.Load<Texture2D>("Tiles/BlankGap");
 			Assets.ExitTexture = content.Load<Texture2D>("Tiles/Exit");
 			Assets.BlockTexture = content.Load<Texture2D>("Tiles/BlockA0");
 			Assets.PlatformTexture = content.Load<Texture2D>("Tiles/Platform");

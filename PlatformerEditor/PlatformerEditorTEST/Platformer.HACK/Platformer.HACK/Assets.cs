@@ -4,6 +4,7 @@ namespace Platformer
 {
 	public static class Assets
 	{
+		public static Texture2D BlankTexture;
 		public static Texture2D ExitTexture;
 		public static Texture2D BlockTexture;
 		public static Texture2D PlatformTexture;

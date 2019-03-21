@@ -21,24 +21,34 @@ namespace Platformer
 			{
 				for (int x = 0; x < 16; x++)
 				{
-					Tiles[x, y] = "1";
+					Tiles[x, y] = ".";
 				}
 			}
 		}
 
-		public void Draw(SpriteBatch spriteBatch)
+		public void Update(int x, int y, String tile)
 		{
+			Tiles[x, y] = tile;
+		}
+
+		public void Draw(SpriteBatch spriteBatch, string selector)
+		{
+			Texture2D texture;
 			for (int y = 0; y < 12; y++)
 			{
 				for (int x = 0; x < 16; x++)
 				{
 					String tile = Tiles[x, y];
-					Texture2D texture = GetTexture(tile);
+					; texture = GetTexture(tile);
 
 					if (null != texture)
 					{
 						Color color = Color.White;
 						Vector2 pos = new Vector2(x * 32, y * 32);
+						if (Assets.BlankTexture == texture && "." == tile)
+						{
+							color = Color.CornflowerBlue;
+						}
 						if (Assets.PlatformTexture == texture && "$" == tile)
 						{
 							color = Color.Gray;
@@ -57,6 +67,11 @@ namespace Platformer
 						    Assets.EnemyDTexture == texture)
 						{
 							pos.Y -= 32;
+
+							if ("a" == tile ||"b" == tile ||"c" == tile ||"d" == tile)
+							{
+								color = Color.Black;
+							}
 						}
 
 						spriteBatch.Draw(texture, pos, color);
@@ -73,8 +88,49 @@ namespace Platformer
 				spriteBatch.Draw(Assets.VertTexture, new Vector2(x * 32, 0), Color.White);
 			}
 
+
+			texture = GetTexture(selector);
+			if (null != texture)
+			{
+				Color color = Color.White;
+				Vector2 pos = new Vector2(512 + 16, 16);
+				if (Assets.PlatformTexture == texture && "$" == selector)
+				{
+					color = Color.Gray;
+				}
+				if (Assets.GemTexture == texture && "G" == selector)
+				{
+					color = Color.Yellow;
+				}
+				if (Assets.GemTexture == texture && "P" == selector)
+				{
+					color = Color.Red;
+				}
+
+				if (Assets.EnemyATexture == texture || Assets.EnemyBTexture == texture || Assets.EnemyCTexture == texture || Assets.EnemyDTexture == texture)
+				{
+					if ("a" == selector || "b" == selector || "c" == selector || "d" == selector)
+					{
+						color = Color.Black;
+					}
+				}
+
+				spriteBatch.Draw(texture, pos, color);
+			}
+
 			spriteBatch.Draw(Assets.HorzTexture, new Vector2(0, 383), Color.White);
 			spriteBatch.Draw(Assets.VertTexture, new Vector2(511, 0), Color.White);
+
+			//int w = 32 * 16;
+			//int h = 32 * 12;
+			//spriteBatch.Draw(Assets.PlayerTexture, new Vector2(w, 64), Color.White);
+			//spriteBatch.Draw(Assets.ExitTexture, new Vector2(w + 32, 64), Color.White);
+
+			//spriteBatch.Draw(Assets.BlockTexture, new Vector2(w, 96), Color.White);
+			//spriteBatch.Draw(Assets.PlatformTexture, new Vector2(w + 32, 96), Color.White);
+
+			//spriteBatch.Draw(Assets.GemTexture, new Vector2(w, 128), Color.Yellow);
+			//spriteBatch.Draw(Assets.GemTexture, new Vector2(w + 32, 128), Color.Red);
 		}
 
 		public string[,] Tiles { get; private set; }
@@ -83,7 +139,7 @@ namespace Platformer
 		{
 			if ("." == tile)
 			{
-				return null;
+				return Assets.BlankTexture;
 			}
 			if ("X" == tile)
 			{

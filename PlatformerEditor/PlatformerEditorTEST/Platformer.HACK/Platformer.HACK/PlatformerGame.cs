@@ -39,17 +39,24 @@ namespace Platformer
 		// then we use the same input state wherever needed
 		private KeyboardState currKeyboardState, prevKeyboardState;
 
+		private MouseState mouseState;
+
 		// The number of levels in the Levels directory of our content. We assume that
 		// levels in our content are 0-based and that all numbers under this constant
 		// have a level file present. This allows us to not need to check for the file
 		// or handle exceptions, both of which can add unnecessary time to level loading.
 		private const int numberOfLevels = 3;
 
+		private string selector = ".";
+		private int fullWide = 18 * 32;
+		private int tileWide = 16 * 32;
+		private int tileWHigh = 12 * 32;
+
 		public PlatformerGame()
 		{
 			graphics = new GraphicsDeviceManager(this);
-			graphics.PreferredBackBufferWidth = 32 * 18;//640;
-			graphics.PreferredBackBufferHeight = 32 * 12;//480;
+			graphics.PreferredBackBufferWidth = fullWide; //32 * 18;//640;
+			graphics.PreferredBackBufferHeight = tileWHigh; //32 * 12;//480;
 			Content.RootDirectory = "Content";
 			Logger.Initialize();
 
@@ -102,6 +109,41 @@ namespace Platformer
 		{
 			// get all of our input states
 			currKeyboardState = Keyboard.GetState();
+
+			Getselector();
+			mouseState = Mouse.GetState();
+			ButtonState buttonState;
+			buttonState = mouseState.LeftButton;
+			if (buttonState == ButtonState.Pressed)
+			{
+				int mx = mouseState.X;
+				int my = mouseState.Y;
+				if (mx >= 0 && mx <= tileWide && my >= 0 && my <= tileWHigh)
+				{
+					int bx = mx / 32;
+					int by = my / 32;
+
+					string pos = String.Format("({0},{1}), ", bx, by);
+					//Logger.Info(pos);
+					boardManager.Update(bx, by, selector);
+				}
+			}
+
+			buttonState = mouseState.RightButton;
+			if (buttonState == ButtonState.Pressed)
+			{
+				int mx = mouseState.X;
+				int my = mouseState.Y;
+				if (mx >= 0 && mx <= tileWide && my >= 0 && my <= tileWHigh)
+				{
+					int bx = mx / 32;
+					int by = my / 32;
+
+					string pos = String.Format("({0},{1}), ", bx, by);
+					//Logger.Info(pos);
+					boardManager.Update(bx, by, ".");
+				}
+			}
 
 			if (currKeyboardState.IsKeyDown(Keys.Escape))
 			{
@@ -186,7 +228,7 @@ namespace Platformer
 
 			spriteBatch.Begin();
 
-			boardManager.Draw(spriteBatch);
+			boardManager.Draw(spriteBatch, selector);
 
 			//level.Draw(gameTime, spriteBatch);
 
@@ -197,6 +239,65 @@ namespace Platformer
 			base.Draw(gameTime);
 		}
 
+		private void Getselector()
+		{
+			if (currKeyboardState.IsKeyDown(Keys.D1))
+			{
+				selector = ".";
+			}
+			if (currKeyboardState.IsKeyDown(Keys.D2))
+			{
+				selector = "#";
+			}
+			if (currKeyboardState.IsKeyDown(Keys.D3))
+			{
+				selector = "@";
+			}
+			if (currKeyboardState.IsKeyDown(Keys.D4))
+			{
+				selector = "$";
+			}
+			if (currKeyboardState.IsKeyDown(Keys.D5))
+			{
+				selector = "X";
+			}
+			if (currKeyboardState.IsKeyDown(Keys.D6))
+			{
+				selector = "1";
+			}
+			if (currKeyboardState.IsKeyDown(Keys.A))
+			{
+				selector = "A";
+			}
+			if (currKeyboardState.IsKeyDown(Keys.S))
+			{
+				selector = "B";
+			}
+			if (currKeyboardState.IsKeyDown(Keys.D))
+			{
+				selector = "C";
+			}
+			if (currKeyboardState.IsKeyDown(Keys.F))
+			{
+				selector = "D";
+			}
+			if (currKeyboardState.IsKeyDown(Keys.Z))
+			{
+				selector = "a";
+			}
+			if (currKeyboardState.IsKeyDown(Keys.X))
+			{
+				selector = "b";
+			}
+			if (currKeyboardState.IsKeyDown(Keys.C))
+			{
+				selector = "c";
+			}
+			if (currKeyboardState.IsKeyDown(Keys.V))
+			{
+				selector = "d";
+			}
+		}
 		private void DrawHud()
 		{
 			Rectangle titleSafeArea = GraphicsDevice.Viewport.TitleSafeArea;
