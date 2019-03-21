@@ -26,6 +26,19 @@ namespace Platformer
 			}
 		}
 
+		public void Load(string[] lines)
+		{
+			for (int y = 0; y < lines.Count(); y++)
+			{
+				string line = lines[y];
+				for (int x = 0; x < line.Length; x++)
+				{
+					string tile = line[x].ToString();
+					Tiles[x, y] = tile;
+				}
+			}
+		}
+
 		public void Update(int x, int y, String tile)
 		{
 			Update(x, y, tile, false);
@@ -52,6 +65,7 @@ namespace Platformer
 					tile = "d";
 				}
 			}
+
 			Tiles[x, y] = tile;
 		}
 

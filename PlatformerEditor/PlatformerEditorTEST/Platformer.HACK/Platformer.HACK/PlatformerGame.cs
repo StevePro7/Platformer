@@ -125,6 +125,15 @@ namespace Platformer
 					boardManager.Clear();
 				}
 			}
+
+			bool load = currKeyboardState.IsKeyDown(Keys.L) && prevKeyboardState.IsKeyUp(Keys.L);
+			if (load)
+			{
+				string path = "Content/Levels/file.txt";
+				string[] lines = File.ReadAllLines(path);
+				boardManager.Load(lines);
+			}
+
 			mouseState = Mouse.GetState();
 			ButtonState buttonState;
 			buttonState = mouseState.LeftButton;
@@ -150,8 +159,6 @@ namespace Platformer
 					{
 						boardManager.RemovePrevious(bx, by, selector);
 					}
-
-					
 				}
 
 				if (mx >= tileWide && mx <= fullWide && my >= 0 && my <= tileWHigh)
@@ -275,9 +282,7 @@ namespace Platformer
 
 		private bool ValidateTile(int bx, int by, string selector)
 		{
-			bool fine = true;
-
-			if (10 == by || 11 == by)
+			if (0 == by || 10 == by || 11 == by)
 			{
 				if ("A" == selector || "B" == selector || "C" == selector || "D" == selector ||
 				    "a" == selector || "b" == selector || "c" == selector || "d" == selector ||
@@ -293,7 +298,8 @@ namespace Platformer
 					return false;
 				}
 			}
-			return fine;
+
+			return true;
 		}
 		private void Getselector2(int bx, int by, bool optional)
 		{
