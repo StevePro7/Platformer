@@ -118,6 +118,13 @@ namespace Platformer
 				Logger.Info("O pressed");
 			}
 
+			bool clear = currKeyboardState.IsKeyDown(Keys.Delete) && prevKeyboardState.IsKeyUp(Keys.Delete);
+			{
+				if (clear)
+				{
+					boardManager.Clear();
+				}
+			}
 			mouseState = Mouse.GetState();
 			ButtonState buttonState;
 			buttonState = mouseState.LeftButton;
@@ -125,14 +132,26 @@ namespace Platformer
 			{
 				int mx = mouseState.X;
 				int my = mouseState.Y;
-				if (mx >= 0 && mx <= tileWide && my >= 0 && my <= tileWHigh)
+				if (mx >= 32 && mx <= tileWide && my >= 0 && my <= tileWHigh)
 				{
 					int bx = mx / 32;
 					int by = my / 32;
 
 					string pos = String.Format("({0},{1}), ", bx, by);
 					//Logger.Info(pos);
-					boardManager.Update(bx, by, selector);
+
+					bool update = ValidateTile(bx, by, selector);
+					if (update)
+					{
+						boardManager.Update(bx, by, selector, optional);
+					}
+
+					if ("X" == selector || "1" == selector)
+					{
+						boardManager.RemovePrevious(bx, by, selector);
+					}
+
+					
 				}
 
 				if (mx >= tileWide && mx <= fullWide && my >= 0 && my <= tileWHigh)
@@ -254,6 +273,28 @@ namespace Platformer
 			base.Draw(gameTime);
 		}
 
+		private bool ValidateTile(int bx, int by, string selector)
+		{
+			bool fine = true;
+
+			if (10 == by || 11 == by)
+			{
+				if ("A" == selector || "B" == selector || "C" == selector || "D" == selector ||
+				    "a" == selector || "b" == selector || "c" == selector || "d" == selector ||
+				    "1" == selector)
+				{
+					return false;
+				}
+			}
+			if (11 == by)
+			{
+				if ("X" == selector)
+				{
+					return false;
+				}
+			}
+			return fine;
+		}
 		private void Getselector2(int bx, int by, bool optional)
 		{
 			if (optional)
@@ -319,7 +360,6 @@ namespace Platformer
 				selector = "D";
 			}
 		}
-
 
 		private void Getselector()
 		{

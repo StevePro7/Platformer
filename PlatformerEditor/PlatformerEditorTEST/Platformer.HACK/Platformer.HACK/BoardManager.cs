@@ -12,10 +12,10 @@ namespace Platformer
 		public BoardManager()
 		{
 			Tiles = new string[16,12];
-			Reset();
+			Clear();
 		}
 
-		public void Reset()
+		public void Clear()
 		{
 			for (int y = 0; y < 12; y++)
 			{
@@ -28,6 +28,30 @@ namespace Platformer
 
 		public void Update(int x, int y, String tile)
 		{
+			Update(x, y, tile, false);
+		}
+
+		public void Update(int x, int y, String tile, bool optional)
+		{
+			if (optional)
+			{
+				if ("A" == tile)
+				{
+					tile = "a";
+				}
+				if ("B" == tile)
+				{
+					tile = "b";
+				}
+				if ("C" == tile)
+				{
+					tile = "c";
+				}
+				if ("D" == tile)
+				{
+					tile = "d";
+				}
+			}
 			Tiles[x, y] = tile;
 		}
 
@@ -153,7 +177,26 @@ namespace Platformer
 			//spriteBatch.Draw(Assets.GemTexture, new Vector2(w + 32, 128), Color.Red);
 		}
 
+		public void RemovePrevious(int bx, int by, String selector)
+		{
+			for (int y = 0; y < 12; y++)
+			{
+				for (int x = 0; x < 16; x++)
+				{
+					String tile = Tiles[x, y];
+					if (tile == selector)
+					{
+						if (x != bx || y != by)
+						{
+							Tiles[x, y] = ".";
+						}
+					}
+				}
+			}
+		}
+
 		public string[,] Tiles { get; private set; }
+
 
 		private Texture2D GetTexture(String tile)
 		{
