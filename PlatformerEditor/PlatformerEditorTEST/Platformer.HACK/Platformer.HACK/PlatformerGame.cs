@@ -111,6 +111,13 @@ namespace Platformer
 			currKeyboardState = Keyboard.GetState();
 
 			Getselector();
+
+			bool optional = currKeyboardState.IsKeyDown(Keys.O);
+			if (optional)
+			{
+				Logger.Info("O pressed");
+			}
+
 			mouseState = Mouse.GetState();
 			ButtonState buttonState;
 			buttonState = mouseState.LeftButton;
@@ -126,6 +133,14 @@ namespace Platformer
 					string pos = String.Format("({0},{1}), ", bx, by);
 					//Logger.Info(pos);
 					boardManager.Update(bx, by, selector);
+				}
+
+				if (mx >= tileWide && mx <= fullWide && my >= 0 && my <= tileWHigh)
+				{
+					int bx = mx / 32;
+					int by = my / 32;
+
+					Getselector2(bx, by, optional);
 				}
 			}
 
@@ -238,6 +253,73 @@ namespace Platformer
 
 			base.Draw(gameTime);
 		}
+
+		private void Getselector2(int bx, int by, bool optional)
+		{
+			if (optional)
+			{
+				if (16 == bx && 7 == by || 16 == bx && 8 == by)
+				{
+					selector = "a";
+				}
+				else if (17 == bx && 7 == by || 17 == bx && 8 == by)
+				{
+					selector = "b";
+				}
+				else if (16 == bx && 9 == by || 16 == bx && 10 == by)
+				{
+					selector = "c";
+				}
+				else if (17 == bx && 9 == by || 17 == bx && 10 == by)
+				{
+					selector = "d";
+				}
+
+				return;
+			}
+
+			if (16 == bx && 3 == by)
+			{
+				selector = ".";
+			}
+			else if (17 == bx && 3 == by)
+			{
+				selector = "#";
+			}
+			else if (16 == bx && 4 == by)
+			{
+				selector = "@";
+			}
+			else if (17 == bx && 4 == by)
+			{
+				selector = "$";
+			}
+			else if (16 == bx && 5 == by || 16 == bx && 6 == by)
+			{
+				selector = "X";
+			}
+			else if (17 == bx && 5 == by || 17 == bx && 6 == by)
+			{
+				selector = "1";
+			}
+			else if (16 == bx && 7 == by || 16 == bx && 8 == by)
+			{
+				selector = "A";
+			}
+			else if (17 == bx && 7 == by || 17 == bx && 8 == by)
+			{
+				selector = "B";
+			}
+			else if (16 == bx && 9 == by || 16 == bx && 10 == by)
+			{
+				selector = "C";
+			}
+			else if (17 == bx && 9 == by || 17 == bx && 10 == by)
+			{
+				selector = "D";
+			}
+		}
+
 
 		private void Getselector()
 		{

@@ -121,11 +121,31 @@ namespace Platformer
 			spriteBatch.Draw(Assets.HorzTexture, new Vector2(0, 383), Color.White);
 			spriteBatch.Draw(Assets.VertTexture, new Vector2(511, 0), Color.White);
 
-			//int w = 32 * 16;
-			//int h = 32 * 12;
-			//spriteBatch.Draw(Assets.PlayerTexture, new Vector2(w, 64), Color.White);
-			//spriteBatch.Draw(Assets.ExitTexture, new Vector2(w + 32, 64), Color.White);
+			int w = 32 * 16;
+			int h = 32 * 3;
+			spriteBatch.Draw(Assets.BlankTexture, new Vector2(w + 0 * 32, h ), Color.White);
+			spriteBatch.Draw(Assets.BlockTexture, new Vector2(w + 1 * 32, h), Color.White);
 
+			h = 32 * 4;
+			spriteBatch.Draw(Assets.PlatformTexture, new Vector2(w + 0 * 32, h), Color.White);
+			spriteBatch.Draw(Assets.PlatformTexture, new Vector2(w + 1 * 32, h), Color.Gray);
+
+			h = 32 * 6;
+			spriteBatch.Draw(Assets.ExitTexture, new Vector2(w + 0 * 32, h - 0), Color.White);
+			spriteBatch.Draw(Assets.PlayerTexture, new Vector2(w + 1 * 32, h - 32), Color.White);
+
+			h = 32 * 7;
+			spriteBatch.Draw(Assets.EnemyATexture, new Vector2(w + 0 * 32, h), Color.White);
+			spriteBatch.Draw(Assets.EnemyBTexture, new Vector2(w + 1 * 32, h), Color.White);
+			h = 32 * 9;
+			spriteBatch.Draw(Assets.EnemyCTexture, new Vector2(w + 0 * 32, h), Color.White);
+			spriteBatch.Draw(Assets.EnemyDTexture, new Vector2(w + 1 * 32, h), Color.White);
+			//h = 32 * 8;
+			//spriteBatch.Draw(Assets.EnemyATexture, new Vector2(w + 0 * 32, h), Color.Black);
+			//spriteBatch.Draw(Assets.EnemyBTexture, new Vector2(w + 1 * 32, h), Color.Black);
+			//h = 32 * 9;
+			//spriteBatch.Draw(Assets.EnemyCTexture, new Vector2(w + 0 * 32, h), Color.Black);
+			//spriteBatch.Draw(Assets.EnemyDTexture, new Vector2(w + 1 * 32, h), Color.Black);
 			//spriteBatch.Draw(Assets.BlockTexture, new Vector2(w, 96), Color.White);
 			//spriteBatch.Draw(Assets.PlatformTexture, new Vector2(w + 32, 96), Color.White);
 
