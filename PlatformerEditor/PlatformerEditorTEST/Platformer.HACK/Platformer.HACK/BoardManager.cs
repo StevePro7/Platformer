@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
@@ -9,9 +10,12 @@ namespace Platformer
 {
 	public class BoardManager
 	{
+		private IList<String> lines;
+ 
 		public BoardManager()
 		{
 			Tiles = new string[16,12];
+			lines = new List<string>(12);
 			Clear();
 		}
 
@@ -26,17 +30,50 @@ namespace Platformer
 			}
 		}
 
-		public void Load(string[] lines)
+
+		public void Load(string path)
 		{
-			for (int y = 0; y < lines.Count(); y++)
+			string[] contents = File.ReadAllLines(path);
+			for (int y = 0; y < contents.Count(); y++)
 			{
-				string line = lines[y];
+				string line = contents[y];
 				for (int x = 0; x < line.Length; x++)
 				{
 					string tile = line[x].ToString();
 					Tiles[x, y] = tile;
 				}
 			}
+		}
+		//public void Load(string[] lines)
+		//{
+		//    for (int y = 0; y < lines.Count(); y++)
+		//    {
+		//        string line = lines[y];
+		//        for (int x = 0; x < line.Length; x++)
+		//        {
+		//            string tile = line[x].ToString();
+		//            Tiles[x, y] = tile;
+		//        }
+		//    }
+		//}
+
+		public void Save(string path)
+		{
+			lines.Clear();
+			for (int y = 0; y < 12; y++)
+			{
+				string line = String.Empty;
+				for (int x = 0; x < 16; x++)
+				{
+					string tile = Tiles[x, y];
+					line += tile;
+				}
+
+				lines.Add(line);
+			}
+
+			string[] contents = lines.ToArray();
+			File.WriteAllLines(path, contents);
 		}
 
 		public void Update(int x, int y, String tile)

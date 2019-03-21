@@ -129,9 +129,14 @@ namespace Platformer
 			bool load = currKeyboardState.IsKeyDown(Keys.L) && prevKeyboardState.IsKeyUp(Keys.L);
 			if (load)
 			{
-				string path = "Content/Levels/file.txt";
-				string[] lines = File.ReadAllLines(path);
-				boardManager.Load(lines);
+				const string path = "Content/Levels/file.txt";
+				boardManager.Load(path);
+			}
+			bool save = currKeyboardState.IsKeyDown(Keys.S) && prevKeyboardState.IsKeyUp(Keys.S);
+			if (save)
+			{
+				const string path = "Content/Levels/file.txt";
+				boardManager.Save(path);
 			}
 
 			mouseState = Mouse.GetState();
@@ -282,7 +287,7 @@ namespace Platformer
 
 		private bool ValidateTile(int bx, int by, string selector)
 		{
-			if (0 == by || 10 == by || 11 == by)
+			if (0 == by || 11 == by)
 			{
 				if ("A" == selector || "B" == selector || "C" == selector || "D" == selector ||
 				    "a" == selector || "b" == selector || "c" == selector || "d" == selector ||
