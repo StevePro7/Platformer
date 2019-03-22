@@ -12,6 +12,13 @@ namespace Platformer
 	/// </summary>
 	public class PlatformerGame : Microsoft.Xna.Framework.Game
 	{
+		private const string root = @"C:\Github\StevePro7\Platformer\PlatformerEditor\";
+		private const string srce = @"PlatformerEditorXXXX\Platformer.HACK\Platformer.HACKContent\Levels\";
+		private const string dest = @"PlatformerEditorXXXX\Platformer.HACK\Platformer.HACK\bin\x86\Debug\Content\Levels\";
+		//const string dest = @"C:\Github\StevePro7\Platformer\PlatformerEditor\PlatformerEditorPLAY\Platformer.HACK\Platformer.HACK\bin\x86\Debug\Content\Levels\";
+
+		private const string file = "0.txt";
+
 		// Resources for drawing.
 		private GraphicsDeviceManager graphics;
 		private SpriteBatch spriteBatch;
@@ -115,7 +122,7 @@ namespace Platformer
 			bool optional = currKeyboardState.IsKeyDown(Keys.O);
 			if (optional)
 			{
-				Logger.Info("O pressed");
+				//Logger.Info("O pressed");
 			}
 
 			bool clear = currKeyboardState.IsKeyDown(Keys.Delete) && prevKeyboardState.IsKeyUp(Keys.Delete);
@@ -136,8 +143,9 @@ namespace Platformer
 			bool load = currKeyboardState.IsKeyDown(Keys.L) && prevKeyboardState.IsKeyUp(Keys.L);
 			if (load)
 			{
-				const string path = "Content/Levels/file.txt";
+				const string path = "Content/Levels/" + file;
 				boardManager.Load(path);
+				valid = true;
 			}
 			bool save = currKeyboardState.IsKeyDown(Keys.S) && prevKeyboardState.IsKeyUp(Keys.S);
 			if (save)
@@ -145,8 +153,11 @@ namespace Platformer
 				valid = boardManager.ValidateBoard();
 				if (valid)
 				{
-					const string path = "Content/Levels/file.txt";
-					boardManager.Save(path);
+					//const string root = "Content/Levels/";
+					//const string dest = @"\..\..\..\..\..\..\PlatformerEditorPLAY\Platformer.HACK\Platformer.HACK\bin\x86\Debug\Content\Levels\";
+					//const string dest = @"\..\PlatformerEditorPLAY\Platformer.HACK\Platformer.HACK\bin\x86\Debug\Content\Levels\";
+					
+					boardManager.Save(root, srce, dest, file);
 				}
 			}
 
@@ -347,9 +358,17 @@ namespace Platformer
 			}
 			if (currKeyboardState.IsKeyDown(Keys.D5))
 			{
-				selector = "X";
+				selector = "G";
 			}
 			if (currKeyboardState.IsKeyDown(Keys.D6))
+			{
+				selector = "P";
+			}
+			if (currKeyboardState.IsKeyDown(Keys.D7))
+			{
+				selector = "X";
+			}
+			if (currKeyboardState.IsKeyDown(Keys.D8))
 			{
 				selector = "1";
 			}
@@ -386,39 +405,6 @@ namespace Platformer
 			//    selector = "d";
 			//}
 		}
-		private void DrawHud()
-		{
-			Rectangle titleSafeArea = GraphicsDevice.Viewport.TitleSafeArea;
-			Vector2 hudLocation = new Vector2(titleSafeArea.X, titleSafeArea.Y);
-			Vector2 center = new Vector2(titleSafeArea.X + titleSafeArea.Width / 2.0f,
-										 titleSafeArea.Y + titleSafeArea.Height / 2.0f);
 
-			// Draw time remaining. Uses modulo division to cause blinking when the
-			// player is running out of time.
-			//string timeString = "TIME: " + level.TimeRemaining.Minutes.ToString("00") + ":" + level.TimeRemaining.Seconds.ToString("00");
-			//Color timeColor;
-			//if (level.TimeRemaining > WarningTime ||
-			//    level.ReachedExit ||
-			//    (int)level.TimeRemaining.TotalSeconds % 2 == 0)
-			//{
-			//    timeColor = Color.Yellow;
-			//}
-			//else
-			//{
-			//    timeColor = Color.Red;
-			//}
-			//DrawShadowedString(hudFont, timeString, hudLocation, timeColor);
-
-			// Draw score
-			//float timeHeight = hudFont.MeasureString(timeString).Y;
-			//DrawShadowedString(hudFont, "SCORE: " + level.Score.ToString(), hudLocation + new Vector2(0.0f, timeHeight * 1.2f), Color.Yellow);
-
-		}
-
-		private void DrawShadowedString(SpriteFont font, string value, Vector2 position, Color color)
-		{
-			spriteBatch.DrawString(font, value, position + new Vector2(1.0f, 1.0f), Color.Black);
-			spriteBatch.DrawString(font, value, position, color);
-		}
 	}
 }

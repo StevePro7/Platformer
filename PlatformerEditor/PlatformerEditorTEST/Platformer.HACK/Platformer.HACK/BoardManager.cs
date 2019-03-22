@@ -44,7 +44,7 @@ namespace Platformer
 			}
 		}
 
-		public void Save(string path)
+		public void Save(string root, string srce, string dest, string file)
 		{
 			lines.Clear();
 			for (int y = 0; y < 12; y++)
@@ -60,11 +60,41 @@ namespace Platformer
 			}
 
 			string[] contents = lines.ToArray();
+
+			string suff = ".txt";
+			file = file.Replace(suff, "");
+
+			string date = DateTime.Now.ToString();
+			date = date.Replace("/", "-");
+			date = date.Replace(" ", "_");
+			date = date.Replace(":", "");
+
+			string path = String.Empty;
+			String temp = srce;
+			temp = temp.Replace("XXXX", "PLAY");
+
+			path = root + srce + file + suff;	File.WriteAllLines(path, contents);
+			path = root + dest + file + suff; File.WriteAllLines(path, contents);
+
+			path += "_" + date + suff;
 			File.WriteAllLines(path, contents);
 
-			path = path.Replace("file", "file2");
+
+			path = dest + file + suff;
+			File.WriteAllLines(path, contents);
+
+			path += "_" + date + suff;
 			File.WriteAllLines(path, contents);
 		}
+
+		//private void Saving(string[] contents, string name)
+		//{
+		//    string temp = srce;
+		//    temp = name.Replace("XXXX", "PLAY");
+		//    string path = root + srce + file;
+		//    File.WriteAllLines(path + suff, contents);
+
+		//}
 
 		public void Update(int x, int y, String tile)
 		{
