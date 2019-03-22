@@ -12,7 +12,7 @@ namespace Platformer
 	/// </summary>
 	public class PlatformerGame : Microsoft.Xna.Framework.Game
 	{
-		private const string root = @"C:\Github\StevePro7\Platformer\PlatformerEditor\";
+		private const string root = @"E:\Github\StevePro7\Platformer\PlatformerEditor\";
 		private const string srce = @"PlatformerEditorXXXX\Platformer.HACK\Platformer.HACKContent\Levels\";
 		private const string dest = @"PlatformerEditorXXXX\Platformer.HACK\Platformer.HACK\bin\x86\Debug\Content\Levels\";
 		//const string dest = @"C:\Github\StevePro7\Platformer\PlatformerEditor\PlatformerEditorPLAY\Platformer.HACK\Platformer.HACK\bin\x86\Debug\Content\Levels\";

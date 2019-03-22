@@ -99,6 +99,11 @@ namespace Platformer
 
 		public void Update(int x, int y, String tile, bool optional)
 		{
+			if (x <= 0 || x >= 16 || y <= 0 || y >= 12)
+			{
+				return;
+			}
+
 			if (optional)
 			{
 				if ("A" == tile)
