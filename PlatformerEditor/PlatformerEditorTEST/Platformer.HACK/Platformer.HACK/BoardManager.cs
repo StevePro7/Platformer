@@ -70,31 +70,27 @@ namespace Platformer
 			date = date.Replace(":", "");
 
 			string path = String.Empty;
-			String temp = srce;
-			temp = temp.Replace("XXXX", "PLAY");
+			String temp1 = srce;
+			String temp2 = dest;
 
-			path = root + srce + file + suff;	File.WriteAllLines(path, contents);
+			srce = srce.Replace("XXXX", "PLAY");
+			dest = dest.Replace("XXXX", "PLAY");
+			path = root + srce + file + suff; File.WriteAllLines(path, contents);
 			path = root + dest + file + suff; File.WriteAllLines(path, contents);
-
-			path += "_" + date + suff;
+			path = root + dest + file + "_" + date + suff;
 			File.WriteAllLines(path, contents);
 
 
-			path = dest + file + suff;
-			File.WriteAllLines(path, contents);
+			srce = temp1;
+			dest = temp2;
 
-			path += "_" + date + suff;
+			srce = srce.Replace("XXXX", "TEST");
+			dest = dest.Replace("XXXX", "TEST");
+			path = root + srce + file + suff; File.WriteAllLines(path, contents);
+			path = root + dest + file + suff; File.WriteAllLines(path, contents);
+			path = root + dest + file + "_" + date + suff;
 			File.WriteAllLines(path, contents);
 		}
-
-		//private void Saving(string[] contents, string name)
-		//{
-		//    string temp = srce;
-		//    temp = name.Replace("XXXX", "PLAY");
-		//    string path = root + srce + file;
-		//    File.WriteAllLines(path + suff, contents);
-
-		//}
 
 		public void Update(int x, int y, String tile)
 		{
