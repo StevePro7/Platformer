@@ -275,6 +275,8 @@ namespace Platformer
 		{
 			int enemy = 0;
 			int guard = 0;
+			int player = 0;
+			int exit = 0;
 			bool blank = true;
 			for (int y = 0; y < 12; y++)
 			{
@@ -299,6 +301,14 @@ namespace Platformer
 				for (int x = 0; x < 16; x++)
 				{
 					String tile = Tiles[x, y];
+					if ("1" == tile)
+					{
+						player++;
+					}
+					if ("X" == tile)
+					{
+						exit++;
+					}
 					if ("A" == tile || "B" == tile || "C" == tile || "D" == tile)
 					{
 						enemy++;
@@ -308,6 +318,19 @@ namespace Platformer
 						guard++;
 					}
 				}
+			}
+
+			if (1 != player)
+			{
+				string msg = String.Format("Player:{0} ", player);
+				Logger.Error(msg);
+				return false;
+			}
+			if (1 != exit)
+			{
+				string msg = String.Format("Exit:{0} ", exit);
+				Logger.Error(msg);
+				return false;
 			}
 
 			int total = enemy + guard;
