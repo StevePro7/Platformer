@@ -273,6 +273,10 @@ namespace Platformer
 
 		public bool ValidateBoard()
 		{
+			// Hardocde bottom corners as passable.
+			Tiles[1, 11] = ".";
+			Tiles[15, 11] = ".";
+
 			int enemy = 0;
 			int guard = 0;
 			int player = 0;
@@ -366,6 +370,27 @@ namespace Platformer
 							}
 						}
 					}
+				}
+			}
+
+			for (int y = 0; y < 11; y++)
+			{
+				for (int x = 0; x < 16; x++)
+				{
+					String tile = Tiles[x, y];
+					if ("A" == tile || "B" == tile || "C" == tile|| "D" == tile ||
+						"a" == tile || "b" == tile || "c" == tile || "d" == tile ||
+					    "X" == tile)
+					{
+						string next1 = Tiles[x, y + 1];
+						if (!("@" == next1 || "#" == next1))
+						{
+							string msg = String.Format("No platform underneath at (X,Y)=({0},{1})", x+1, y+1);
+							Logger.Error(msg);
+							return false;
+						}
+					}
+					
 				}
 			}
 
