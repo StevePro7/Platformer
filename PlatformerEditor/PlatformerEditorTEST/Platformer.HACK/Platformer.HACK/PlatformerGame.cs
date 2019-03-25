@@ -12,7 +12,10 @@ namespace Platformer
 	/// </summary>
 	public class PlatformerGame : Microsoft.Xna.Framework.Game
 	{
-		private const string root = @"E:\Github\StevePro7\Platformer\PlatformerEditor\";
+		// mklink /D C:\PlatformerEditor C:\Github\StevePro7\Platformer\PlatformerEditor\
+		// mklink /D C:\PlatformerEditor E:\Github\StevePro7\Platformer\PlatformerEditor\
+		private const string root = @"C:\PlatformerEditor\";
+		//private const string root = @"E:\Github\StevePro7\Platformer\PlatformerEditor\";
 		private const string srce = @"PlatformerEditorXXXX\Platformer.HACK\Platformer.HACKContent\Levels\";
 		private const string dest = @"PlatformerEditorXXXX\Platformer.HACK\Platformer.HACK\bin\x86\Debug\Content\Levels\";
 		//const string dest = @"C:\Github\StevePro7\Platformer\PlatformerEditor\PlatformerEditorPLAY\Platformer.HACK\Platformer.HACK\bin\x86\Debug\Content\Levels\";
@@ -168,7 +171,7 @@ namespace Platformer
 			{
 				int mx = mouseState.X;
 				int my = mouseState.Y;
-				if (mx >= 32 && mx <= tileWide && my >= 0 && my <= tileHigh)
+				if (mx >= 32 && mx <= tileWide && my >= 32 && my <= tileHigh)
 				{
 					int bx = mx / 32;
 					int by = my / 32;
@@ -245,7 +248,7 @@ namespace Platformer
 
 		private bool ValidateTile(int bx, int by, string selector)
 		{
-			if (0 == by || 11 == by)
+			if (0 == by || 11 == by || 10 == by)
 			{
 				if ("A" == selector || "B" == selector || "C" == selector || "D" == selector ||
 				    "a" == selector || "b" == selector || "c" == selector || "d" == selector ||
