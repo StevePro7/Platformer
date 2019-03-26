@@ -449,6 +449,7 @@ namespace Platformer
 							float absDepthX = depthX;
 							float absDepthY = depthY;
 
+							// Ensure both using same sign.
 							if (absDepthX < 0 && absDepthY >= 0)
 							{
 								absDepthX *= -1;
@@ -494,10 +495,7 @@ namespace Platformer
 									boundsTop = (int)Position.Y - localBoundsHeight;
 								}
 							}
-
-
-
-							if (absDepthY >= 0 && absDepthX >= 0)
+							else if (absDepthY >= 0 && absDepthX >= 0)
 							{
 								if (absDepthY < absDepthX || collision == TileCollision.Platform)
 								{
@@ -559,12 +557,17 @@ namespace Platformer
 		    int distanceX = centerAX - centerBX;
 		    int distanceY = centerAY - centerBY;
 
+			// pre-calc'd on init.
 		    //int minDistanceX = halfWidthA + halfWidthB;
 		    //int minDistanceY = halfHeightA + halfHeightB;
 
 		    depthX = 0;
 		    depthY = 0;
 
+		    if (0 == distanceX || 0 == distanceY)
+		    {
+			    int bob = 787;
+		    }
 
 			if (distanceX > 0)
 			{
@@ -599,10 +602,10 @@ namespace Platformer
 		    }
 			
 		    // If we are not intersecting at all, return (0, 0).
-		    if (Math.Abs(distanceX) >= minDistanceX || Math.Abs(distanceY) >= minDistanceY)
-		    {
-			    return;
-		    }
+			if (Math.Abs(distanceX) >= minDistanceX || Math.Abs(distanceY) >= minDistanceY)
+			{
+				return;
+			}
 
 		    // Calculate and return intersection depths.
 		    depthX = distanceX > 0 ? minDistanceX - distanceX : -minDistanceX - distanceX;

@@ -449,8 +449,15 @@ namespace Platformer
 						Process(boundsLeft, boundsTop, tileBoundsLeft, tileBoundsTop);
 						if (depthX != 0 || depthY != 0)
 						{
-							float absDepthX = Math.Abs(depthX);
-							float absDepthY = Math.Abs(depthY);
+							//float absDepthX = Math.Abs(depthX);
+							//float absDepthY = Math.Abs(depthY);
+
+							float absDepthX = depthX;
+							float absDepthY = depthY;
+
+							string msg = String.Format("DX:{0} DY:{1} aDX:{2} aDY:{3}", depthX, depthY, absDepthX, absDepthY);
+							Logger.Info(msg);
+
 
 							// Resolve the collision along the shallow axis.
 							if (absDepthY < absDepthX || collision == TileCollision.Platform)
