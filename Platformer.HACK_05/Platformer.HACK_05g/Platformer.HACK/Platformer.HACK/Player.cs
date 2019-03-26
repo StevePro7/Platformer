@@ -37,6 +37,10 @@ namespace Platformer
 	    const int halfHeightA = rectAHeight / 2;
 	    const int halfWidthB = rectBWidth / 2;
 	    const int halfHeightB = rectBHeight / 2;
+		const int minDistanceX = halfWidthA + halfWidthB;
+		const int minDistanceY = halfHeightA + halfHeightB;
+	    const int negMinDistanceX = -1 * minDistanceX;
+		const int negMinDistanceY = -1 * minDistanceY;
 
 	    private int depthX;
 	    private int depthY;
@@ -555,14 +559,29 @@ namespace Platformer
 		    int distanceX = centerAX - centerBX;
 		    int distanceY = centerAY - centerBY;
 
-		    int minDistanceX = halfWidthA + halfWidthB;
-		    int minDistanceY = halfHeightA + halfHeightB;
+		    //int minDistanceX = halfWidthA + halfWidthB;
+		    //int minDistanceY = halfHeightA + halfHeightB;
 
 		    depthX = 0;
 		    depthY = 0;
 
-		   
-			//distanceY = -210;
+
+			if (distanceX > 0)
+			{
+				if (distanceX >= minDistanceX)
+				{
+					return;
+				}
+			}
+			else if (distanceX < 0)
+			{
+				//if (distanceY <= -minDistanceY)
+				if (distanceX <= negMinDistanceX)
+				{
+					return;
+				}
+			}
+
 		    if (distanceY > 0)
 		    {
 			    if (distanceY >= minDistanceY)
@@ -572,16 +591,13 @@ namespace Platformer
 		    }
 			else if (distanceY < 0)
 		    {
-				if (distanceY <= -minDistanceY)
+				//if (distanceY <= -minDistanceY)
+				if (distanceY <= negMinDistanceY)
 				{
 					return;
 				}
 		    }
-			//if (Math.Abs(distanceY) >= minDistanceY)
-			//{
-			//    return;
-			//}
-
+			
 		    // If we are not intersecting at all, return (0, 0).
 		    if (Math.Abs(distanceX) >= minDistanceX || Math.Abs(distanceY) >= minDistanceY)
 		    {
