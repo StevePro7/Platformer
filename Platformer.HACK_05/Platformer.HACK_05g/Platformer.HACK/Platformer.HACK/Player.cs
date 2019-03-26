@@ -434,23 +434,55 @@ namespace Platformer
 						Process(boundsLeft, boundsTop, tileBoundsLeft, tileBoundsTop);
 						if (depthX != 0 || depthY != 0)
 						{
-							float absDepthX = Math.Abs(depthX);
-							float absDepthY = Math.Abs(depthY);
+							//if (depthY < depthX || collision == TileCollision.Platform)
+							//{
+							//    int yy = 7;
+							//}
+
+							//float absDepthX = Math.Abs(depthX);
+							//float absDepthY = Math.Abs(depthY);
+
+							float absDepthX = depthX;
+							float absDepthY = depthY;
+
+							if (absDepthX < 0 && absDepthY >= 0)
+							{
+								absDepthX *= -1;
+							}
+							if (absDepthY < 0 && absDepthX >= 0)
+							{
+								absDepthY *= -1;
+							}
+
 
 							// Resolve the collision along the shallow axis.
-							if (absDepthY < absDepthX || collision == TileCollision.Platform)
+							if (absDepthY < 0 && absDepthX < 0)
 							{
-								// If we crossed the top of a tile, we are on the ground.
-								if (previousBottom <= tileBoundsTop)
+								//if (absDepthY < absDepthX || collision == TileCollision.Platform)
+								if (absDepthX < absDepthY || collision == TileCollision.Platform)
 								{
-									isOnGround = true;
-								}
+									// If we crossed the top of a tile, we are on the ground.
+									if (previousBottom <= tileBoundsTop)
+									{
+										isOnGround = true;
+									}
 
-								// Ignore platforms, unless we are on the ground.
-								if (collision == TileCollision.Impassable || IsOnGround)
+									// Ignore platforms, unless we are on the ground.
+									if (collision == TileCollision.Impassable || IsOnGround)
+									{
+										// Resolve the collision along the Y axis.
+										Position = new Vector2(Position.X, Position.Y + depthY);
+
+										// Perform further collisions with the new bounds.
+										//bounds = BoundingRectangle;
+										boundsLeft = (int)Position.X - halfBoundsWidth;
+										boundsTop = (int)Position.Y - localBoundsHeight;
+									}
+								}
+								else if (collision == TileCollision.Impassable) // Ignore platforms.
 								{
-									// Resolve the collision along the Y axis.
-									Position = new Vector2(Position.X, Position.Y + depthY);
+									// Resolve the collision along the X axis.
+									Position = new Vector2(Position.X + depthX, Position.Y);
 
 									// Perform further collisions with the new bounds.
 									//bounds = BoundingRectangle;
@@ -458,16 +490,43 @@ namespace Platformer
 									boundsTop = (int)Position.Y - localBoundsHeight;
 								}
 							}
-							else if (collision == TileCollision.Impassable) // Ignore platforms.
-							{
-								// Resolve the collision along the X axis.
-								Position = new Vector2(Position.X + depthX, Position.Y);
 
-								// Perform further collisions with the new bounds.
-								//bounds = BoundingRectangle;
-								boundsLeft = (int)Position.X - halfBoundsWidth;
-								boundsTop = (int)Position.Y - localBoundsHeight;
+
+
+							if (absDepthY >= 0 && absDepthX >= 0)
+							{
+								if (absDepthY < absDepthX || collision == TileCollision.Platform)
+								{
+									// If we crossed the top of a tile, we are on the ground.
+									if (previousBottom <= tileBoundsTop)
+									{
+										isOnGround = true;
+									}
+
+									// Ignore platforms, unless we are on the ground.
+									if (collision == TileCollision.Impassable || IsOnGround)
+									{
+										// Resolve the collision along the Y axis.
+										Position = new Vector2(Position.X, Position.Y + depthY);
+
+										// Perform further collisions with the new bounds.
+										//bounds = BoundingRectangle;
+										boundsLeft = (int)Position.X - halfBoundsWidth;
+										boundsTop = (int)Position.Y - localBoundsHeight;
+									}
+								}
+								else if (collision == TileCollision.Impassable) // Ignore platforms.
+								{
+									// Resolve the collision along the X axis.
+									Position = new Vector2(Position.X + depthX, Position.Y);
+
+									// Perform further collisions with the new bounds.
+									//bounds = BoundingRectangle;
+									boundsLeft = (int)Position.X - halfBoundsWidth;
+									boundsTop = (int)Position.Y - localBoundsHeight;
+								}
 							}
+
 						}
 					}
 				}
@@ -501,6 +560,27 @@ namespace Platformer
 
 		    depthX = 0;
 		    depthY = 0;
+
+		   
+			//distanceY = -210;
+		    if (distanceY > 0)
+		    {
+			    if (distanceY >= minDistanceY)
+			    {
+				    return;
+			    }
+		    }
+			else if (distanceY < 0)
+		    {
+				if (distanceY <= -minDistanceY)
+				{
+					return;
+				}
+		    }
+			//if (Math.Abs(distanceY) >= minDistanceY)
+			//{
+			//    return;
+			//}
 
 		    // If we are not intersecting at all, return (0, 0).
 		    if (Math.Abs(distanceX) >= minDistanceX || Math.Abs(distanceY) >= minDistanceY)
