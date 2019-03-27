@@ -16,18 +16,16 @@ namespace Platformer
 {
     class Player
     {
-	    private Config config;
+	    // (16 - 24) / 2		16=tileWidth	24=playerWidth
+	    private const int drawOffsetX = -4;
 
-	    // (32 - 48) / 2		32=tileWidth	48=playerWidth
-	    private const int drawOffsetX = -8;
+		private readonly int[] ltArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 };
+	    private readonly int[] rtArray = { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+	    private readonly int[] ttArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 };
+	    private readonly int[] btArray = { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
 
-	    private readonly int[] ltArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 };
-	    private readonly int[] rtArray = { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-	    private readonly int[] ttArray = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-	    private readonly int[] btArray = { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 };
-
-	    const int localBoundsWidth = 24;
-	    const int localBoundsHeight = 52;
+	    const int localBoundsWidth = 12;//24;
+	    const int localBoundsHeight = 26;//52;
 	    const int halfBoundsWidth = localBoundsWidth / 2;//12;
 
 	    const int rectAWidth = localBoundsWidth;
@@ -39,6 +37,10 @@ namespace Platformer
 	    const int halfHeightA = rectAHeight / 2;
 	    const int halfWidthB = rectBWidth / 2;
 	    const int halfHeightB = rectBHeight / 2;
+		const int minDistanceX = halfWidthA + halfWidthB;
+		const int minDistanceY = halfHeightA + halfHeightB;
+	    const int negMinDistanceX = -1 * minDistanceX;
+		const int negMinDistanceY = -1 * minDistanceY;
 
 	    private int depthX;
 	    private int depthY;
@@ -47,7 +49,7 @@ namespace Platformer
 	    const int MAX_X = 10;
 	    private readonly int[] velocityXgnd = { 1, 2, 2, 2, 2, 2, 2, 2, 3, 3 };
 	    private readonly int[] velocityXair = { 1, 2, 3, 3, 3, 3, 3, 3, 3, 3 };
-	    private readonly int[] velocityY = { -11, -9, -7, -6, -6, -5, -4, -4, -3, -3, -2, -2, -2, -1, -1, -1, -1 };
+		private readonly int[] velocityY = { -11, -9, -7, -6, -6, -5, -4, -4, -3, -3, -2, -2, -2, -1, -1, -1, -1 };
 	    private readonly int[] gravityZ = { 1, 1, 2, 2, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 };
 	    private int player_idxX, player_idxY, player_grav;
 	    private int jumpFrame;
@@ -94,10 +96,10 @@ namespace Platformer
         Vector2 velocity;
 
         // Constants for controling horizontal movement
-        //private const float MoveAcceleration = 13000.0f;
-        private const float MaxMoveSpeed = 1750.0f;
-        //private const float GroundDragFactor = 0.48f;
-        //private const float AirDragFactor = 0.58f;
+		//private const float MoveAcceleration = 13000.0f;
+		//private const float MaxMoveSpeed = 1750.0f;
+		//private const float GroundDragFactor = 0.48f;
+		//private const float AirDragFactor = 0.58f;
 
         public bool IsOnGround
         {
@@ -113,23 +115,22 @@ namespace Platformer
 
         public Rectangle BoundingRectangle
         {
-	        get
-	        {
-		        int localBoundsWidth = 24;
-		        int localBoundsHeight = 52;
+			get
+			{
+				int localBoundsWidth = 12;//24;		//IMP
+				int localBoundsHeight = 26;//52;	//IMP
 
-		        int halfBoundsWidth = localBoundsWidth / 2;//12;
-		        int left = (int)Position.X - halfBoundsWidth;		//=8
-		        int top = (int)Position.Y - localBoundsHeight;		//=12
+				int halfBoundsWidth = localBoundsWidth / 2;//12;
+				int left = (int)Position.X - halfBoundsWidth;		//=8
+				int top = (int)Position.Y - localBoundsHeight;		//=12
 
-		        Rectangle br = new Rectangle(left, top, localBoundsWidth, localBoundsHeight);
-		        return br;
-	        }
+				Rectangle br = new Rectangle(left, top, localBoundsWidth, localBoundsHeight);
+				return br;
+			}
         }
 
-        public Player(Level level, Vector2 position, Config config)
+        public Player(Level level, Vector2 position)
         {
-	        this.config = config;
             this.level = level;
 
             LoadContent();
@@ -232,7 +233,7 @@ namespace Platformer
 
         public void ApplyPhysics(GameTime gameTime)
         {
-            float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             Vector2 previousPosition = Position;
 	        int prevPosY = (int) previousPosition.Y;
@@ -247,10 +248,10 @@ namespace Platformer
 	        }
 	        if (enum_move_type.move_type_idle != player_move_type)
 	        {
-		        velocity.X = (int) (player_move_type - 1) * deltaX * 2;			// IMPORTANT must multiply by 2 as pre-calc's for 16px
+		        velocity.X = (int) (player_move_type - 1) * deltaX * 1;			// IMPORTANT must multiply by 2 as pre-calc's for 16px
 	        }
 
-	        //velocity.X += movement * MoveAcceleration * elapsed;
+            //velocity.X += movement * MoveAcceleration * elapsed;
 
 	        // TODO stevepro - this is the problem line:
 	        // once hit the apex of the jump the DoJump() method will reset velocityY to 0 so as not harshly fall.
@@ -267,43 +268,32 @@ namespace Platformer
 		        player_grav = 0;
 	        }
 	        deltaY = gravityZ[player_grav];
-			velocity.Y = deltaY * 2;											// IMPORTANT must multiply by 2 as pre-calc's for 16px
-			//velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
+	        velocity.Y = deltaY * 1;											// IMPORTANT must multiply by 2 as pre-calc's for 16px
+	        //velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
 
             velocity.Y = DoJump(velocity.Y, gameTime);
 
-            // Prevent the player from running faster than his top speed.            
-            velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
+			// Prevent the player from running faster than his top speed.            
+	        //velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
 
-            // Apply velocity.
+			// Apply velocity.
 	        //var bob = velocity * elapsed;
 	        var bobX = velocity.X;// * elapsed;		// IMPORTANT pre-calc'd so don't multiply by game tile delta elapsed
 			var bobY = velocity.Y;// * elapsed;		// IMPORTANT pre-calc'd so don't multiply by game tile delta elapsed
 	        var bobPos = Position;
 	        bobPos.X += bobX;
-
-			// Boundaries.
-	        if (bobPos.X <= 48.0f)
-	        {
-		        bobPos.X = 48.0f;
-	        }
-	        if (bobPos.X >= 496.0f)
-	        {
-		        bobPos.X = 496.0f;
-	        }
-
 	        bobPos.Y += bobY;
 	        Position = bobPos;
-            Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
+	        Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
 
 	        int currPosY = (int) Position.Y;
 	        int currPosX = (int) Position.X;
 
 	        if (0.0 != movement)
 	        {
-				//int velX = (int)(velocity.X);
-				//int delta = currPosX - prevPosX;
-				//string msg = String.Format("{0}\t\t{1}\t\t{2}\t\t{3}", velX, currPosX, prevPosX, delta);
+		        //int velX = (int)(velocity.X);
+		        //int delta = currPosX - prevPosX;
+		        //string msg = String.Format("{0}\t\t{1}\t\t{2}\t\t{3}", velX, currPosX, prevPosX, delta);
 		        //Logger.Info(msg);
 	        }
 
@@ -314,55 +304,55 @@ namespace Platformer
             if (Position.X == previousPosition.X)
                 velocity.X = 0;
 
-	        if (Position.Y == previousPosition.Y)
-	        {
-		        velocity.Y = 0;
-		        player_grav = 0;
-		        jumpFrame = 0;
-	        }
+			if (Position.Y == previousPosition.Y)
+			{
+				velocity.Y = 0;
+				player_grav = 0;
+				jumpFrame = 0;
+			}
         }
 
-        private float DoJump(float inpVelocityY, GameTime gameTime)
+		private float DoJump(float inpVelocityY, GameTime gameTime)
         {
 	        if (!isJumping && jumpFrame > 0 || isJumping && jumpFrame >= COUNT)
 	        {
-				player_grav = 0;
+		        player_grav = 0;
 		        inpVelocityY = 0;
 	        }
             // If the player wants to jump
             if (isJumping)
             {
-                // Begin or continue a jump
+				// Begin or continue a jump
 	            if ((!wasJumping && IsOnGround) || jumpFrame > 0)
                 {
 	                jumpFrame++;
 
-	                //sprite.PlayAnimation(jumpAnimation);
+                    //sprite.PlayAnimation(jumpAnimation);
                 }
 
-                // If we are in the ascent of the jump
+				// If we are in the ascent of the jump
 	            if (0 < jumpFrame && jumpFrame <= COUNT)
-                {
+	            {
                     // Fully override the vertical velocity with a power curve that gives players more control over the top of the jump
-					deltaY = velocityY[player_idxY];
-	                inpVelocityY = deltaY * 2;							// IMPORTANT must multiply by 2 as pre-calc's for 16px
+		            deltaY = velocityY[player_idxY];
+		            inpVelocityY = deltaY * 1;							// IMPORTANT must multiply by 2 as pre-calc's for 16px
 
-	                player_idxY++;
-	                if (player_idxY > COUNT - 1)
-	                {
-		                player_idxY = COUNT - 1;
-	                }
+		            player_idxY++;
+		            if (player_idxY > COUNT - 1)
+		            {
+			            player_idxY = COUNT - 1;
+		            }
                 }
                 else
                 {
-                    // Reached the apex of the jump
+					// Reached the apex of the jump
 	                player_idxY = 0;
 	                jumpFrame = 0;
                 }
             }
             else
             {
-                // Continues not jumping or cancels a jump in progress
+				// Continues not jumping or cancels a jump in progress
 	            player_idxY = 0;
 	            jumpFrame = 0;
             }
@@ -390,10 +380,10 @@ namespace Platformer
 	        //int boundsTop = bounds2.Top;
 	        //int boundsBottom = bounds2.Bottom;
 
-			int leftTile = 0;
-			int rightTile = 0;
+	        int leftTile = 0;
+	        int rightTile = 0;
 			int topTile = 0;
-			int bottomTile = 0;
+	        int bottomTile = 0;
 
 	        //Vector2 drawPosn = GetDrawPosn();
 	        Vector2 collPosn = GetCollPosn();
@@ -401,10 +391,10 @@ namespace Platformer
 			int idxX = (int)collPosn.X;
 			int quoX = (int)(idxX / Tile.Size.X);
 			int remX = (int)(idxX % Tile.Size.X);
-			if (remX < 0)
-			{
-				remX = 0;
-			}
+			//if (remX < 0)
+			//{
+			//    remX = 0;
+			//}
 			int idxLeftTile = ltArray[remX];
 			int idxRightTile = rtArray[remX];
 
@@ -425,14 +415,13 @@ namespace Platformer
 			topTile = idxTopTile + quoY;
 			bottomTile = idxBottomTile + quoY;
 
-	        if (1 == bottomTile - topTile)
-	        {
-				Logger.Info("falling in between tiles due gravity");
-	        }
-
 	        // Reset flag to search for ground collision.
             isOnGround = false;
 
+	        if (isJumping)
+	        {
+		        int x = 7;
+	        }
 			// For each potentially colliding tile,
 			for (int y = topTile; y <= bottomTile; ++y)
 			{
@@ -449,30 +438,56 @@ namespace Platformer
 						Process(boundsLeft, boundsTop, tileBoundsLeft, tileBoundsTop);
 						if (depthX != 0 || depthY != 0)
 						{
+							//if (depthY < depthX || collision == TileCollision.Platform)
+							//{
+							//    int yy = 7;
+							//}
+
 							//float absDepthX = Math.Abs(depthX);
 							//float absDepthY = Math.Abs(depthY);
 
 							float absDepthX = depthX;
 							float absDepthY = depthY;
 
-							string msg = String.Format("DX:{0} DY:{1} aDX:{2} aDY:{3}", depthX, depthY, absDepthX, absDepthY);
-							Logger.Info(msg);
+							// Ensure both using same sign.
+							if (absDepthX < 0 && absDepthY >= 0)
+							{
+								absDepthX *= -1;
+							}
+							if (absDepthY < 0 && absDepthX >= 0)
+							{
+								absDepthY *= -1;
+							}
 
 
 							// Resolve the collision along the shallow axis.
-							if (absDepthY < absDepthX || collision == TileCollision.Platform)
+							if (absDepthY < 0 && absDepthX < 0)
 							{
-								// If we crossed the top of a tile, we are on the ground.
-								if (previousBottom <= tileBoundsTop)
+								//if (absDepthY < absDepthX || collision == TileCollision.Platform)
+								if (absDepthX < absDepthY || collision == TileCollision.Platform)
 								{
-									isOnGround = true;
-								}
+									// If we crossed the top of a tile, we are on the ground.
+									if (previousBottom <= tileBoundsTop)
+									{
+										isOnGround = true;
+									}
 
-								// Ignore platforms, unless we are on the ground.
-								if (collision == TileCollision.Impassable || IsOnGround)
+									// Ignore platforms, unless we are on the ground.
+									if (collision == TileCollision.Impassable || IsOnGround)
+									{
+										// Resolve the collision along the Y axis.
+										Position = new Vector2(Position.X, Position.Y + depthY);
+
+										// Perform further collisions with the new bounds.
+										//bounds = BoundingRectangle;
+										boundsLeft = (int)Position.X - halfBoundsWidth;
+										boundsTop = (int)Position.Y - localBoundsHeight;
+									}
+								}
+								else if (collision == TileCollision.Impassable) // Ignore platforms.
 								{
-									// Resolve the collision along the Y axis.
-									Position = new Vector2(Position.X, Position.Y + depthY);
+									// Resolve the collision along the X axis.
+									Position = new Vector2(Position.X + depthX, Position.Y);
 
 									// Perform further collisions with the new bounds.
 									//bounds = BoundingRectangle;
@@ -480,15 +495,38 @@ namespace Platformer
 									boundsTop = (int)Position.Y - localBoundsHeight;
 								}
 							}
-							else if (collision == TileCollision.Impassable) // Ignore platforms.
+							else if (absDepthY >= 0 && absDepthX >= 0)
 							{
-								// Resolve the collision along the X axis.
-								Position = new Vector2(Position.X + depthX, Position.Y);
+								if (absDepthY < absDepthX || collision == TileCollision.Platform)
+								{
+									// If we crossed the top of a tile, we are on the ground.
+									if (previousBottom <= tileBoundsTop)
+									{
+										isOnGround = true;
+									}
 
-								// Perform further collisions with the new bounds.
-								//bounds = BoundingRectangle;
-								boundsLeft = (int)Position.X - halfBoundsWidth;
-								boundsTop = (int)Position.Y - localBoundsHeight;
+									// Ignore platforms, unless we are on the ground.
+									if (collision == TileCollision.Impassable || IsOnGround)
+									{
+										// Resolve the collision along the Y axis.
+										Position = new Vector2(Position.X, Position.Y + depthY);
+
+										// Perform further collisions with the new bounds.
+										//bounds = BoundingRectangle;
+										boundsLeft = (int)Position.X - halfBoundsWidth;
+										boundsTop = (int)Position.Y - localBoundsHeight;
+									}
+								}
+								else if (collision == TileCollision.Impassable) // Ignore platforms.
+								{
+									// Resolve the collision along the X axis.
+									Position = new Vector2(Position.X + depthX, Position.Y);
+
+									// Perform further collisions with the new bounds.
+									//bounds = BoundingRectangle;
+									boundsLeft = (int)Position.X - halfBoundsWidth;
+									boundsTop = (int)Position.Y - localBoundsHeight;
+								}
 							}
 
 						}
@@ -519,17 +557,55 @@ namespace Platformer
 		    int distanceX = centerAX - centerBX;
 		    int distanceY = centerAY - centerBY;
 
-		    int minDistanceX = halfWidthA + halfWidthB;
-		    int minDistanceY = halfHeightA + halfHeightB;
+			// pre-calc'd on init.
+		    //int minDistanceX = halfWidthA + halfWidthB;
+		    //int minDistanceY = halfHeightA + halfHeightB;
 
 		    depthX = 0;
 		    depthY = 0;
 
-		    // If we are not intersecting at all, return (0, 0).
-		    if (Math.Abs(distanceX) >= minDistanceX || Math.Abs(distanceY) >= minDistanceY)
+		    if (0 == distanceX || 0 == distanceY)
 		    {
-			    return;
+			    int bob = 787;
 		    }
+
+			if (distanceX > 0)
+			{
+				if (distanceX >= minDistanceX)
+				{
+					return;
+				}
+			}
+			else if (distanceX < 0)
+			{
+				//if (distanceY <= -minDistanceY)
+				if (distanceX <= negMinDistanceX)
+				{
+					return;
+				}
+			}
+
+		    if (distanceY > 0)
+		    {
+			    if (distanceY >= minDistanceY)
+			    {
+				    return;
+			    }
+		    }
+			else if (distanceY < 0)
+		    {
+				//if (distanceY <= -minDistanceY)
+				if (distanceY <= negMinDistanceY)
+				{
+					return;
+				}
+		    }
+			
+		    // If we are not intersecting at all, return (0, 0).
+			if (Math.Abs(distanceX) >= minDistanceX || Math.Abs(distanceY) >= minDistanceY)
+			{
+				return;
+			}
 
 		    // Calculate and return intersection depths.
 		    depthX = distanceX > 0 ? minDistanceX - distanceX : -minDistanceX - distanceX;
@@ -538,11 +614,6 @@ namespace Platformer
 
         public void OnKilled(Enemy killedBy)
         {
-			if (config.Invincibility)
-	        {
-		        return;
-	        }
-
             isAlive = false;
             //sprite.PlayAnimation(dieAnimation);
         }
@@ -573,9 +644,9 @@ namespace Platformer
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-			Vector2 drawPosn = GetDrawPosn();
+	        Vector2 drawPosn = GetDrawPosn();
 			sprite.Draw(spriteBatch, drawPosn);
-			//spriteBatch.Draw(BoundImage, new Vector2(BoundingRectangle.X, BoundingRectangle.Y), Color.White);
+	        spriteBatch.Draw(BoundImage, new Vector2(BoundingRectangle.X, BoundingRectangle.Y), Color.White);
         }
     }
 }
