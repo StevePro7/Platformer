@@ -13,6 +13,7 @@ namespace Platformer
 	public class PlatformerGame : Microsoft.Xna.Framework.Game
 	{
 		// mklink /D C:\PlatformerEditor C:\Github\StevePro7\Platformer\PlatformerEditor\
+		// mklink /D C:\PlatformerEditor D:\Github\StevePro7\Platformer\PlatformerEditor\
 		// mklink /D C:\PlatformerEditor E:\Github\StevePro7\Platformer\PlatformerEditor\
 		private const string root = @"C:\PlatformerEditor\";
 		//private const string root = @"E:\Github\StevePro7\Platformer\PlatformerEditor\";
