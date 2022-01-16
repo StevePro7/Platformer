@@ -262,7 +262,8 @@ namespace Platformer
 		/// </param>
 		private Tile LoadVarietyTile(string baseName, int variationCount, TileCollision collision)
 		{
-			int index = random.Next(variationCount);
+			//int index = random.Next(variationCount);
+			int index = 9;
 			return LoadTile(baseName + index, collision);
 		}
 
