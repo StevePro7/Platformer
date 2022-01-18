@@ -264,10 +264,28 @@ namespace Platformer
 
             // Base velocity is a combination of horizontal movement control and
             // acceleration downward due to gravity.
-            velocity.X += movement * MoveAcceleration * elapsed;
+
+	        string msgY = String.Empty;
+	        var deltaX = movement*MoveAcceleration*elapsed;
+	        velocity.X += deltaX;//movement * MoveAcceleration * elapsed;
+
+	        var deltaY = GravityAcceleration*elapsed;
+			//Logger.Info(deltaY.ToString());
+
             velocity.Y = MathHelper.Clamp(velocity.Y + GravityAcceleration * elapsed, -MaxFallSpeed, MaxFallSpeed);
+	        var aa = velocity.Y;
+			if (velocity.Y != 68)
+			{
+				//msgY += velocity.Y.ToString();
+			}
 
             velocity.Y = DoJump(velocity.Y, gameTime);
+	        var bb = velocity.Y;
+
+			if (velocity.Y != 68)
+			{
+				//msgY += "," +velocity.Y.ToString();
+			}
 
             // Apply pseudo-drag horizontally.
             if (IsOnGround)
@@ -277,13 +295,36 @@ namespace Platformer
 
             // Prevent the player from running faster than his top speed.            
             velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
+			//if (velocity.Y != 0)
+			//{
+			//    msgY += "," + velocity.Y.ToString();
+			//}
 
             // Apply velocity.
-            Position += velocity * elapsed;
+			var delta = velocity * elapsed;
+			if (velocity.Y != 68)
+			{
+				msgY += "," + delta.Y.ToString();
+			}
+
+	        Position += delta;
+			if (velocity.Y != 68)
+			{
+				msgY += "," + Position.Y.ToString();
+			}
             Position = new Vector2((float)Math.Round(Position.X), (float)Math.Round(Position.Y));
+			if (velocity.Y != 68)
+			{
+				//msgY += "," + Position.Y.ToString();
+			}
 
             // If the player is now colliding with the level, separate them.
             HandleCollisions();
+
+			if (msgY.Length != 0)
+			{
+				Logger.Info(msgY);
+			}
 
             // If the collision stopped us from moving, reset the velocity to zero.
             if (Position.X == previousPosition.X)
@@ -330,8 +371,8 @@ namespace Platformer
                 {
                     // Fully override the vertical velocity with a power curve that gives players more control over the top of the jump
                     velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower));
-	                string msg = String.Format("{0},{1}", jumpTime, velocityY);
-	                Logger.Info(msg);
+	                //string msg = String.Format("{0},{1}", jumpTime, velocityY);
+	                //Logger.Info(msg);
                 }
                 else
                 {

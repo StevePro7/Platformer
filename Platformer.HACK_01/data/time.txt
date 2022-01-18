@@ -1,0 +1,20 @@
+Time
+18/01/2022
+
+50x FPS
+
+0.02
+gameTime.ElapsedGameTime.TotalSeconds;
+
+20
+gameTime.ElapsedGameTime.TotalMilliseconds
+
+
+MoveAcceleration = 13000.0f
+gameTime.ElapsedGameTime.TotalSeconds;
+
+var delta = MoveAcceleration*elapsed;
+0.02
+var delta = MoveAcceleration*elapsed;
+var delta = 260
+
