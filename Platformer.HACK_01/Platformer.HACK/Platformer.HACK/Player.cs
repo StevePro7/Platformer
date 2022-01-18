@@ -338,14 +338,17 @@ namespace Platformer
 
 			if (msgX.Length != 0)
 			{
-				Logger.Info(msgX);
+				//Logger.Info(msgX);
 			}
 
             // If the collision stopped us from moving, reset the velocity to zero.
 	        var testX = Position.X - previousPosition.X;
 	        if (testX != 0)
 	        {
-		        //Logger.Info(testX.ToString());
+		        if (!IsOnGround)
+		        {
+					Logger.Info(testX.ToString());
+		        }
 	        }
             if (Position.X == previousPosition.X)
                 velocity.X = 0;
