@@ -330,6 +330,8 @@ namespace Platformer
                 {
                     // Fully override the vertical velocity with a power curve that gives players more control over the top of the jump
                     velocityY = JumpLaunchVelocity * (1.0f - (float)Math.Pow(jumpTime / MaxJumpTime, JumpControlPower));
+	                string msg = String.Format("{0},{1}", jumpTime, velocityY);
+	                Logger.Info(msg);
                 }
                 else
                 {
