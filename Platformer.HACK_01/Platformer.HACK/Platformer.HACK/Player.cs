@@ -265,9 +265,14 @@ namespace Platformer
             // Base velocity is a combination of horizontal movement control and
             // acceleration downward due to gravity.
 
+			string msgX = String.Empty;
 	        string msgY = String.Empty;
 	        var deltaX = movement*MoveAcceleration*elapsed;
 	        velocity.X += deltaX;//movement * MoveAcceleration * elapsed;
+			if (velocity.X != 0)
+			{
+				msgX += velocity.X.ToString();
+			}
 
 	        var deltaY = GravityAcceleration*elapsed;
 			//Logger.Info(deltaY.ToString());
@@ -293,8 +298,18 @@ namespace Platformer
             else
                 velocity.X *= AirDragFactor;
 
+			if (velocity.X != 0)
+			{
+				msgX += "," + velocity.X.ToString();
+			}
+
             // Prevent the player from running faster than his top speed.            
             velocity.X = MathHelper.Clamp(velocity.X, -MaxMoveSpeed, MaxMoveSpeed);
+			if (velocity.X != 0)
+			{
+				msgX += "," + velocity.X.ToString();
+			}
+
 			//if (velocity.Y != 0)
 			//{
 			//    msgY += "," + velocity.Y.ToString();
@@ -321,9 +336,9 @@ namespace Platformer
             // If the player is now colliding with the level, separate them.
             HandleCollisions();
 
-			if (msgY.Length != 0)
+			if (msgX.Length != 0)
 			{
-				Logger.Info(msgY);
+				Logger.Info(msgX);
 			}
 
             // If the collision stopped us from moving, reset the velocity to zero.
