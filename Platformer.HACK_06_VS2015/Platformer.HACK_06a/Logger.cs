@@ -1,5 +1,4 @@
-﻿using System;
-using log4net;
+﻿using log4net;
 using log4net.Config;
 
 namespace Platformer
@@ -34,4 +33,5 @@ namespace Platformer
 			Log.Warn(message);
 		}
 	}
+
 }

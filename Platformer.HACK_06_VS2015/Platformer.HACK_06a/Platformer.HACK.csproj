@@ -35,25 +35,29 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AnGame.cs" />
+    <Compile Include="Accelerometer.cs" />
+    <Compile Include="Animation.cs" />
+    <Compile Include="AnimationPlayer.cs" />
+    <Compile Include="Circle.cs" />
+    <Compile Include="Enemy.cs" />
+    <Compile Include="EnumManager.cs" />
+    <Compile Include="Gem.cs" />
+    <Compile Include="Level.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="Manager\MyContentManager.cs" />
-    <Compile Include="Manager\MyInputManager.cs" />
-    <Compile Include="Manager\MyLevelManager.cs" />
-    <Compile Include="Manager\MyPlayerManager.cs" />
-    <Compile Include="Manager\MyScreenManager.cs" />
-    <Compile Include="Object\MyPlayerObject.cs" />
-    <Compile Include="MyProgram.cs" />
+    <Compile Include="PlatformerGame.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Static\Assets.cs" />
-    <Compile Include="Static\Constants.cs" />
-    <Compile Include="Static\Enumerations.cs" />
+    <Compile Include="RectangleExtensions.cs" />
+    <Compile Include="Tile.cs" />
+    <Compile Include="TouchCollectionExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="log4net">
@@ -85,7 +89,8 @@
     <None Include="Content\Levels\3.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="Icon.ico" />
+    <Content Include="Game.ico" />
+    <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
