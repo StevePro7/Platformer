@@ -19,9 +19,9 @@ namespace Platformer
 		// Global content.
 		private SpriteFont hudFont;
 
-		private Texture2D winOverlay;
-		private Texture2D loseOverlay;
-		private Texture2D diedOverlay;
+		//private Texture2D winOverlay;
+		//private Texture2D loseOverlay;
+		//private Texture2D diedOverlay;
 
 		// Meta-level game state.
 		private int levelIndex = 0;
@@ -74,9 +74,9 @@ namespace Platformer
 			hudFont = Content.Load<SpriteFont>("Fonts/Hud");
 
 			// Load overlay textures
-			winOverlay = Content.Load<Texture2D>("Overlays/you_win");
-			loseOverlay = Content.Load<Texture2D>("Overlays/you_lose");
-			diedOverlay = Content.Load<Texture2D>("Overlays/you_died");
+			//winOverlay = Content.Load<Texture2D>("Overlays/you_win");
+			//loseOverlay = Content.Load<Texture2D>("Overlays/you_lose");
+			//diedOverlay = Content.Load<Texture2D>("Overlays/you_died");
 
 			LoadNextLevel();
 		}
