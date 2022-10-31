@@ -2,7 +2,7 @@
 using log4net;
 using log4net.Config;
 
-namespace Test
+namespace Platformer
 {
 	public static class Logger
 	{

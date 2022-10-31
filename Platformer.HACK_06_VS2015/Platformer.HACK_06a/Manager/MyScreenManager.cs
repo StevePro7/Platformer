@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-namespace Test
+namespace Platformer
 {
 	public class MyScreenManager
 	{

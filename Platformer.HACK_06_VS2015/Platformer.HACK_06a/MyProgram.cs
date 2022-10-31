@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Test
+namespace Platformer
 {
 #if WINDOWS || LINUX
     /// <summary>

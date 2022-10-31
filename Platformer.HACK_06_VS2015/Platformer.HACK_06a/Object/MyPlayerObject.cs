@@ -1,4 +1,4 @@
-﻿namespace Test
+﻿namespace Platformer
 {
 	public struct struct_player_object
 	{
