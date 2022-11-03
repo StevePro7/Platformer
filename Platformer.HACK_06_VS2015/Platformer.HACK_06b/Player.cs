@@ -179,7 +179,7 @@ namespace Platformer
             // Get analog horizontal movement.
 	        shouldLog = false;
 
-			if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
+			if (keyboardState.IsKeyDown(Keys.Left) && prevKeyboardState.IsKeyUp(Keys.Left))
 			{
 				movement = -1.0f;
 				if (enum_move_type.move_type_left != player_move_type)
@@ -199,7 +199,7 @@ namespace Platformer
 				}
 				player_move_type = enum_move_type.move_type_left;
 			}
-			else if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
+			else if (keyboardState.IsKeyDown(Keys.Right) && prevKeyboardState.IsKeyUp(Keys.Right))
 			{
 				movement = 1.0f;
 				if (enum_move_type.move_type_rght != player_move_type)
@@ -291,10 +291,10 @@ namespace Platformer
 
 	        if (0.0 != movement)
 	        {
-		        //int velX = (int)(velocity.X);
-		        //int delta = currPosX - prevPosX;
-		        //string msg = String.Format("{0}\t\t{1}\t\t{2}\t\t{3}", velX, currPosX, prevPosX, delta);
-		        //Logger.Info(msg);
+		        int velX = (int)(velocity.X);
+		        int delta = currPosX - prevPosX;
+		        string msg = String.Format("{0}\t\t{1}\t\t{2}\t\t{3}", velX, currPosX, prevPosX, delta);
+		        Logger.Info(msg);
 	        }
 
             // If the player is now colliding with the level, separate them.
@@ -326,7 +326,6 @@ namespace Platformer
 	            if ((!wasJumping && IsOnGround) || jumpFrame > 0)
                 {
 	                jumpFrame++;
-
                     //sprite.PlayAnimation(jumpAnimation);
                 }
 
@@ -566,7 +565,7 @@ namespace Platformer
 
 		    if (0 == distanceX || 0 == distanceY)
 		    {
-				Logger.Info("dx && dy == 0");
+				//Logger.Info("dx && dy == 0");
 		    }
 
 			if (distanceX > 0)
